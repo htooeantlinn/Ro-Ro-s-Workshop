@@ -1,0 +1,8 @@
+{
+  "label": "3D Printed",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "To learn the most important Arduino-CLI concepts."
+  }
+}

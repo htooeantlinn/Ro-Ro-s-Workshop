@@ -1,0 +1,129 @@
+---
+sidebar_label: 'Homebrew'
+sidebar_position: 2
+---
+
+import { useState, useEffect } from 'react';
+
+export const ImageLoop = ({ images }) => {
+  const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  useEffect(() => {
+    // Only set interval if there's more than one image
+    if (images.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <div 
+        onClick={() => setIsZoomed(!isZoomed)}
+        style={{ 
+          cursor: 'zoom-in', 
+          position: 'relative',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '2px solid var(--ifm-color-emphasis-300)',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+        }}
+      >
+        <img src={images[index]} style={{ display: 'block', width: '100%' }} />
+        
+        {images.length > 1 && (
+          <div style={{
+            position: 'absolute', bottom: '10px', right: '10px',
+            backgroundColor: '#333', color: 'white',
+            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem', 
+            fontWeight: 'bold', opacity: '0.8'
+          }}>
+            Step {index + 1} of {images.length}
+          </div>
+        )}
+      </div>
+
+      {isZoomed && (
+        <div 
+          onClick={() => setIsZoomed(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img src={images[index]} style={{ maxHeight: '95vh', maxWidth: '95vw', borderRadius: '8px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+# Homebrew
+
+Homebrew is a free, open-source software package manager for macOS and Linux that simplifies installing, updating, and managing command-line tools, developer dependencies, and applications. It acts like an “app store” for the terminal, installing software to its own directory and symlinking files into /opt/homebrew.
+
+* [Official Software](https://brew.sh)
+
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410272/htooeantlinn/Screenshot_2026-03-10_at_10.23.31_AM_j6b3wy.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410265/htooeantlinn/Screenshot_2026-03-10_at_10.22.50_AM_pyzo3t.png"
+  ]} />
+
+## Installation Script
+Click at here Homebrew’s download & install script to copy:
+
+```bash
+/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh](https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh))"
+```
+
+<ImageLoop images={[
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410136/htooeantlinn/image_8_okpyks.png",
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410135/htooeantlinn/image_9_vr8wxa.png",
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410142/htooeantlinn/image_10_wawuq6.png",
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410270/htooeantlinn/Screenshot_2026-03-10_at_10.30.07_AM_qrg4gm.png"
+]} />
+
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410141/htooeantlinn/image_11_azmclk.png"
+  ]} />
+
+```bash
+echo >> /Users/[YourName]/.zprofile
+echo 'eval "$(/usr/local/bin/brew shellenv zsh)"' >> /Users/[YourName]/.zprofile
+eval "$(/usr/local/bin/brew shellenv zsh)"
+
+```
+
+## Paste scripts in Terminal and Enter
+
+<ImageLoop images={[
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410144/htooeantlinn/image_12_td4czn.png",
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410272/htooeantlinn/Screenshot_2026-03-10_at_10.31.10_AM_uorula.png"
+]} />
+
+---
+
+## Maintenance Commands
+
+update က "သတင်းစာဖတ်တာ" ဖြစ်ပြီး၊ upgrade က "ဈေးဝယ်တာ" ပါ။
+
+```bash
+brew update
+```
+```bash
+brew upgrade
+```
+
+<ImageLoop images={[
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410254/htooeantlinn/Screenshot_2026-03-10_at_10.12.49_AM_jvowus.png",
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410141/htooeantlinn/image_13_cpusr6.png",
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410273/htooeantlinn/Screenshot_2026-03-10_at_10.31.22_AM_n82ubx.png",
+"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410141/htooeantlinn/image_14_dixdic.png"
+]} />
+
+<ImageLoop images={[
+]} />

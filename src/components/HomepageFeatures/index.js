@@ -1,50 +1,54 @@
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import Link from '@docusaurus/Link'; // 1. Import the Link component
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: 'Tutorial',
+    link: '/docs/intro', // 2. Add the path here
+    Svg: require('@site/static/img/svgviewer-output-1.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        သပ်ရပ်ပြီး စနစ်ကျတဲ့ Coding ရေးသားနည်းများနှင့် Tutorial များ
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: 'Shop',
+    link: '/shop/intro', // 2. Add the path here
+    Svg: require('@site/static/img/svgviewer-output-2.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        3D Printed ပစ္စည်းများနှင့် Electronic Component ပစ္စည်းများ
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: 'Blog',
+    link: '/blog', // 2. Add the path here
+    Svg: require('@site/static/img/svgviewer-output-3.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        အနာဂတ်ရဲ့ နည်းပညာ အယူအဆသစ်များ
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({Svg, title, description, link}) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
-      <div className="text--center padding-horiz--md">
-        <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
-      </div>
+      {/* Add className={styles.featureLink} to your Links */}
+      <Link to={link} className={styles.featureLink}>
+        <div className="text--center">
+          <Svg className={styles.featureSvg} role="img" />
+        </div>
+        <div className="text--center padding-horiz--md">
+          <Heading as="h3">{title}</Heading>
+          <p style={{color: 'var(--ifm-font-color-base)'}}>{description}</p>
+        </div>
+      </Link>
     </div>
   );
 }

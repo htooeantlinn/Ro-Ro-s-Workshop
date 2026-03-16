@@ -1,0 +1,108 @@
+---
+sidebar_label: 'What, Why, How'
+sidebar_position: 1
+---
+
+import { useState, useEffect } from 'react';
+
+export const ImageLoop = ({ images }) => {
+  const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  useEffect(() => {
+    // Only set interval if there's more than one image
+    if (images.length <= 1) return;
+
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <div 
+        onClick={() => setIsZoomed(!isZoomed)}
+        style={{ 
+          cursor: 'zoom-in', 
+          position: 'relative',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '2px solid var(--ifm-color-emphasis-300)',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+        }}
+      >
+        <img src={images[index]} style={{ display: 'block', width: '100%' }} />
+        
+        {images.length > 1 && (
+          <div style={{
+            position: 'absolute', bottom: '10px', right: '10px',
+            backgroundColor: '#333', color: 'white',
+            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem', 
+            fontWeight: 'bold', opacity: '0.8'
+          }}>
+            Step {index + 1} of {images.length}
+          </div>
+        )}
+      </div>
+
+      {isZoomed && (
+        <div 
+          onClick={() => setIsZoomed(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img src={images[index]} style={{ maxHeight: '95vh', maxWidth: '95vw', borderRadius: '8px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+# Arduino CLI: The Essentials
+
+## 🤔 What is that!
+
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409994/htooeantlinn/image_1_mcq0cj.png"
+]} />
+
+:::info What is it?
+The **Arduino CLI** is an open-source tool providing all Arduino IDE features—board/library management and sketch building—directly in your terminal.
+:::
+
+---
+
+## ⚡ Why Use It?
+Ideal for **automation**, **CI/CD**, and advanced users who prefer a text-based environment over a heavy GUI.
+
+* [Official Software](https://www.arduino.cc/en/software/#arduino-cli) | [Official Docs](https://docs.arduino.cc/arduino-cli/)
+
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410139/htooeantlinn/image_2_ywxsog.png"
+]} />
+
+---
+
+## 🛠️ How it Works
+
+### 1. Create Sketch, Compile, Upload
+
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409994/htooeantlinn/image_4_baqmhn.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409995/htooeantlinn/image_5_zxifoo.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409992/htooeantlinn/image_6_qj3ahx.png"
+]} />
+
+## 🔗 Reference
+<div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '16px', marginTop: '20px' }}>
+  <iframe 
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+    src="https://www.youtube.com/embed/J-qGn1eEidA?si=_Nz1TLhH8-ovpW86" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowFullScreen>
+  </iframe>
+</div>

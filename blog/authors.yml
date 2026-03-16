@@ -1,25 +1,50 @@
-yangshun:
-  name: Yangshun Tay
-  title: Ex-Meta Staff Engineer, Co-founder GreatFrontEnd
-  url: https://linkedin.com/in/yangshun
-  image_url: https://github.com/yangshun.png
+htooeantlinn:
+  name: Htoo Eant Linn
+  title: Founder, Software Engineer
+  # url: https://linkedin.com/in/htooeantlinn
+  image_url: https://github.com/htooeantlinn.png
   page: true
   socials:
-    x: yangshunz
-    linkedin: yangshun
-    github: yangshun
-    newsletter: https://www.greatfrontend.com
+    # x: htooeantlinn
+    telegram: https://t.me/htooeantlinn
+    # instagram: htooeantlinn
+    # facebook: https://facebook.com/htooeantlinn
+    youtube: htooeantlinn
+    # linkedin: htooeantlinn
+    github: htooeantlinn
+    # newsletter: https://www.greatfrontend.com
 
-slorber:
-  name: Sébastien Lorber
-  title: Docusaurus maintainer
-  url: https://sebastienlorber.com
-  image_url: https://github.com/slorber.png
+djrangas:
+  name: DJ Rangas
+  title: Other
+  # url: https://djrangas.com
+  image_url: https://github.com/djrangas.png
   page:
     # customize the url of the author page at /blog/authors/<permalink>
-    permalink: '/all-sebastien-lorber-articles'
+    permalink: '/dj-rangas'
   socials:
-    x: sebastienlorber
-    linkedin: sebastienlorber
-    github: slorber
-    newsletter: https://thisweekinreact.com
+    # x: djrangas
+    telegram: https://t.me/djrangas
+    # instagram: djrangas
+    # facebook: https://facebook.com/djrangas
+    # youtube: djrangas
+    # linkedin: djrangas
+    # github: djrangas
+    # newsletter: https://www.greatfrontend.com
+
+eimonthant:
+  name: Ei Mon Thant
+  title: Other
+  # url: https://eimonthant.com
+  image_url: https://github.com/eimonthant.png
+  page: true
+  socials:
+    # x: eimonthant
+    telegram: https://t.me/eimonthant292
+    # instagram: eimonthant
+    # facebook: https://facebook.com/eimonthant
+    # youtube: eimonthant
+    # linkedin: eimonthant
+    github: eimonthant
+    # newsletter: https://www.greatfrontend.com
+

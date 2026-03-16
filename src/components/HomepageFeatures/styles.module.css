@@ -8,4 +8,22 @@
 .featureSvg {
   height: 200px;
   width: 200px;
+  transition: transform 0.3s ease; /* Smooth scaling animation */
+}
+
+/* 1. Remove default link styling (blue color/underline) */
+.featureLink {
+  text-decoration: none !important;
+  color: inherit;
+  transition: color 0.3s ease;
+}
+
+/* 2. Hover effects */
+.featureLink:hover {
+  color: var(--ifm-color-primary); /* Uses your Docusaurus theme color */
+  text-decoration: none;
+}
+
+.featureLink:hover .featureSvg {
+  transform: scale(1.05); /* Slight zoom on the icon */
 }

@@ -1,0 +1,104 @@
+---
+sidebar_label: 'Intro'
+sidebar_position: 1
+---
+
+
+## 🚀 Programming Languages & “Hello, World!”
+
+**Programming Language** ဆိုတာ လူသားတွေ နားလည်တဲ့ Code နဲ့ ကွန်ပျူတာ နားလည်တဲ့ Machine Code (Binary $0$ & $1$) ကြားမှာ ပေါင်းကူးပေးတဲ့ အတုအယောင် ဘာသာစကားတစ်ခု ဖြစ်ပါတယ်။
+
+The **"Hello, World!"** program is the traditional first step for beginners. ဒါဟာ Development Environment အဆင်ပြေပြေ Setup ဖြစ်မဖြစ် စစ်ဆေးတဲ့ အခြေခံအကျဆုံး နည်းလမ်းပဲ ဖြစ်ပါတယ်။
+
+---
+
+### 🐚 Bash (Shell Scripting)
+
+Bash ကို Terminal မှာ Task တွေ Automate လုပ်ဖို့ အသုံးများပါတယ်။
+
+* **Version Check:** `bash --version`
+* **Alias သတ်မှတ်ခြင်း:** ရှည်လျားတဲ့ Command တွေကို အတိုကောက် နာမည်ပေးခြင်း။
+* `alias ll="ls -la"`
+
+
+
+**Hello World Script (`myBash.sh`):**
+
+```bash
+#!/bin/bash
+echo "Hello World!"
+
+```
+
+**How to run:**
+
+```bash
+chmod +x myBash.sh   # Permission ပေးရန်
+./myBash.sh          # Execute လုပ်ရန်
+
+```
+
+---
+
+### 🐍 Python
+
+Python ကတော့ Readable ဖြစ်ပြီး Syntax အရမ်းရိုးရှင်းတဲ့ Language တစ်ခုပါ။
+
+**Code (`main.py`):**
+
+```python
+print("Hello World!")
+
+```
+
+**Environment Management:**
+
+* **Venv:** `python3 -m venv venv` (Project သီးသန့် Environment ဆောက်ရန်)
+* **Activate:** `source venv/bin/activate`
+* **Libraries:** `pip install mediapipe opencv-python numpy`
+* **Requirements:** `pip freeze > requirements.txt` (Libraries စာရင်း သိမ်းရန်)
+
+---
+
+### ⚙️ C & C++ (Compilers)
+
+C နဲ့ C++ က Low-level Memory ကို Control လုပ်နိုင်တဲ့ အားကောင်းတဲ့ Language တွေ ဖြစ်ပါတယ်။
+
+| Language | Code Example | Compile & Run |
+| --- | --- | --- |
+| **C** | `printf("Hello, World!\n");` | `gcc main.c -o main && ./main` |
+| **C++** | `cout << "Hello World!" << endl;` | `g++ main.cpp -o main && ./main` |
+
+---
+
+### ☕ Java
+
+Java က "Write Once, Run Anywhere" ဆိုတဲ့အတိုင်း Platform တော်တော်များများမှာ အလုပ်လုပ်ပါတယ်။ macOS မှာ **Homebrew** သုံးပြီး Install လုပ်ရတာ ပိုအဆင်ပြေပါတယ်။
+
+**Installation Note:**
+Homebrew နဲ့ တင်ပြီးရင် Path သတ်မှတ်ပေးဖို့ မမေ့ပါနဲ့-
+
+```bash
+echo 'export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"' >> ~/.zshrc
+
+```
+
+**Hello World (`Main.java`):**
+
+```java
+public class Main {
+  public static void main(String[] args) {
+    System.out.println("Hello World!");
+  }
+}
+
+```
+
+**How to run:**
+
+1. **Compile:** `javac Main.java`
+2. **Run:** `java Main`
+
+---
+
+> **Note:** Language တစ်ခုချင်းစီမှာ သူ့ရဲ့ အားသာချက်ကိုယ်စီ ရှိပါတယ်။ Project ပေါ်မူတည်ပြီး သင့်တော်တာကို ရွေးချယ်အသုံးပြုရမှာ ဖြစ်ပါတယ်။
