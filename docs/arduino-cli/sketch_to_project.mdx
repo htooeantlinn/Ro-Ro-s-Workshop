@@ -1,0 +1,45 @@
+---
+sidebar_label: 'Sketch to Project'
+sidebar_position: 5
+---
+# Sketch to Project
+```bash
+ls
+```
+![Alt Text](ass/image_29.png)
+
+```bash
+arduino-cli sketch new MySketch
+```
+![Alt Text](ass/image_4.png)
+
+```bash
+ls
+```
+![Alt Text](ass/image_31.png)
+
+```bash
+vim MySketch/MySketch.ino
+```
+![Alt Text](ass/image_32.png)
+
+```bash
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial);
+}
+
+void loop() {
+  Serial.println("Hello, World!");
+  delay(1000);
+}
+```
+![Alt Text](ass/image_33.png)
+
+
+```bash
+cat MySketch/MySketch.ino
+```
+![Alt Text](ass/image_38.png)
+

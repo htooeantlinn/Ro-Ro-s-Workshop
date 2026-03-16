@@ -10,8 +10,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
+  title: 'Welcome to Ro Ro\'s Workshop',
+  tagline: 'BRINGING OUR EXPERIENCE ',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -74,6 +74,18 @@ const config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'shop', // instance id
+        path: 'shop', // folder name
+        routeBasePath: 'shop', // URL path
+        sidebarPath: './sidebars.js', // သို့မဟုတ် sidebar အသစ်သုံးနိုင်သည်
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -83,10 +95,10 @@ const config = {
         respectPrefersColorScheme: true,
       },
       navbar: {
-        title: 'My Site',
+        title: 'Ro Ro\'s Workshop',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          src: 'img/svgviewer-output.svg',
         },
         items: [
           {
@@ -95,10 +107,17 @@ const config = {
             position: 'left',
             label: 'Tutorial',
           },
+          {
+            type: 'docSidebar',
+            sidebarId: 'shopSidebar', // sidebars.js ထဲက id နဲ့ တူရမယ်
+            docsPluginId: 'shop',     // plugins ထဲက id နဲ့ တူရမယ်
+            position: 'left',
+            label: 'Shop',
+          },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
+            href: 'https://t.me/htooeantlinn_bot',
+            label: 'Join Now!',
             position: 'right',
           },
         ],
@@ -119,16 +138,16 @@ const config = {
             title: 'Community',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Telegram',
+                href: 'https://t.me/roroworkshopcommunity',
               },
+              // {
+              //   label: 'Discord',
+              //   href: 'https://discordapp.com/invite/roroworkshopcommunity',
+              // },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'X',
-                href: 'https://x.com/docusaurus',
+                label: 'Facebook',
+                href: 'https://facebook.com/roroworkshopcommunity',
               },
             ],
           },
@@ -136,17 +155,21 @@ const config = {
             title: 'More',
             items: [
               {
+                label: 'Shop',
+                to: '/shop/intro',
+              },
+              {
                 label: 'Blog',
                 to: '/blog',
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/htooeantlinn',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Ro Ro's Workshop, Inc. Built in Myanmar.`,
       },
       prism: {
         theme: prismThemes.github,

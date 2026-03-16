@@ -1,0 +1,69 @@
+---
+sidebar_label: 'Library & Core'
+sidebar_position: 4
+---
+# Library & Core
+```bash
+arduino-cli install “MIDI Library”
+```
+![Alt Text](ass/image_18.png)
+
+We can find our libraries.
+```bash
+ls /Documents/Arduino/libraries.
+```
+![Alt Text](ass/image_19.png)
+
+We can upgrade our libraries version.
+```bash
+arduino-cli lib upgrade
+```
+![Alt Text](ass/image_20.png)
+
+```bash
+arduino-cli core update-index
+```
+![Alt Text](ass/image_21.png)
+
+```bash
+arduino-cli core upgrade
+```
+![Alt Text](ass/image_22.png)
+
+Shows the list of installed platforms on our system.
+```bash
+arduino-cli core list
+```
+![Alt Text](ass/image_23.png)
+
+---
+
+## Arduino UNO core install
+```bash
+arduino-cli core install arduino:avr
+```
+![Alt Text](ass/image_24.png)
+
+---
+
+## ESP32 core install
+```bash
+export ARDUINO_CLI_DOWNLOAD_TIMEOUT=600; until arduino-cli core install esp32:esp32; do echo "Retrying in 15s..."; sleep 15; done
+```
+![Alt Text](ass/image_25.png)
+
+---
+
+## Pi Pico 2W core install
+```bash
+arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json && arduino-cli core update-index
+```
+![Alt Text](ass/image_26.png)
+```bash
+export ARDUINO_CLI_DOWNLOAD_TIMEOUT=1200; until arduino-cli core install rp2040:rp2040; do echo "Retrying in 10s..."; sleep 10; done
+```
+![Alt Text](ass/image_27.png)
+```bash
+brew install picotool
+```
+![Alt Text](ass/image_28.png)

@@ -1,0 +1,101 @@
+---
+sidebar_label: 'Advanced'
+sidebar_position: 3
+---
+
+# 🚀 Server Administration & Version Control Guide
+
+ဒီ Guide မှာ macOS ပေါ်မှာ SSH, Apache Server နဲ့ Git/GitHub တို့ကို စနစ်တကျ Setup လုပ်ပုံတွေကို အဆင့်ဆင့် ဖော်ပြပေးထားပါတယ်။
+
+---
+
+## 1. SSH Server (Secure Shell)
+
+Remote access ရယူဖို့အတွက် SSH ကို အသုံးပြုပါတယ်။
+
+### Enable/Disable SSH
+
+* **SSH ဖွင့်ရန်:** `sudo systemsetup -setremotelogin on`
+* **SSH ပိတ်ရန်:** `sudo systemsetup -setremotelogin off`
+
+### Firewall Configuration (လုံခြုံရေးအတွက်)
+
+Firewall မှာ SSH port ကို ခွင့်ပြုပေးဖို့ လိုအပ်ပါတယ်။
+
+1. **Firewall ဖွင့်ရန်:** `sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on`
+2. **SSH ကို Allow လုပ်ရန်:** `sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/sbin/sshd`
+3. **Connection ကို Unblock လုပ်ရန်:** `sudo /usr/libexec/ApplicationFirewall/socketfilterfw --unblockapp /usr/sbin/sshd`
+
+### Finding Your IP Address
+
+Remote ကနေ လှမ်းချိတ်ဖို့ ကိုယ့်ရဲ့ IP ကို အရင်သိရပါမယ်။
+
+* **Wi-Fi IP:** `ipconfig getifaddr en0`
+* **Ethernet IP:** `ipconfig getifaddr en1`
+
+### SSH Client & Key Exchange
+
+* **Login to Server:** `ssh [username]@[IPaddress]`
+* **Generate SSH Key:** `ssh-keygen` (Password မလိုဘဲ Login ဝင်နိုင်ဖို့ Key ထုတ်ခြင်း)
+* **Copy Key to Server:** `ssh-copy-id [username]@[IPaddress]`
+* *Note:* `ssh-copy-id` မရှိပါက `cat ~/.ssh/id_rsa.pub` ကိုသုံးပြီး Public Key ကို copy ယူကာ Server ၏ `authorized_keys` ထဲသို့ manually ထည့်နိုင်ပါတယ်။
+
+
+
+---
+
+## 2. Apache Web Server
+
+Local Web Development အတွက် Apache ကို အသုံးပြုပုံ ဖြစ်ပါတယ်။
+
+### Basic Commands
+
+* **Check Version:** `httpd -v`
+* **Start Server:** `sudo apachectl start`
+* **Stop Server:** `sudo apachectl stop`
+* **Restart Server:** `sudo apachectl restart`
+
+### Configuration Paths
+
+* **Default Web Root:** `/Library/WebServer/Documents/` (ဒီထဲမှာ `index.html` ဖိုင်တွေ ထားရပါတယ်။)
+* **Main Config File:** `sudo nano /etc/apache2/httpd.conf` (Server settings တွေ ပြောင်းလဲရန်)
+
+---
+
+## 3. Git & GitHub
+
+Version Control အသုံးပြုပြီး Code များကို သိမ်းဆည်းနည်း ဖြစ်ပါတယ်။
+
+### Initial Configuration (ပထမဆုံးတစ်ကြိမ်ပြုလုပ်ရန်)
+
+```bash
+git config --global user.name "Htoo Aunk Linn"
+git config --global user.email "your-email@example.com"
+
+```
+
+### Git Workflow Steps
+
+1. **Check Version:** `git --version`
+2. **Initialize Project:** `git init` (Folder တစ်ခုကို Git စသုံးတော့မယ်ဆိုရင် သုံးပါတယ်။)
+3. **Stage Files:** `git add .` (File အားလုံးကို ပြောင်းလဲမှု မှတ်သားရန် အဆင်သင့်လုပ်ခြင်း)
+4. **Commit:** `git commit -m "1st commit"` (ပြောင်းလဲမှုများကို Version တစ်ခုအဖြစ် သတ်မှတ်ခြင်း)
+5. **Connect to GitHub:** `git remote add origin https://github.com/your_username/repo_name.git`
+6. **Branching:**
+* `git branch` (လက်ရှိ branch ကို ကြည့်ရန်)
+* `git branch -a` (Branch အားလုံးကို ကြည့်ရန်)
+
+
+
+---
+
+### Pro-Tip Summary Table
+
+| Service | Key Action | Command Example |
+| --- | --- | --- |
+| **SSH** | Remote Access | `ssh user@ip` |
+| **Apache** | Start Server | `sudo apachectl start` |
+| **Git** | Push Code | `git push origin main` |
+
+---
+
