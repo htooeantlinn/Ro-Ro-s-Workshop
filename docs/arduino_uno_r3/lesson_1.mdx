@@ -1,0 +1,78 @@
+---
+sidebar_label: 'Lesson 1'
+sidebar_position: 2
+---
+
+# Lesson 1
+### Breadboard
+```cpp
+void setup()
+{
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000); // Wait for 1000 millisecond(s)
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000); // Wait for 1000 millisecond(s)
+}
+```
+
+### Blink
+```cpp
+/*
+  This program blinks pin 13 of the Arduino (the
+  built-in LED)
+*/
+
+void setup()
+{
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop()
+{
+  // turn the LED on (HIGH is the voltage level)
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000); // Wait for 1000 millisecond(s)
+  // turn the LED off by making the voltage LOW
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000); // Wait for 1000 millisecond(s)
+}
+```
+
+### Fade
+```cpp
+/*
+  Fade
+  This example shows how to fade an LED on pin 9
+  using the analogWrite() function.
+
+  The analogWrite() function uses PWM, so if  you
+  want to change the pin you're using, be  sure to
+  use another PWM capable pin. On most  Arduino,
+  the PWM pins are identified with   a "~" sign,
+  like ~3, ~5, ~6, ~9, ~10 and ~11.
+*/
+
+int brightness = 0;
+
+void setup()
+{
+  pinMode(9, OUTPUT);
+}
+
+void loop()
+{
+  for (brightness = 0; brightness <= 255; brightness += 5) {
+    analogWrite(9, brightness);
+    delay(30); // Wait for 30 millisecond(s)
+  }
+  for (brightness = 255; brightness >= 0; brightness -= 5) {
+    analogWrite(9, brightness);
+    delay(30); // Wait for 30 millisecond(s)
+  }
+}
+```
