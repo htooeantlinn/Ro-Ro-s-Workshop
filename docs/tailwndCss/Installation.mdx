@@ -1,0 +1,90 @@
+---
+sidebar_label: "Installtion"
+sidebar_position: 2
+---
+
+### Play CDN
+ဒါကတော့ ဘာမှ Install လုပ်စရာမလိုဘဲ HTML file ထဲမှာ script line တစ်ကြောင်းထည့်ရုံနဲ့ တန်းသုံးလို့ရတဲ့ နည်းလမ်းပါ။ လေ့လာသူအသစ်တွေ စမ်းသပ်ဖို့ အကောင်းဆုံးပါ။
+``` cpp
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
+  </body>
+</html>
+```
+---
+
+### Tailwind CLI
+
+ဒါကတော့ တကယ့် Developer တိုင်း သုံးရမယ့် Standard နည်းလမ်းပါ။ ဒါကို သုံးဖို့ဆိုရင် သင့်စက်ထဲမှာ Node.js ရှိနေဖို့ လိုအပ်ပါတယ်။
+
+**Step 1:** သင့် Project Folder ထဲမှာ **Terminal (သို့မဟုတ်) CMD** ကိုဖွင့်ပြီး အောက်ပါ Command တွေကို ရိုက်ထည့်ပါ။
+
+```cppp
+npm install tailwindcss @tailwindcss/cli
+```
+
+
+**Step 2: သင့်ရဲ့ src/input.css ဖိုင်ထဲမှာ CSS Import တစ်ကြောင်းတည်းနဲ့တင် အလုပ်လုပ်သွားပါပြီ။**
+
+```cpp
+@import "tailwindcss";
+```
+
+**Step 3:** Tailwind CLI ကို သုံးပြီး သင့်ရဲ့ CSS ကို Compile လုပ်ပါ။
+```cpp
+npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch
+```
+
+**Step 4:** index.html ရဲ့ `<head>` ထဲမှာ ထွက်လာတဲ့ output.css ကို ချိတ်လိုက်ပါ။
+
+```cpp
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./dist/output.css" rel="stylesheet">
+</head>
+<body class="bg-slate-100 flex items-center justify-center h-screen">
+  <h1 class="text-4xl font-black text-sky-500 italic">
+    Tailwind v4.2 Is Here!
+  </h1>
+</body>
+</html>
+```
+---
+
+### Using Vite
+
+**Step 1:** Vite project မရှိသေးရင် အရင်ဆုံး တည်ဆောက်ပါ။ Vanilla (ရိုးရိုး JS) အတွက် အောက်ပါ command ကို သုံးပါ။
+
+```cpp
+npm create vite@latest my-project -- --template vanilla
+cd my-project
+```
+
+**Step 2:** Tailwind CSS နဲ့ Vite အတွက် လိုအပ်တဲ့ plugin ကို setup လုပ်ပါ။
+```cpp
+npm install tailwindcss @tailwindcss/vite
+```
+
+**Step 3:** vite.config.js ဖိုင်ထဲမှာ Tailwind plugin ကို ချိတ်ပေးရပါမယ်။ ဒါမှ Vite က Tailwind class တွေကို နားလည်မှာပါ။
+```cpp
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [
+    tailwindcss(),
+  ],
+})
+```
