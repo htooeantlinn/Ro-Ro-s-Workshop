@@ -1,0 +1,130 @@
+---
+sidebar_label: "Spacing and Sizing"
+sidebar_position: 3
+---
+
+
+import { useState, useEffect } from 'react';
+
+export const ImageLoop = ({ images, width = '100%' }) => {
+  const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  useEffect(() => {
+    if (!images || images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [images]);
+
+  const containerStyle = {
+    cursor: 'zoom-in',
+    position: 'relative',
+    borderRadius: '12px',
+    overflow: 'hidden',
+    border: '2px solid var(--ifm-color-emphasis-300)',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+    width: width,
+    marginBottom: '20px'
+  };
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <div onClick={() => setIsZoomed(!isZoomed)} style={containerStyle}>
+        <img src={images[index]} style={{ display: 'block', width: '100%' }} />
+        {images.length > 1 && (
+          <div style={{
+            position: 'absolute', bottom: '10px', right: '10px',
+            backgroundColor: '#333', color: 'white',
+            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem',
+            fontWeight: 'bold', opacity: '0.8'
+          }}>
+            Step {index + 1} of {images.length}
+          </div>
+        )}
+      </div>
+      {isZoomed && (
+        <div 
+          onClick={() => setIsZoomed(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img src={images[index]} style={{ maxHeight: '95vh', maxWidth: '95vw', borderRadius: '8px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+# Spacing and Sizing
+
+## Padding
+
+### Basic Example
+Use `p-<number> utilities like p-4 and p-8 to control the padding on all sides of an element`:
+
+<ImageLoop class="w-100%" images={[
+  "https://res.cloudinary.com/dnfivtpof/image/upload/v1773758757/img1_dmkmrj.png"
+]} />
+
+```cpp
+<div class="p-8 ...">p-8</div>
+
+```
+
+### Adding padding to one side
+pt=padding top
+
+pb=padding bottom
+
+pl=padding left
+
+pr=padding right
+
+<ImageLoop class="w-100%" images={[
+  "https://res.cloudinary.com/dnfivtpof/image/upload/v1773759882/Screenshot_2026-03-17_at_9.33.33_PM_zdvzul.png"
+]} />
+
+```cpp
+<div class="pt-6 ...">pt-6</div>
+<div class="pr-4 ...">pr-4</div>
+<div class="pb-8 ...">pb-8</div>
+<div class="pl-2 ...">pl-2</div>
+```
+
+### Horizontal padding
+px-4 and px-8 to control the horizontal padding of an element:
+<ImageLoop class="w-100%" images={[
+  "https://res.cloudinary.com/dnfivtpof/image/upload/v1773760071/img3_r35z0e.png"
+]} />
+
+```cpp
+<div class="px-8 ...">px-8</div>
+
+```
+
+### Vertical padding
+py-4 and py-8 to control the vertical padding of an element:
+<ImageLoop class="w-100%" images={[
+  "https://res.cloudinary.com/dnfivtpof/image/upload/v1773760947/img4_rclx2g.png"
+]} />
+
+```cpp
+<div class="py-8 ...">py-8</div>
+```
+---
+## Margin
+
+### Bais Example
+m-4 and m-8 to control the margin on all sides of an element:
+<ImageLoop class="w-100%" images={[
+  "https://res.cloudinary.com/dnfivtpof/image/upload/v1773763957/img5_feh0yf.png"
+]} />
+```cpp
+<div class="m-8 ...">m-8</div>
+
+```

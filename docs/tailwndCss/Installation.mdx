@@ -2,6 +2,7 @@
 sidebar_label: "Installtion"
 sidebar_position: 2
 ---
+# Installtion
 
 ### Play CDN
 ဒါကတော့ ဘာမှ Install လုပ်စရာမလိုဘဲ HTML file ထဲမှာ script line တစ်ကြောင်းထည့်ရုံနဲ့ တန်းသုံးလို့ရတဲ့ နည်းလမ်းပါ။ လေ့လာသူအသစ်တွေ စမ်းသပ်ဖို့ အကောင်းဆုံးပါ။
@@ -88,3 +89,33 @@ export default defineConfig({
   ],
 })
 ```
+
+**Step 4:** သင့်ရဲ့ CSS ဖိုင်ထဲမှာတော့ ဒီတစ်ကြောင်းတည်းနဲ့တင် လုံလောက်ပါတယ်။
+
+```cpp
+@import "tailwindcss";
+```
+**Step 5:** Development server ကို စတင် Run လိုက်ပါ။
+```cpp
+npm run dev
+```
+
+**Step 6:** index.html ရဲ့ `<head>` ထဲမှာ CSS ဖိုင်ကို ချိတ်ထားဖို့ မမေ့ပါနဲ့။ ပြီးရင်တော့ Tailwind ရဲ့ utility classes တွေကို စိတ်ကြိုက် သုံးနိုင်ပါပြီ။
+```cpp
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/style.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 flex items-center justify-center h-screen text-white">
+  <h1 class="text-4xl font-black underline decoration-sky-500">
+    Hello Tailwind v4!
+  </h1>
+</body>
+</html>
+```
+---
+
+:::info ဒါက အရေးကြီးဆုံးပါ။ VS Code မှာ `Tailwind CSS IntelliSense` extension ကို သေချာပေါက် ထည့်ထားပါ။
