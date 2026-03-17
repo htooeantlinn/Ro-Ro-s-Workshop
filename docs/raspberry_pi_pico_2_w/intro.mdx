@@ -10,12 +10,10 @@ export const ImageLoop = ({ images }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   
   useEffect(() => {
-    // Only set interval if there's more than one image
     if (images.length <= 1) return;
-
     const timer = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1000);
+    }, 2000); // Intro အတွက် နည်းနည်းလေး ပိုနှေးပေးထားပါတယ်
     return () => clearInterval(timer);
   }, [images.length]);
 
@@ -62,9 +60,39 @@ export const ImageLoop = ({ images }) => {
   );
 };
 
-# Intro
-TinyUSB ကို အပြည့်အဝ Support ပေးတယ်။ Dual-core ဖြစ်လို့ တစ်ဖက်က sensor ဖတ်၊ တစ်ဖက်က USB signal ပို့တာမျိုး လုပ်လို့ရတယ်။
+# Introduction to Raspberry Pi Pico 2 W
+
+Raspberry Pi Pico 2 W ဟာ နောက်ဆုံးပေါ် **RP2350** chip ကို အသုံးပြုထားတဲ့ စွမ်းဆောင်ရည်မြင့် microcontroller တစ်ခုဖြစ်ပါတယ်။ Dual-core Processor ပါဝင်ပြီး Wi-Fi (2.4GHz) နဲ့ Bluetooth 5.2 တို့ကိုပါ အပြည့်အဝ Support ပေးထားပါတယ်။
+
+
+
+### Key Features
+* **Dual-Core Architecture:** တစ်ဖက်က Sensor data တွေကိုဖတ်ပြီး နောက်တစ်ဖက်ကနေ USB signal ပို့တာမျိုး ဒါမှမဟုတ် Wi-Fi ဆက်သွယ်ရေးလုပ်တာမျိုး (Multitasking) ကို အလွယ်တကူ လုပ်ဆောင်နိုင်ပါတယ်။
+* **TinyUSB Support:** USB stack ကို အပြည့်အဝ Support ပေးတဲ့အတွက် Keyboard, Mouse သို့မဟုတ် MIDI device တွေအဖြစ် ဖန်တီးဖို့ အဆင်ပြေပါတယ်။
+* **Wireless Connectivity:** 2.4GHz Wi-Fi ပါဝင်လို့ Internet of Things (IoT) project တွေအတွက် အသင့်တော်ဆုံးပါပဲ။
+* **Security:** Arm TrustZone အခြေခံထားတဲ့ security feature တွေပါဝင်လာလို့ data တွေကို ပိုမိုလုံခြုံစွာ သိမ်းဆည်းနိုင်ပါတယ်။
+
+### Pinout Diagram
+Pico 2 W ရဲ့ Pin တွေအစီအစဉ်ကို အောက်ပါ ပုံမှာ အသေးစိတ်ကြည့်ရှုနိုင်ပါတယ်။
 
 <ImageLoop images={[
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773457133/htooeantlinn/pack2/pico-pinout_ad3i6t.svg"
 ]} />
+
+---
+
+### သင်ယူသွားမည့် လမ်းညွှန် (Proposed Curriculum)
+
+Pico 2 W က MicroPython ရော C/C++ ရော သုံးလို့ရပါတယ်။ အောက်ပါ သင်ခန်းစာတွေကို အကြံပြုချင်ပါတယ် -
+
+1.  **Lesson 1:** Setting up MicroPython & Thonny IDE (Environment Setup)
+2.  **Lesson 2:** Hello LED (Internal & External LED Control)
+3.  **Lesson 3:** Reading Inputs (Buttons & Switches)
+4.  **Lesson 4:** PWM & ADC (Fading LED & Potentiometer)
+5.  **Lesson 5:** Dual Core Programming (Core 0 & Core 1 ခွဲသုံးနည်း)
+6.  **Lesson 6:** Wi-Fi Basics (Connecting to Internet)
+7.  **Lesson 7:** Simple Web Server (Browser ကနေ LED ထိန်းချုပ်ခြင်း)
+
+:::info Note
+Pico 2 W ဟာ Pico 1 (RP2040) နဲ့ Pinout အတူတူပဲဖြစ်တဲ့အတွက် အရင်က ထွက်ထားတဲ့ expansion board တွေ၊ shield တွေနဲ့လည်း အဆင်ပြေပြေ တွဲသုံးလို့ရပါတယ်။
+:::

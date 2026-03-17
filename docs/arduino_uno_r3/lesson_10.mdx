@@ -3,100 +3,90 @@ sidebar_label: 'Lesson 10'
 sidebar_position: 11
 ---
 
-# Lesson 10
-### 2 wire LCD
+# Lesson 10: LCD Display (Hello World)
+
+ဒီသင်ခန်းစာမှာတော့ Serial Monitor မှာတင်မကဘဲ အပြင်မှာပါ စာသားတွေကို မြင်တွေ့နိုင်ဖို့ 16x2 LCD display ကို ဘယ်လိုအသုံးပြုရမလဲဆိုတာ လေ့လာသွားမှာဖြစ်ပါတယ်။
+
+### LCD (16x2) ဆိုတာဘာလဲ?
+LCD 16x2 ဆိုတာ စာလုံးအလုံးရေ ၁၆ လုံးပါတဲ့ စာကြောင်း ၂ ကြောင်း (စုစုပေါင်း ၃၂ လုံး) ကို ပြသပေးနိုင်တဲ့ screen ဖြစ်ပါတယ်။ Arduino နဲ့ ချိတ်ဆက်တဲ့အခါ Pin တွေအများကြီးသုံးရတဲ့ Parallel mode နဲ့ I2C adapter သုံးပြီး ကြိုး ၂ ပင်တည်းသုံးရတဲ့ mode ဆိုပြီး နှစ်မျိုးရှိပါတယ်။
+
+
+
+---
+
+### 1. Standard LCD Connection (Parallel Mode)
+ဒါကတော့ I2C adapter မပါဘဲ Arduino pin တွေကို တိုက်ရိုက်အသုံးပြုပြီး ချိတ်ဆက်နည်းဖြစ်ပါတယ်။
+
+
+
 ```cpp
-/*
-  LiquidCrystal Library - Hello World
-
-   Demonstrates the use of a 16x2 LCD display.
-  The LiquidCrystal library works with all LCD
-  displays that are compatible with the  Hitachi
-  HD44780 driver. There are many of them out
-  there, and you  can usually tell them by the
-  16-pin interface.
-
-  This sketch prints "Hello World!" to the LCD
-  and shows the time.
-
-  The circuit:
-  * LCD RS pin to digital pin 12
-  * LCD Enable pin to digital pin 11
-  * LCD D4 pin to digital pin 5
-  * LCD D5 pin to digital pin 4
-  * LCD D6 pin to digital pin 3
-  * LCD D7 pin to digital pin 2
-  * LCD R/W pin to ground
-  * LCD VSS pin to ground
-  * LCD VCC pin to 5V
-  * 10K resistor:
-  * ends to +5V and ground
-  * wiper to LCD VO pin (pin 3)
-
-  Library originally added 18 Apr 2008  by David
-  A. Mellis
-  library modified 5 Jul 2009  by Limor Fried
-  (http://www.ladyada.net)
-  example added 9 Jul 2009  by Tom Igoe
-  modified 22 Nov 2010  by Tom Igoe
-
-  This example code is in the public domain.
-
-  http://www.arduino.cc/en/Tutorial/LiquidCrystal
-*/
-
-#include <LiquidCrystal.h>
+#include <LiquidCrystal.h> // Library ကို ထည့်သွင်းခြင်း
 
 int seconds = 0;
 
+// LCD ချိတ်ဆက်ထားသည့် Pin နံပါတ်များကို သတ်မှတ်ခြင်း
+// RS, EN, D4, D5, D6, D7
 LiquidCrystal lcd_1(12, 11, 5, 4, 3, 2);
 
-void setup()
-{
-  lcd_1.begin(16, 2); // Set up the number of columns and rows on the LCD.
+void setup() {
+  // LCD ကို စတင်ခြင်း (Columns 16 ခု, Rows 2 ခု)
+  lcd_1.begin(16, 2); 
 
-  // Print a message to the LCD.
-  lcd_1.print("hello world!");
+  // စာသား စတင်ရိုက်နှိပ်ခြင်း
+  lcd_1.print("Hello World!");
 }
 
-void loop()
-{
-  // set the cursor to column 0, line 1
-  // (note: line 1 is the second row, since counting
-  // begins with 0):
+void loop() {
+  // ဒုတိယစာကြောင်း (Row 1) ၏ အစသို့ Cursor ကို ရွှေ့မည်
   lcd_1.setCursor(0, 1);
-  // print the number of seconds since reset:
+
+  // စက္ကန့်အရေအတွက်ကို ပြသမည်
   lcd_1.print(seconds);
-  delay(1000); // Wait for 1000 millisecond(s)
+
+  delay(1000); 
   seconds += 1;
 }
 ```
 
-### LCD
+---
+
+### 2. LCD with Backlight Control
+Display ရဲ့ နောက်ခံမီး (Backlight) ကို Code ကနေ ထိန်းချုပ်ပြီး မှိတ်တုတ်မှိတ်တုတ် ဖြစ်အောင် လုပ်ဆောင်နည်း ဖြစ်ပါတယ်။
+
 ```cpp
 #include <Adafruit_LiquidCrystal.h>
 
 int seconds = 0;
-
 Adafruit_LiquidCrystal lcd_1(0);
 
-void setup()
-{
+void setup() {
   lcd_1.begin(16, 2);
-
-  lcd_1.print("hello world");
+  lcd_1.print("Hello World");
 }
 
-void loop()
-{
+void loop() {
   lcd_1.setCursor(0, 1);
   lcd_1.print(seconds);
+
+  // Backlight ကို ဖွင့်မည်
   lcd_1.setBacklight(1);
-  delay(500); // Wait for 500 millisecond(s)
+  delay(500); 
+
+  // Backlight ကို ပိတ်မည်
   lcd_1.setBacklight(0);
-  delay(500); // Wait for 500 millisecond(s)
+  delay(500); 
+
   seconds += 1;
 }
 ```
 
+---
 
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Contrast Adjustment:** LCD မှာ စာသားတွေ မမြင်ရဘဲ တုံးကြီးတွေပဲ ပေါ်နေရင် သို့မဟုတ် ဘာမှမပေါ်ရင် 10K Potentiometer ကို သုံးပြီး Contrast (အလင်းအမှောင်) ကို လှည့်ချိန်ပေးရပါမယ်။
+* **Counting:** Arduino မှာ နေရာသတ်မှတ်တဲ့အခါ `0` ကနေ စတင်ရေတွက်ပါတယ်။ ဒါကြောင့် ပထမစာကြောင်းက `0` ဖြစ်ပြီး ဒုတိယစာကြောင်းက `1` ဖြစ်ပါတယ်။
+* **I2C Advantage:** လက်တွေ့ project တွေမှာတော့ ကြိုးရှုပ်တာ သက်သာဖို့ I2C module ပါတဲ့ LCD ကို သုံးတာ ပိုကောင်းပါတယ်။ (SDA နဲ့ SCL ကြိုး ၂ ပင်တည်းသာ သုံးရပါမယ်)
+
+:::tip Pro Tip
+စာသားဟောင်းတွေကို ဖျက်ပြီး အသစ်ရေးချင်ရင် `lcd_1.clear();` function ကို သုံးနိုင်ပါတယ်။
+:::

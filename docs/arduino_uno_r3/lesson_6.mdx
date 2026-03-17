@@ -3,46 +3,56 @@ sidebar_label: 'Lesson 6'
 sidebar_position: 7
 ---
 
-# Lesson 6
-### Servo
+# Lesson 6: Servo Motor Control
+
+ဒီသင်ခန်းစာမှာတော့ Arduino ကနေ Motor တစ်ခုကို တိကျတဲ့ ဒီဂရီ (Angle) အတိုင်း ဘယ်လိုလှည့်မလဲဆိုတာ လေ့လာသွားပါမယ်။
+
+### Servo Motor ဆိုတာဘာလဲ?
+Servo Motor ဆိုတာ ရိုးရိုး motor တွေလို တစ်ပတ်လုံး အမြဲလည်နေတာမျိုးမဟုတ်ဘဲ ကျွန်ုပ်တို့ပေးလိုက်တဲ့ Degree (ဥပမာ - 0° မှ 180° အကြား) အတိုင်း တိတိကျကျ ရွေ့လျားပေးနိုင်တဲ့ Motor အမျိုးအစားဖြစ်ပါတယ်။
+
+
+
+---
+
+### Sweep (ရှေ့နောက် လှည့်ပတ်ခြင်း)
+Servo motor ကို 0 ဒီဂရီ ကနေ 180 ဒီဂရီအထိ တဖြည်းဖြည်းချင်း ရှေ့နောက် လှည့်စေမည့် Code ဖြစ်ပါတယ်။
+
 ```cpp
-/*
-  Sweep
+#include <Servo.h> // Servo Library ကို ထည့်သွင်းခြင်း
 
-  by BARRAGAN <http://barraganstudio.com>
-  This example code is in the public domain.
+int pos = 0;       // Servo ၏ အနေအထားကို သိမ်းမည့် variable
+Servo servo_9;     // Servo object တစ်ခု တည်ဆောက်ခြင်း
 
-  modified 8 Nov 2013  by Scott Fitzgerald
-  http://www.arduino.cc/en/Tutorial/Sweep
-*/
-
-#include <Servo.h>
-
-int pos = 0;
-
-Servo servo_9;
-
-void setup()
-{
+void setup() {
+  // Pin 9 တွင် Servo ကို ချိတ်ဆက်ထားကြောင်း သတ်မှတ်ခြင်း
+  // 500 နှင့် 2500 သည် Pulse Width range များဖြစ်သည်
   servo_9.attach(9, 500, 2500);
 }
 
-void loop()
-{
-  // sweep the servo from 0 to 180 degrees in steps
-  // of 1 degrees
+void loop() {
+  // 0 မှ 180 ဒီဂရီအထိ ၁ ဒီဂရီချင်း တိုး၍ လှည့်မည်
   for (pos = 0; pos <= 180; pos += 1) {
-    // tell servo to go to position in variable 'pos'
-    servo_9.write(pos);
-    // wait 15 ms for servo to reach the position
-    delay(15); // Wait for 15 millisecond(s)
+    servo_9.write(pos); // Servo ကို သတ်မှတ်ထားသော position သို့ ရွှေ့မည်
+    delay(15);          // Servo နေရာတကျဖြစ်စေရန် ၁၅ မီလီစက္ကန့် စောင့်မည်
   }
+
+  // 180 မှ 0 ဒီဂရီအထိ ၁ ဒီဂရီချင်း လျှော့၍ ပြန်လှည့်မည်
   for (pos = 180; pos >= 0; pos -= 1) {
-    // tell servo to go to position in variable 'pos'
     servo_9.write(pos);
-    // wait 15 ms for servo to reach the position
-    delay(15); // Wait for 15 millisecond(s)
+    delay(15);
   }
 }
 ```
 
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Library:** Servo motor တွေကို အလွယ်တကူ ထိန်းချုပ်ဖို့ `#include <Servo.h>` ကို အမြဲသုံးရပါတယ်။
+* **External Power:** Servo အကြီးစားတွေ သုံးမယ်ဆိုရင် Arduino ရဲ့ 5V Pin ကနေ လုံလောက်တဲ့ current မပေးနိုင်တဲ့အတွက် ပြင်ပ Battery (External Power) သုံးဖို့ လိုအပ်ပါတယ်။
+* **Connections:** * **Brown/Black:** Ground (GND)
+    * **Red:** Positive (5V)
+    * **Orange/Yellow:** Signal (PWM Pin)
+
+:::tip Pro Tip
+Servo motor ကို တိုက်ရိုက် position တစ်ခုတည်း ပေးချင်ရင် `servo_9.write(90);` ဆိုပြီး loop ထဲမထည့်ဘဲ တစ်ခါတည်း ရေးသားနိုင်ပါတယ်။
+:::

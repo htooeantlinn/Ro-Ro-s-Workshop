@@ -3,196 +3,129 @@ sidebar_label: 'Lesson 7'
 sidebar_position: 8
 ---
 
-# Lesson 7
-### Tone Keyboard
+# Lesson 7: Sound and Melodies
+
+ဒီသင်ခန်းစာမှာတော့ Arduino ကို အသုံးပြုပြီး အသံလှိုင်း (Frequencies) တွေ ဘယ်လိုထုတ်မလဲဆိုတာ လေ့လာပါမယ်။ Speaker သို့မဟုတ် Buzzer တစ်ခုရှိရုံနဲ့ ကိုယ်ပိုင် Piano သေးသေးလေး ဒါမှမဟုတ် သီချင်းသံစဉ်လေးတွေ ဖန်တီးနိုင်ပါတယ်။
+
+### 1. Tone Keyboard (Mini Piano)
+ခလုတ် ၃ ခုကို အသုံးပြုပြီး မတူညီတဲ့ အသံ ၃ မျိုး (Note A, B, C) ထွက်အောင် လုပ်ဆောင်နည်း ဖြစ်ပါတယ်။
+
+
+
 ```cpp
-/*
-  Keyboard
-
-  Plays a pitch that changes based on a changing
-  input circuit:
-  * 3 pushbuttons from +5V to analog in 0 through
-  3
-  * 3 10K resistors from analog in 0 through 3 to
-  ground
-  * 8-ohm speaker on digital pin 8
-*/
-
-int pos = 0;
-
-void setup()
-{
+void setup() {
   pinMode(A0, INPUT);
-  pinMode(8, OUTPUT);
   pinMode(A1, INPUT);
   pinMode(A2, INPUT);
+  pinMode(8, OUTPUT); // Speaker Pin
 }
 
-void loop()
-{
-  // if button press on A0 is detected
+void loop() {
+  // A0 ခလုတ်ကို နှိပ်လျှင် Note A4 (440Hz) အသံလွှတ်မည်
   if (digitalRead(A0) == HIGH) {
-    tone(8, 440, 100); // play tone 57 (A4 = 440 Hz)
+    tone(8, 440, 100); 
   }
-  // if button press on A1 is detected
+  // A1 ခလုတ်ကို နှိပ်လျှင် Note B4 (494Hz) အသံလွှတ်မည်
   if (digitalRead(A1) == HIGH) {
-    tone(8, 494, 100); // play tone 59 (B4 = 494 Hz)
+    tone(8, 494, 100); 
   }
-  // if button press on A0 is detected
+  // A2 ခလုတ်ကို နှိပ်လျှင် Note C5 (523Hz) အသံလွှတ်မည်
   if (digitalRead(A2) == HIGH) {
-    tone(8, 523, 100); // play tone 60 (C5 = 523 Hz)
+    tone(8, 523, 100); 
   }
-  delay(10); // Delay a little bit to improve simulation performance
+  delay(10); 
 }
 ```
 
-### Tone Melody
+---
+
+### 2. Tone Melody (သီချင်းသံစဉ်တီးခတ်ခြင်း)
+သတ်မှတ်ထားတဲ့ Note တွေကို Array ထဲထည့်ပြီး သီချင်းတစ်ပုဒ်အဖြစ် အလိုအလျောက် တီးခတ်ခိုင်းနည်း ဖြစ်ပါတယ်။
+
 ```cpp
-/*
-  Melody
-
- Plays a melody
-
- circuit:
- * 8-ohm speaker on digital pin 8
-
- created 21 Jan 2010
- modified 30 Aug 2011
- by Tom Igoe
-
-This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/Tone
-
- */
 #define NOTE_C4  262
 #define NOTE_G3  196
 #define NOTE_A3  220
 #define NOTE_B3  247
-#define NOTE_C4  262
 
-
-// notes in the melody:
-int melody[] = {
-  NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4
-};
-
-// note durations: 4 = quarter note, 8 = eighth note, etc.:
-int noteDurations[] = {
-  4, 8, 8, 4, 4, 4, 4, 4
-};
+int melody[] = { NOTE_C4, NOTE_G3, NOTE_G3, NOTE_A3, NOTE_G3, 0, NOTE_B3, NOTE_C4 };
+int noteDurations[] = { 4, 8, 8, 4, 4, 4, 4, 4 };
 
 void setup() {
-  // iterate over the notes of the melody:
   for (int thisNote = 0; thisNote < 8; thisNote++) {
-
-    // to calculate the note duration, take one second
-    // divided by the note type.
-    //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+    // အသံကြာချိန်ကို တွက်ချက်ခြင်း
     int noteDuration = 1000 / noteDurations[thisNote];
     tone(8, melody[thisNote], noteDuration);
 
-    // to distinguish the notes, set a minimum time between them.
-    // the note's duration + 30% seems to work well:
+    // အသံတစ်ခုနှင့်တစ်ခုကြား ခေတ္တရပ်ခြင်း
     int pauseBetweenNotes = noteDuration * 1.30;
     delay(pauseBetweenNotes);
-    // stop the tone playing:
-    noTone(8);
+    noTone(8); // အသံရပ်မည်
   }
 }
 
 void loop() {
-  // no need to repeat the melody.
+  // setup ထဲမှာ ရေးထားတဲ့အတွက် တစ်ကြိမ်သာ တီးပါမည်
 }
 ```
 
-### Tone  Multiple
+---
+
+### 3. Multiple Tone Player
+Speaker အများအပြားကို တစ်ခုပြီးတစ်ခု အလှည့်ကျ အသံမြည်အောင် စေခိုင်းနည်း ဖြစ်ပါတယ်။
+
 ```cpp
-/*
-  Multiple tone player
-
-  Plays multiple tones on multiple pins in
-  sequence
-
-  circuit:
-  * 3 8-ohm speaker on digital pins 6, 7, and 8
-
-  created 8 March 2010  by Tom Igoe  based on a
-  snippet from Greg Borenstein
-
-  This example code is in the public domain.
-  http://www.arduino.cc/en/Tutorial/Tone4
-*/
-
-int pos = 0;
-
-void setup()
-{
-  pinMode(8, OUTPUT);
+void setup() {
   pinMode(6, OUTPUT);
   pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
 }
 
-void loop()
-{
-  // turn off tone function for pin 8:
+void loop() {
   noTone(8);
-  // play a note on pin 6 for 200 ms:
-  tone(6, 880, 200); // play tone 69 (A5 = 880 Hz)
-  delay(200); // Wait for 200 millisecond(s)
-  // turn off tone function for pin 6:
+  tone(6, 880, 200); // Pin 6 မှ အသံမြည်မည်
+  delay(200); 
+
   noTone(6);
-  // play a note on pin 7 for 500 ms:
-  tone(7, 988, 500); // play tone 71 (B5 = 988 Hz)
-  delay(500); // Wait for 500 millisecond(s)
-  // turn off tone function for pin 7:
+  tone(7, 988, 500); // Pin 7 မှ အသံမြည်မည်
+  delay(500); 
+
   noTone(7);
-  // play a note on pin 8 for 300 ms:
-  tone(8, 1047, 300); // play tone 72 (C6 = 1047 Hz)
-  delay(300); // Wait for 300 millisecond(s)
+  tone(8, 1047, 300); // Pin 8 မှ အသံမြည်မည်
+  delay(300); 
 }
 ```
 
-### Tone Pitch
+---
+
+### 4. Tone Pitch Follower (Light to Sound)
+Sensor (ဥပမာ- LDR) ကနေ ဖတ်ရတဲ့ အလင်းပမာဏအပေါ် မူတည်ပြီး အသံရဲ့ အနိမ့်အမြင့် (Pitch) ကို ပြောင်းလဲပေးတာ ဖြစ်ပါတယ်။ အလင်းများရင် အသံစူးပြီး၊ အလင်းနည်းရင် အသံအစ်သွားပါလိမ့်မယ်။
+
+
+
 ```cpp
-/*
-  Pitch follower
-
-  Plays a pitch that changes based on a changing
-  analog input
-
-  circuit:
-  * 8-ohm speaker on digital pin 9
-  * photoresistor on analog 0 to 5V
-  * 4.7K resistor on analog 0 to ground
-
-  created 21 Jan 2010
-  modified 31 May 2012  by Tom Igoe, with
-  suggestion from Michael Flynn
-
-  This example code is in the public domain.
-  http://www.arduino.cc/en/Tutorial/Tone2
-*/
-
 int sensorReading = 0;
 
-void setup()
-{
+void setup() {
   pinMode(A0, INPUT);
   Serial.begin(9600);
   pinMode(9, OUTPUT);
 }
 
-void loop()
-{
-  // read the sensor
+void loop() {
   sensorReading = analogRead(A0);
-  // print the sensor reading so you know its range
   Serial.println(sensorReading);
-  // map the sensor reading to a range for the
-  // speaker
-  tone(9, 440 * pow(2.0, (constrain(int(map(sensorReading, 0, 1023, 36, 84)), 35, 127) - 57) / 12.0), 1000);
-  delay(10); // Delay a little bit to improve simulation performance
+
+  // Sensor reading ကို မူတည်ပြီး Frequency အဖြစ် ပြောင်းလဲခြင်း
+  int pitch = map(sensorReading, 0, 1023, 100, 1000);
+  tone(9, pitch, 10); 
+  
+  delay(10); 
 }
 ```
 
+:::info Summary
+* **tone(pin, frequency, duration):** အသံလွှတ်ရန် သုံးသည်။
+* **noTone(pin):** အသံရပ်ရန် သုံးသည်။
+* **Frequency:** ကိန်းဂဏန်းကြီးလေ အသံစူး (High pitch) လေ ဖြစ်သည်။
+:::

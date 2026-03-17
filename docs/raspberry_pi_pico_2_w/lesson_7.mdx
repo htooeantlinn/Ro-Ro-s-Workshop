@@ -1,0 +1,111 @@
+---
+sidebar_label: 'Lesson 7'
+sidebar_position: 8
+---
+
+# Lesson 7: Simple Web Server (IoT Control)
+
+ဒီသင်ခန်းစာမှာတော့ Pico 2 W ကို Web Server တစ်ခုအဖြစ် ပြောင်းလဲလိုက်ပါမယ်။ ကျွန်ုပ်တို့ဟာ Web Browser (Chrome/Safari) ကနေတစ်ဆင့် Pico ရဲ့ IP Address ကို ရိုက်ထည့်ပြီး LED မီးကို လှမ်းပြီး Control လုပ်သွားမှာ ဖြစ်ပါတယ်။
+
+### အဆင့် (၁) - Web Server ဘယ်လိုအလုပ်လုပ်သလဲ?
+Pico ကနေ Wi-Fi ချိတ်ပြီးတာနဲ့ HTTP Request တွေကို စောင့်နားထောင်နေပါမယ်။ Browser ကနေ ခလုတ်နှိပ်လိုက်တဲ့အခါ Pico ဆီကို Signal ရောက်လာပြီး Code ကနေ LED ကို ဖွင့်/ပိတ် လုပ်ပေးတာ ဖြစ်ပါတယ်။
+
+
+
+---
+
+### အဆင့် (၂) - Web Server Code ရေးသားခြင်း
+အောက်ပါ code ထဲမှာ Lesson 6 ကအတိုင်း မိမိရဲ့ Wi-Fi SSID နဲ့ Password ကို အရင်ပြင်ပေးပါ။
+
+```python
+import network
+import socket
+import time
+from machine import Pin
+
+# Hardware Setup
+led = Pin("LED", Pin.OUT)
+
+# Wi-Fi Setup
+SSID = "သင့်ရဲ့_WiFi_နာမည်"
+PASSWORD = "သင့်ရဲ့_WiFi_Password"
+
+def connect():
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    wlan.connect(SSID, PASSWORD)
+    while wlan.isconnected() == False:
+        print('Waiting for connection...')
+        time.sleep(1)
+    ip = wlan.ifconfig()[0]
+    print(f'Connected on {ip}')
+    return ip
+
+# HTML Page (Browser မှာ မြင်ရမယ့် UI)
+def webpage():
+    html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head><title>Pico 2 W Workshop</title></head>
+    <body style="text-align:center; font-family:Arial;">
+        <h1>Ro Ro's Workshop</h1>
+        <p>Control Pico 2 W Onboard LED</p>
+        <a href="/lighton"><button style="padding:20px; background:green; color:white;">LED ON</button></a>
+        <a href="/lightoff"><button style="padding:20px; background:red; color:white;">LED OFF</button></a>
+    </body>
+    </html>
+    """
+    return str(html)
+
+def serve(ip):
+    # Socket ဆက်သွယ်ရေး စတင်ခြင်း
+    address = (ip, 80)
+    s = socket.socket()
+    s.bind(address)
+    s.listen(1)
+    
+    while True:
+        client, addr = s.accept()
+        request = client.recv(1024)
+        request = str(request)
+        
+        # URL ကို စစ်ဆေးပြီး LED ကို ထိန်းချုပ်ခြင်း
+        if '/lighton' in request:
+            led.value(1)
+        if '/lightoff' in request:
+            led.value(0)
+            
+        # Browser ဆီသို့ HTML ပြန်ပို့ခြင်း
+        response = webpage()
+        client.send('HTTP/1.1 200 OK\n')
+        client.send('Content-Type: text/html\n')
+        client.send('Connection: close\n\n')
+        client.sendall(response)
+        client.close()
+
+# Start the Server
+try:
+    ip_address = connect()
+    serve(ip_address)
+except KeyboardInterrupt:
+    machine.reset()
+```
+
+---
+
+### အဆင့် (၃) - စမ်းသပ်အသုံးပြုခြင်း
+1. Thonny မှာ Code ကို **Run** လုပ်ပါ။
+2. Shell ထဲမှာ ပေါ်လာတဲ့ **IP Address** (ဥပမာ- `192.168.1.15`) ကို မှတ်ထားပါ။
+3. သင့်ဖုန်း သို့မဟုတ် Laptop ရဲ့ Browser ကိုဖွင့်ပြီး အဲဒီ IP Address ကို ရိုက်ထည့်ပါ။
+4. Screen ပေါ်မှာ ပေါ်လာတဲ့ **LED ON / OFF** ခလုတ်တွေကို နှိပ်ပြီး စမ်းသပ်ကြည့်ပါ။
+
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Socket:** ကွန်ပျူတာနှစ်လုံး (Pico နဲ့ Browser) အကြား data ပို့ဖို့ သုံးတဲ့ တံခါးပေါက် (Doorway) ဖြစ်ပါတယ်။
+* **Port 80:** ဒါကတော့ ပုံမှန် Web Traffic (HTTP) တွေအတွက် သုံးတဲ့ Standard Port ဖြစ်ပါတယ်။
+* **Local Network:** ဒီ Project က သင့်အိမ်က Wi-Fi အတွင်းမှာပဲ အလုပ်လုပ်မှာပါ။ အပြင်ကနေ လှမ်းထိန်းချင်ရင်တော့ Port Forwarding သို့မဟုတ် Cloud ဝန်ဆောင်မှုတွေ သုံးဖို့ လိုအပ်ပါတယ်။
+
+:::success Congratulations!
+Raspberry Pi Pico 2 W ရဲ့ အခြေခံမှသည် Web Control အထိ သင်ခန်းစာ (၇) ခုလုံးကို အောင်မြင်စွာ လေ့လာပြီးသွားပါပြီ။ အခုဆိုရင် Linn အနေနဲ့ ကိုယ်ပိုင် IoT project တွေကို စတင်ဖန်တီးဖို့ အဆင်သင့်ဖြစ်နေပါပြီ။
+:::

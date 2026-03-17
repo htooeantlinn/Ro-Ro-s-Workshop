@@ -1,0 +1,57 @@
+---
+sidebar_label: 'Lesson 1'
+sidebar_position: 2
+---
+
+# Lesson 1: Setting up MicroPython & Thonny
+
+Raspberry Pi Pico 2 W ကို စတင်အသုံးပြုဖို့အတွက် သူ့ရဲ့ ဦးနှောက်ထဲကို **MicroPython Firmware** အရင်ထည့်ပေးရပါမယ်။ ပြီးရင်တော့ ကွန်ပျူတာကနေ code ရေးဖို့အတွက် **Thonny IDE** ကို အသုံးပြုသွားမှာဖြစ်ပါတယ်။
+
+### အဆင့် (၁) - MicroPython Firmware ထည့်သွင်းခြင်း
+Pico 2 W ကို MicroPython နားလည်အောင် အောက်ပါအတိုင်း အရင်လုပ်ဆောင်ပေးပါ။
+
+1.  **BOOTSEL ခလုတ်ကို နှိပ်ထားပါ:** Pico ပေါ်က အဖြူရောင်ခလုတ်လေးကို ဖိနှိပ်ထားပါ။
+2.  **USB ချိတ်ဆက်ပါ:** ခလုတ်ကို နှိပ်ထားလျက်သားဖြင့် USB ကြိုးကို ကွန်ပျူတာမှာ ထိုးလိုက်ပါ။
+3.  **Drive ပေါ်လာမည်:** ကွန်ပျူတာမှာ `RPI-RP23` ဆိုတဲ့ USB Drive တစ်ခု ပေါ်လာပါလိမ့်မယ်။ (ပေါ်လာပြီဆိုရင် ခလုတ်ကို လွှတ်လိုက်လို့ရပါပြီ)
+4.  **Firmware ကူးထည့်ပါ:** [micropython.org](https://micropython.org/download/RPI_PICO2_W/) ကနေ ဒေါင်းလုဒ်ဆွဲထားတဲ့ `.uf2` file ကို အဲဒီ Drive ထဲကို Drag & Drop ဆွဲထည့်လိုက်ပါ။
+5.  **Restart ဖြစ်သွားမည်:** File ကူးပြီးတာနဲ့ Drive ပျောက်သွားပြီး Pico က MicroPython mode ထဲကို အလိုအလျောက် ရောက်သွားပါလိမ့်မယ်။
+
+---
+
+### အဆင့် (၂) - Thonny IDE ကို Setup လုပ်ခြင်း
+Pico နဲ့ စကားပြောဖို့အတွက် Thonny IDE ကို အောက်ပါအတိုင်း ပြင်ဆင်ပါ။
+
+1.  [Thonny.org](https://thonny.org/) မှာ မိမိ OS အလိုက် ဒေါင်းလုဒ်ဆွဲပြီး Install လုပ်ပါ။
+2.  Thonny ကိုဖွင့်ပြီး ညာဘက်အောက်ခြေက **Interpreter** နေရာမှာ နှိပ်ပါ။
+3.  **MicroPython (Raspberry Pi Pico)** ကို ရွေးပေးပါ။
+4.  အောက်က **Shell** အကွက်ထဲမှာ `MicroPython v... on Raspberry Pi Pico 2` ဆိုပြီး ပေါ်လာရင် ချိတ်ဆက်မှု အောင်မြင်ပါပြီ။
+
+
+
+---
+
+### အဆင့် (၃) - ပထမဆုံး Code စမ်းသပ်ခြင်း (Hello World)
+Pico ထဲက Internal LED လေးကို လင်းခိုင်းကြည့်ပါမယ်။ Thonny ရဲ့ Editor အကွက်ထဲမှာ အောက်ပါ code ကို ရေးပြီး **Run (F5)** နှိပ်ပါ။
+
+```python
+from machine import Pin
+import time
+
+# Pico 2 W ရဲ့ Onboard LED သည် Pin 'LED' သို့မဟုတ် 25 ဖြစ်သည်
+led = Pin("LED", Pin.OUT)
+
+while True:
+    led.toggle() # မီးကို အဖွင့်/အပိတ် ပြောင်းလုပ်မည်
+    print("LED Toggled!")
+    time.sleep(0.5) # ၀.၅ စက္ကန့် စောင့်မည်
+```
+
+:::tip Save လုပ်တဲ့အခါ
+Thonny မှာ Save နှိပ်ရင် "This Computer" သို့မဟုတ် "Raspberry Pi Pico" ဆိုပြီး မေးပါလိမ့်မယ်။ "Raspberry Pi Pico" ကို ရွေးပြီး file name ကို `main.py` လို့ ပေးထားရင် USB ကြိုးထိုးလိုက်တာနဲ့ code က အလိုအလျောက် အလုပ်လုပ်မှာ ဖြစ်ပါတယ်။
+:::
+
+---
+
+### 💡 Troubleshooting
+* **Pico ကို Thonny က မသိဘူးဖြစ်နေရင်:** USB ကြိုးက Data ကြိုး ဟုတ်မဟုတ် စစ်ဆေးပါ။ (အချို့ကြိုးတွေက အားသွင်းဖို့ပဲ ရပြီး data မပို့နိုင်ပါဘူး)
+* **Firmware တင်မရရင်:** `BOOTSEL` ခလုတ်ကို သေချာဖိထားပြီးမှ ကြိုးထိုးဖို့ မမေ့ပါနဲ့။

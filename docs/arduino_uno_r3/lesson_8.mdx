@@ -3,64 +3,68 @@ sidebar_label: 'Lesson 8'
 sidebar_position: 9
 ---
 
-# Lesson 8
-### Ultrasonic Range Finder
+# Lesson 8: Ultrasonic Distance Sensor
+
+ဒီသင်ခန်းစာမှာတော့ Ultrasonic Sensor ကိုအသုံးပြုပြီး အရာဝတ္ထုတွေရဲ့ အကွာအဝေးကို စင်တီမီတာ (cm) သို့မဟုတ် လက်မ (inches) နဲ့ ဘယ်လိုတိုင်းတာမလဲဆိုတာ လေ့လာသွားပါမယ်။
+
+### Ultrasonic Sensor ဘယ်လိုအလုပ်လုပ်သလဲ?
+Sensor ရဲ့ Trigger pin ကနေ လူနားနဲ့မကြားနိုင်တဲ့ အသံလှိုင်း (Ultrasound) ကို လွှတ်လိုက်ပါတယ်။ အဲဒီအသံလှိုင်းဟာ အရာဝတ္ထုတစ်ခုခုကို ရိုက်မိပြီး ပြန်လာတဲ့အခါ Echo pin ကနေ ပြန်ဖမ်းယူပါတယ်။ အသံလှိုင်း အသွားအပြန် ကြာချိန်ကို ကြည့်ပြီး အကွာအဝေးကို တွက်ချက်တာ ဖြစ်ပါတယ်။
+
+
+
+---
+
+### Distance Measurement (အကွာအဝေးတိုင်းတာခြင်း)
+ရှေ့မှာရှိတဲ့ အတားအဆီးနဲ့ အကွာအဝေးကို Serial Monitor မှာ ပြသပေးမည့် Code ဖြစ်ပါတယ်။
+
 ```cpp
-/*
-  Ping))) Sensor
-
-  This sketch reads a PING))) ultrasonic
-  rangefinder and returns the distance to the
-  closest object in range. To do this, it sends a
-  pulse to the sensor to initiate a reading, then
-  listens for a pulse to return.  The length of
-  the returning pulse is proportional to the
-  distance of the object from the sensor.
-
-  The circuit:
-   * +V connection of the PING))) attached to +5V
-   * GND connection attached to ground
-   * SIG connection attached to digital pin 7
-
-  http://www.arduino.cc/en/Tutorial/Ping
-
-  This example code is in the public domain.
-*/
-
 int inches = 0;
-
 int cm = 0;
 
-long readUltrasonicDistance(int triggerPin, int echoPin)
-{
-  pinMode(triggerPin, OUTPUT);  // Clear the trigger
+// အကွာအဝေးကို တိုင်းတာပေးမည့် သီးသန့် function
+long readUltrasonicDistance(int triggerPin, int echoPin) {
+  pinMode(triggerPin, OUTPUT);  
   digitalWrite(triggerPin, LOW);
   delayMicroseconds(2);
-  // Sets the trigger pin to HIGH state for 10 microseconds
+  
+  // အသံလှိုင်းစတင်လွှတ်ရန် Trigger ကို 10 microseconds ကြာ HIGH ပေးခြင်း
   digitalWrite(triggerPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(triggerPin, LOW);
+  
   pinMode(echoPin, INPUT);
-  // Reads the echo pin, and returns the sound wave travel time in microseconds
+  // Echo pin မှ အသံလှိုင်းပြန်လာသည့် ကြာချိန်ကို microseconds ဖြင့် ဖတ်ခြင်း
   return pulseIn(echoPin, HIGH);
 }
 
-void setup()
-{
+void setup() {
   Serial.begin(9600);
 }
 
-void loop()
-{
-  // measure the ping time in cm
+void loop() {
+  // အကွာအဝေးကို cm ဖြင့် တွက်ချက်ခြင်း (0.01723 သည် အသံ၏အလျင်ကို မူတည်၍ တွက်ထားခြင်းဖြစ်သည်)
+  // ဤနေရာတွင် Trigger နှင့် Echo ကို Pin 7 တစ်ခုတည်း သုံးထားသည် (3-pin sensor အမျိုးအစား)
   cm = 0.01723 * readUltrasonicDistance(7, 7);
-  // convert to inches by dividing by 2.54
+  
+  // cm မှ inches သို့ ပြောင်းလဲခြင်း
   inches = (cm / 2.54);
+
   Serial.print(inches);
-  Serial.print("in, ");
+  Serial.print(" in, ");
   Serial.print(cm);
-  Serial.println("cm");
-  delay(100); // Wait for 100 millisecond(s)
+  Serial.println(" cm");
+
+  delay(100); 
 }
 ```
 
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Sensor အမျိုးအစား:** အသုံးအများဆုံး **HC-SR04** မှာ Pin ၄ ခု (VCC, GND, Trig, Echo) ပါဝင်ပြီး Tinkercad ရှိ အချို့ sensor များတွင် Pin ၃ ခု (VCC, GND, SIG) သာ ပါတတ်ပါတယ်။
+* **Accuracy:** အသံလှိုင်းကို သုံးတာဖြစ်လို့ အသံလှိုင်းကို စုပ်ယူနိုင်တဲ့ အရာဝတ္ထုတွေ (ဥပမာ- ဂွမ်း၊ ရေမြှုပ်) ကို တိုင်းတာတဲ့အခါ တိကျမှု လျော့နည်းနိုင်ပါတယ်။
+* **Range:** များသောအားဖြင့် 2cm ကနေ 400cm အထိ တိုင်းတာနိုင်ပါတယ်။
+
+:::tip DIY Project Idea
+ဒီ sensor ကို သုံးပြီး အနောက်ကပ်ရင် အသံမြည်တဲ့ Car Parking Sensor သို့မဟုတ် အလိုအလျောက် ပွင့်တဲ့ အမှိုက်ပုံး (Smart Dustbin) တွေကို ဖန်တီးနိုင်ပါတယ်။
+:::

@@ -3,49 +3,62 @@ sidebar_label: 'Lesson 9'
 sidebar_position: 10
 ---
 
-# Lesson 9
-### Neopixel
+# Lesson 9: NeoPixel (RGB LED Strip)
+
+ဒီသင်ခန်းစာမှာတော့ LED အလုံးပေါင်းများစွာကို ကြိုးတစ်ပင်တည်း (Single Data Pin) အသုံးပြုပြီး အရောင်မျိုးစုံ ဘယ်လိုထိန်းချုပ်မလဲဆိုတာ လေ့လာသွားပါမယ်။
+
+### NeoPixel ဆိုတာဘာလဲ?
+NeoPixel ဆိုတာ Addressable RGB LED အမျိုးအစားဖြစ်ပါတယ်။ သူတို့ရဲ့ ထူးခြားချက်က LED တစ်လုံးချင်းစီမှာ ကိုယ်ပိုင် ID (Index) ရှိကြပြီး Red, Green, Blue အရောင်တွေကို ပေါင်းစပ်ပြီး အရောင်ပေါင်း ၁၆ သန်းကျော်ကို ဖန်တီးနိုင်တာ ဖြစ်ပါတယ်။
+
+
+
+---
+
+### Random Color Animation (ကျပန်းအရောင်ပြောင်းလဲခြင်း)
+NeoPixel တစ်လုံးချင်းစီကို ကျပန်းအရောင် (Random Color) များဖြင့် တဖြည်းဖြည်း လင်းလာစေမည့် Code ဖြစ်ပါတယ်။
+
 ```cpp
-#include <Adafruit_NeoPixel.h>
+#include <Adafruit_NeoPixel.h> // NeoPixel Library ကို ထည့်သွင်းခြင်း
 
-#define PIN 2	 // input pin Neopixel is attached to
+#define PIN 2           // Arduino နှင့် ချိတ်ဆက်ထားသော Pin
+#define NUMPIXELS 12    // NeoPixel အလုံးအရေအတွက်
 
-#define NUMPIXELS      12 // number of neopixels in strip
-
+// NeoPixel object တစ်ခု တည်ဆောက်ခြင်း
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
-int delayval = 100; // timing delay in milliseconds
-
-int redColor = 0;
-int greenColor = 0;
-int blueColor = 0;
+int delayval = 100; // အချိန်စောင့်ဆိုင်းရန်
+int redColor, greenColor, blueColor;
 
 void setup() {
-  // Initialize the NeoPixel library.
-  pixels.begin();
+  pixels.begin(); // NeoPixel ဆက်သွယ်ရေး စတင်ခြင်း
 }
 
 void loop() {
-  setColor();
+  // အရောင်အသစ်များကို ကျပန်းရွေးချယ်ခြင်း
+  redColor = random(0, 255);
+  greenColor = random(0, 255);
+  blueColor = random(0, 255);
 
-  for (int i=0; i < NUMPIXELS; i++) {
-    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
+  // LED တစ်လုံးချင်းစီကို အရောင်သတ်မှတ်ခြင်း
+  for (int i = 0; i < NUMPIXELS; i++) {
+    // pixels.Color(R, G, B) စနစ်ဖြင့် အရောင်သတ်မှတ်မည်
     pixels.setPixelColor(i, pixels.Color(redColor, greenColor, blueColor));
 
-    // This sends the updated pixel color to the hardware.
+    // ပြောင်းလဲမှုများကို Hardware ဆီသို့ ပို့လွှတ်ခြင်း
     pixels.show();
 
-    // Delay for a period of time (in milliseconds).
     delay(delayval);
   }
 }
-
-// setColor()
-// picks random values to set for RGB
-void setColor(){
-  redColor = random(0, 255);
-  greenColor = random(0,255);
-  blueColor = random(0, 255);
-}
 ```
 
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Library:** NeoPixel ကို သုံးဖို့အတွက် `Adafruit_NeoPixel` library ကို Arduino IDE မှာ အရင်သွင်းထားဖို့ လိုပါတယ်။
+* **Power Supply:** LED အရေအတွက် အရမ်းများလာရင် (ဥပမာ- အလုံး ၃၀ ထက်ကျော်ရင်) Arduino ကနေ လုံလောက်တဲ့ Current မပေးနိုင်တော့ပါဘူး။ အဲဒီအခါမှာ ပြင်ပ 5V Power Source သီးသန့် သုံးပေးရပါမယ်။
+* **Color Index:** ပထမဆုံး LED ကို `0` ကနေ စတင်ရေတွက်ပါတယ်။
+
+:::warning သတိပြုရန်
+NeoPixel တွေကို ချိတ်ဆက်တဲ့အခါ Data လမ်းကြောင်း မှန်ကန်ဖို့ လိုပါတယ်။ Sensor ပေါ်မှာပါတဲ့ မြားခေါင်း (Arrow) အတိုင်း **DI (Data In)** ကနေ သွင်းပြီး **DO (Data Out)** ကနေ နောက်တစ်လုံးကို ဆက်ရပါမယ်။
+:::

@@ -3,58 +3,57 @@ sidebar_label: 'Lesson 3'
 sidebar_position: 4
 ---
 
-# Lesson 3
-### Analog Input
+# Lesson 3: Analog Input (Potentiometer)
+
+ဒီသင်ခန်းစာမှာတော့ Digital Input (0 နဲ့ 1) တွေအပြင် ပိုပြီးအသေးစိတ်ကျတဲ့ Analog Input (0 ကနေ 1023 အထိ) တန်ဖိုးတွေကို ဘယ်လိုဖတ်မလဲဆိုတာ လေ့လာရမှာ ဖြစ်ပါတယ်။
+
+### Analog Input ဆိုတာဘာလဲ?
+Arduino Uno ရဲ့ Analog Pins (A0 - A5) တွေဟာ Voltage အတိုးအလျှော့ကို ဖတ်ပေးနိုင်ပါတယ်။ ဥပမာ - Potentiometer (အသံချဲ့စက် ခလုတ်ကဲ့သို့ လှည့်ရသော ပစ္စည်း) ကို လှည့်လိုက်တဲ့အခါ ထွက်လာတဲ့ Voltage အပြောင်းအလဲကို ဂဏန်းတန်ဖိုး 0 ကနေ 1023 အထိ ပြောင်းလဲဖတ်ရှုပေးတာမျိုး ဖြစ်ပါတယ်။
+
+
+
+[Image of Arduino with Potentiometer circuit diagram]
+
+
+---
+
+### Potentiometer ဖြင့် LED Blink အနှေးအမြန် ထိန်းချုပ်ခြင်း
+Potentiometer ကို လှည့်ပြီး LED မှိတ်တုတ်မှိတ်တုတ် ဖြစ်နှုန်းကို စိတ်ကြိုက်ချိန်ညှိနိုင်မည့် Code ဖြစ်ပါတယ်။
+
 ```cpp
-/*
-    Analog Input  Demonstrates analog input by
-  reading an analog sensor on analog pin 0 and
-  turning on and off a light emitting diode(LED)
-  connected to digital pin 13.  The amount of time
-  the LED will be on and off depends on  the value
-  obtained by analogRead().
+int sensorValue = 0; // Sensor က ဖတ်ရတဲ့ တန်ဖိုးကို သိမ်းမည့် variable
 
-  The circuit:
-  * Potentiometer attached to analog input 0
-  * center pin of the potentiometer to the analog
-  pin
-  * one side pin (either one) to ground
-  * the other side pin to +5V
-  * LED anode (long leg) attached to digital
-  output 13
-  * LED cathode (short leg) attached to ground
-  * Note: because most Arduinos have a built-in
-  LED attached  to pin 13 on the board, the LED is
-  optional.
-
-  Created by David Cuartielles
-  modified 30 Aug 2011  By Tom Igoe
-
-  This example code is in the public domain.
-  http://www.arduino.cc/en/Tutorial/AnalogInput
-*/
-
-int sensorValue = 0;
-
-void setup()
-{
+void setup() {
+  // A0 pin ကို Input အဖြစ် သတ်မှတ်ခြင်း
   pinMode(A0, INPUT);
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void loop()
-{
-  // read the value from the sensor
+void loop() {
+  // Potentiometer မှ Voltage ကို ဖတ်ပြီး 0 - 1023 အကြား တန်ဖိုးပြောင်းလဲယူခြင်း
   sensorValue = analogRead(A0);
-  // turn the LED on
+
+  // LED ကို ဖွင့်မည်
   digitalWrite(LED_BUILTIN, HIGH);
-  // stop the program for the <sensorValue>
-  // milliseconds
-  delay(sensorValue); // Wait for sensorValue millisecond(s)
-  // turn the LED off
+
+  // ဖတ်ရရှိသော တန်ဖိုး (milliseconds) အတိုင်း ခေတ္တရပ်မည်
+  // ဥပမာ - အဆုံးထိလှည့်ထားလျှင် 1023ms (၁ စက္ကန့်ခန့်) ကြာမည်
+  delay(sensorValue); 
+
+  // LED ကို ပိတ်မည်
   digitalWrite(LED_BUILTIN, LOW);
-  // stop the program for the <sensorValue>
-  // milliseconds
-  delay(sensorValue); // Wait for sensorValue millisecond(s)
+
+  // ဖတ်ရရှိသော တန်ဖိုးအတိုင်း ထပ်မံရပ်မည်
+  delay(sensorValue);
 }
 ```
+
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Resolution:** Uno R3 ရဲ့ Analog Read ဟာ 10-bit ဖြစ်တဲ့အတွက် $2^{10} = 1024$ levels (0 to 1023) အထိ ဖတ်ပေးနိုင်တာဖြစ်ပါတယ်။
+* **Applications:** ဒီနည်းလမ်းကို အလင်းအမှောင် Sensor (LDR) ဖတ်တာ၊ အပူချိန် Sensor (Thermistor) ဖတ်တာနဲ့ အသံအတိုးအလျှော့ လုပ်တာတွေမှာ အဓိက သုံးပါတယ်။
+
+:::warning သတိပြုရန်
+Potentiometer ရဲ့ အလယ်တိုင် (Middle Pin) ကိုသာ Analog Pin (A0) မှာ ချိတ်ရမှာဖြစ်ပြီး ဘေးနှစ်ဖက်ကိုတော့ 5V နဲ့ GND မှာ ကြိုက်သလို ချိတ်နိုင်ပါတယ်။ (ဘေးနှစ်ဖက် ပြောင်းချိတ်ရင် လှည့်တဲ့အခါ တန်ဖိုးတိုးတာ/လျော့တာ ပြောင်းပြန်ဖြစ်သွားပါလိမ့်မယ်)
+:::
