@@ -10,9 +10,7 @@ export const ImageLoop = ({ images }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   
   useEffect(() => {
-    // Only set interval if there's more than one image
     if (images.length <= 1) return;
-
     const timer = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % images.length);
     }, 2000);
@@ -64,17 +62,17 @@ export const ImageLoop = ({ images }) => {
 
 # Homebrew
 
-Homebrew is a free, open-source software package manager for macOS and Linux that simplifies installing, updating, and managing command-line tools, developer dependencies, and applications. It acts like an “app store” for the terminal, installing software to its own directory and symlinking files into /opt/homebrew.
+**Homebrew** ဆိုသည်မှာ macOS နှင့် Linux တို့အတွက် အခမဲ့အသုံးပြုနိုင်သော open-source software package manager တစ်ခု ဖြစ်ပါသည်။ Terminal ပေါ်တွင် command-line tools များ၊ developer dependencies များနှင့် applications များကို အလွယ်တကူ install လုပ်ခြင်း၊ update ပြုလုပ်ခြင်းနှင့် စီမံခန့်ခွဲခြင်းတို့အတွက် အသုံးပြုရပါသည်။ ၎င်းသည် terminal အတွက် "App Store" တစ်ခုကဲ့သို့ အလုပ်လုပ်ပေးပြီး software များကို သီးခြား directory တစ်ခုတွင် စနစ်တကျ install လုပ်ပေးပါသည်။
 
-* [Official Software](https://brew.sh)
+* 🔗 [Official Software Website](https://brew.sh)
 
 <ImageLoop images={[
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410265/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.22.50_AM_pyzo3t.png",
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410272/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.23.31_AM_j6b3wy.png"
-  ]} />
+]} />
 
 ## Installation Script
-Click at here Homebrew’s download & install script to copy:
+Homebrew ကို ထည့်သွင်းရန် အောက်ပါ script ကို copy ကူးယူပြီး Terminal တွင် paste ပြုလုပ်၍ run ပေးပါ။
 
 ```bash
 /bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh](https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh))"
@@ -87,33 +85,32 @@ Click at here Homebrew’s download & install script to copy:
 "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410270/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.30.07_AM_qrg4gm.png"
 ]} />
 
+Install လုပ်ပြီးနောက် **Next Steps** ဟု ပြထားသော command များကို run ပေးရန် လိုအပ်ပါသည်။ (ဥပမာ- `.zprofile` တွင် configuration ထည့်သွင်းခြင်း)
+
 <ImageLoop images={[
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410141/htooeantlinn/pack1/image_11_azmclk.png"
-  ]} />
+]} />
 
 ```bash
+# [YourName] နေရာတွင် မိမိစက်၏ username ကို အစားထိုးပါ
 echo >> /Users/[YourName]/.zprofile
 echo 'eval "$(/usr/local/bin/brew shellenv zsh)"' >> /Users/[YourName]/.zprofile
 eval "$(/usr/local/bin/brew shellenv zsh)"
-
 ```
-
-## Paste scripts in Terminal and Enter
-
-<ImageLoop images={[
-"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410144/htooeantlinn/pack1/image_12_td4czn.png",
-"https://res.cloudinary.com/dilbjcn76/image/upload/v1773410272/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.31.10_AM_uorula.png"
-]} />
-
----
 
 ## Maintenance Commands
 
-update က "သတင်းစာဖတ်တာ" ဖြစ်ပြီး၊ upgrade က "ဈေးဝယ်တာ" ပါ။
+Homebrew ကို ကောင်းမွန်စွာ အလုပ်လုပ်စေရန် အောက်ပါ command များဖြင့် ထိန်းသိမ်းနိုင်ပါသည်။
+နားလည်လွယ်အောင် ပြောရလျှင် - `update` လုပ်ခြင်းက "သတင်းစာဖတ်ပြီး version အသစ်တွေရှိမရှိ စစ်ဆေးတာ" ဖြစ်ပြီး၊ `upgrade` လုပ်ခြင်းက "အသစ်ထွက်သမျှကို တကယ် install လုပ်လိုက်တာ (ဈေးဝယ်တာ)" နှင့် တူပါသည်။
 
+### 🔄 Update Homebrew
+Brew ကိုယ်တိုင်နှင့် package စာရင်းများကို update လုပ်ရန်:
 ```bash
 brew update
 ```
+
+### ⬆️ Upgrade Packages
+Install လုပ်ထားသော software များကို version အသစ်သို့ မြှင့်တင်ရန်:
 ```bash
 brew upgrade
 ```

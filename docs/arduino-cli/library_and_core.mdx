@@ -2,68 +2,166 @@
 sidebar_label: 'Library & Core'
 sidebar_position: 4
 ---
-# Library & Core
-```bash
-arduino-cli install “MIDI Library”
-```
-![Alt Text](ass/image_18.png)
 
-We can find our libraries.
-```bash
-ls /Documents/Arduino/libraries.
-```
-![Alt Text](ass/image_19.png)
+import { useState, useEffect } from 'react';
 
-We can upgrade our libraries version.
+export const ImageLoop = ({ images }) => {
+  const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <div 
+        onClick={() => setIsZoomed(!isZoomed)}
+        style={{ 
+          cursor: 'zoom-in', 
+          position: 'relative',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '2px solid var(--ifm-color-emphasis-300)',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+        }}
+      >
+        <img src={images[index]} style={{ display: 'block', width: '100%' }} />
+        
+        {images.length > 1 && (
+          <div style={{
+            position: 'absolute', bottom: '10px', right: '10px',
+            backgroundColor: '#333', color: 'white',
+            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem', 
+            fontWeight: 'bold', opacity: '0.8'
+          }}>
+            Step {index + 1} of {images.length}
+          </div>
+        )}
+      </div>
+
+      {isZoomed && (
+        <div 
+          onClick={() => setIsZoomed(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img src={images[index]} style={{ maxHeight: '95vh', maxWidth: '95vw', borderRadius: '8px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+# Library & Core Management
+
+Arduino ပရောဂျက်များတွင် လိုအပ်သော Library များနှင့် Board Core (Platforms) များကို Terminal မှ စီမံခန့်ခွဲနည်းများ ဖြစ်ပါသည်။
+
+## 📚 Library စီမံခန့်ခွဲခြင်း
+
+### Library အသစ်ထည့်သွင်းခြင်း
+ဥပမာအနေဖြင့် MIDI Library ကို အောက်ပါအတိုင်း install လုပ်နိုင်ပါသည်။
+```bash
+arduino-cli lib install "MIDI Library"
+```
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410294/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.36.29_AM_l3x0hj.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410148/htooeantlinn/pack1/image_18_jqbjxs.png"
+]} />
+
+### Install လုပ်ထားသော Library များကို စစ်ဆေးခြင်း
+မိမိစက်ထဲရှိ Library folder ကို အောက်ပါ command ဖြင့် ကြည့်ရှုနိုင်ပါသည်။
+```bash
+ls ~/Documents/Arduino/libraries
+```
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410296/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.37.37_AM_de5lqr.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409995/htooeantlinn/pack1/image_19_cct8za.png"
+]} />
+
+### Library များအားလုံးကို Version မြှင့်တင်ခြင်း
 ```bash
 arduino-cli lib upgrade
 ```
-![Alt Text](ass/image_20.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410262/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.16.35_AM_xq0ckm.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410151/htooeantlinn/pack1/image_20_dnduc8.png"
+]} />
+
+---
+
+## 🏗️ Core (Platform) စီမံခန့်ခွဲခြင်း
+
+Core မသွင်းမီ Index များကို အမြဲ update လုပ်ပေးရန် လိုအပ်ပါသည်။
 
 ```bash
 arduino-cli core update-index
 ```
-![Alt Text](ass/image_21.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410260/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.14.48_AM_pdeezr.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410148/htooeantlinn/pack1/image_21_nb8xkq.png"
+]} />
 
-```bash
-arduino-cli core upgrade
-```
-![Alt Text](ass/image_22.png)
-
-Shows the list of installed platforms on our system.
+### Install လုပ်ထားသော Core များစာရင်းကြည့်ရန်
 ```bash
 arduino-cli core list
 ```
-![Alt Text](ass/image_23.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410273/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.43.16_AM_fxxdyw.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410214/htooeantlinn/pack1/image_23_r0nwg9.png"
+]} />
 
 ---
 
-## Arduino UNO core install
+## 🔌 Specific Board Cores Installation
+
+### 1. Arduino UNO (AVR)
 ```bash
 arduino-cli core install arduino:avr
 ```
-![Alt Text](ass/image_24.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410272/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.43.34_AM_ll1y5s.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410152/htooeantlinn/pack1/image_24_bmcg6r.png"
+]} />
 
----
-
-## ESP32 core install
+### 2. ESP32 Series
+အင်တာနက်လိုင်းကြောင့် error တက်ခြင်းမှ ကာကွယ်ရန် retry loop ဖြင့် ထည့်သွင်းနည်း ဖြစ်ပါသည်။
 ```bash
 export ARDUINO_CLI_DOWNLOAD_TIMEOUT=600; until arduino-cli core install esp32:esp32; do echo "Retrying in 15s..."; sleep 15; done
 ```
-![Alt Text](ass/image_25.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410279/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.45.55_AM_mlgb2k.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410153/htooeantlinn/pack1/image_25_kbo1ik.png"
+]} />
 
----
+### 3. Raspberry Pi Pico 2W (RP2040)
+ပထမဦးစွာ URL ထည့်သွင်းပြီးမှ install ပြုလုပ်ရပါမည်။
 
-## Pi Pico 2W core install
 ```bash
-arduino-cli config add board_manager.additional_urls https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json && arduino-cli core update-index
-```
-![Alt Text](ass/image_26.png)
-```bash
+# Additional URL ထည့်သွင်းခြင်း
+arduino-cli config add board_manager.additional_urls [https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json](https://github.com/earlephilhower/arduino-pico/releases/download/global/package_rp2040_index.json) && arduino-cli core update-index
+
+# Core install လုပ်ခြင်း
 export ARDUINO_CLI_DOWNLOAD_TIMEOUT=1200; until arduino-cli core install rp2040:rp2040; do echo "Retrying in 10s..."; sleep 10; done
 ```
-![Alt Text](ass/image_27.png)
+:::info Pro-Tip
+Pico အတွက် `picotool` ကိုပါ တစ်ခါတည်း install လုပ်ထားသင့်ပါသည်။
 ```bash
 brew install picotool
 ```
-![Alt Text](ass/image_28.png)
+:::
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410279/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.46.19_AM_cn3vuk.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410154/htooeantlinn/pack1/image_26_brrtmq.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410281/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.46.43_AM_ess7gl.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410157/htooeantlinn/pack1/image_27_q82v53.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410282/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.51.32_AM_yvyahf.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410162/htooeantlinn/pack1/image_28_jqfasn.png"
+]} />

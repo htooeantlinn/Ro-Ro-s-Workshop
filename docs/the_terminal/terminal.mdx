@@ -65,75 +65,78 @@ export const ImageLoop = ({ images, width = '100%' }) => {
   "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Terminalicon3.png/250px-Terminalicon3.png"
 ]} />
 
-Terminal is a kernel. Already on MacOS.  
-A kernel is the core, privileged component of an operating system (OS).
+Terminal ဆိုသည်မှာ Operating System တစ်ခု၏ Kernel ကို တိုက်ရိုက်ခိုင်းစေနိုင်သည့် ပတ်ဝန်းကျင်တစ်ခု ဖြစ်ပါသည်။ macOS တွင် built-in ပါဝင်ပြီးသား ဖြစ်ပါသည်။
+
+> **Kernel ဆိုတာဘာလဲ?**
+> Kernel သည် Operating System (OS) တစ်ခု၏ အဓိကအကျဆုံးနှင့် လုပ်ပိုင်ခွင့်အရှိဆုံး (Core, Privileged Component) အစိတ်အပိုင်း ဖြစ်ပါသည်။
 
 ## Rosetta
-Rosetta enables a Mac with Apple silicon to run Intel-based apps. 
+Apple Silicon (M1, M2, M3 etc.) ပါဝင်သော Mac များတွင် Intel-based apps များကို အဆင်ပြေပြေ အသုံးပြုနိုင်ရန် **Rosetta** က ကူညီပေးပါသည်။
 
-<ImageLoop width="30%" images={[
+<ImageLoop width="60%" images={[
     "https://res.cloudinary.com/dilbjcn76/image/upload/v1773458625/htooeantlinn/pack2/Screenshot_2026-03-14_at_9.52.59_AM_pijgpo.png",
     "https://res.cloudinary.com/dilbjcn76/image/upload/v1773458628/htooeantlinn/pack2/Screenshot_2026-03-14_at_9.53.06_AM_nodjy9.png"
 ]} />
 
 ## Essential Terminal Shortcuts
 
-Managing your command line efficiently can save a massive amount of time. Here are the most common shortcuts for navigation and control:
+Command line ကို ကျွမ်းကျင်စွာ အသုံးပြုနိုင်ခြင်းက အချိန်ကုန်သက်သာစေပါသည်။ အသုံးအများဆုံး Shortcut များမှာ အောက်ပါအတိုင်း ဖြစ်ပါသည် -
 
 | Shortcut | Action |
 | --- | --- |
-| `Ctrl + L` | **Clear screen** (equivalent to typing `clear`) |
-| `Ctrl + C` | **Abort** the current command/process |
-| `Ctrl + U` | **Delete** the entire line (from cursor to start) |
-| `Ctrl + K` | **Delete** from cursor to the end of the line |
-| `Ctrl + A` | Move cursor to the **beginning** of the line |
-| `Ctrl + E` | Move cursor to the **end** of the line |
-| `Ctrl + D` | **Exit** the current shell or close the terminal |
+| `Ctrl + L` | **Clear screen** (စာမျက်နှာကို ရှင်းထုတ်ရန် - `clear` ဟု ရိုက်ခြင်းနှင့် အတူတူပင်ဖြစ်သည်) |
+| `Ctrl + C` | **Abort** (လက်ရှိအလုပ်လုပ်နေသော command သို့မဟုတ် process ကို ရပ်တန့်ရန်) |
+| `Ctrl + U` | Cursor မှ အစပိုင်းအထိ တစ်ကြောင်းလုံးကို **ဖျက်ပစ်ရန်** |
+| `Ctrl + K` | Cursor မှ အဆုံးပိုင်းအထိ တစ်ကြောင်းလုံးကို **ဖျက်ပစ်ရန်** |
+| `Ctrl + A` | Cursor ကို စာကြောင်း၏ **အစ** သို့ ရွှေ့ရန် |
+| `Ctrl + E` | Cursor ကို စာကြောင်း၏ **အဆုံး** သို့ ရွှေ့ရန် |
+| `Ctrl + D` | လက်ရှိ shell သို့မဟုတ် terminal ကို **ပိတ်ရန်** |
+
+---
 
 ## 🖥️ Command Line Interface (CLI) Basics
 
-A **Command Line Interface (CLI)** is a text-based environment used to interact with an operating system. Whether you call it the terminal, console, or shell, these core commands are your primary tools.
-
----
+**Command Line Interface (CLI)** ဆိုသည်မှာ text-based ပုံစံဖြင့် Operating System ကို ခိုင်းစေနိုင်သော ပတ်ဝန်းကျင်ဖြစ်ပါသည်။ Terminal, Console သို့မဟုတ် Shell ဟု အမျိုးမျိုး ခေါ်ဝေါ်ကြသော်လည်း အခြေခံအကျဆုံး commands များမှာ အတူတူပင် ဖြစ်ပါသည်။
 
 ### 🔍 System & Documentation
 
 | Command | Description |
 | --- | --- |
-| `whoami` | Displays the **effective user ID** of the current user. |
-| `pwd` | **Print Working Directory**: Shows exactly where you are. |
-| `man [command]` | Opens the **manual** (documentation) for a specific command. |
+| `whoami` | လက်ရှိ login ဝင်ထားသော **User ID** ကို ပြသပေးသည်။ |
+| `pwd` | **Print Working Directory**: လက်ရှိရောက်နေသော folder လမ်းကြောင်းကို ပြသပေးသည်။ |
+| `man [command]` | Command တစ်ခုချင်းစီ၏ အသုံးပြုပုံလမ်းညွှန် (**Manual**) ကို ဖွင့်ဖတ်နိုင်သည်။ |
 
 ### 📂 Navigation & Listing
 
 | Command | Description |
 | --- | --- |
-| `ls` | **List** directory contents. |
-| `ls -l` | List contents in **long format** (shows permissions, size, etc.). |
-| `cd [path]` | **Change Directory**. |
-| `cd ..` | Move **up one level** in the directory tree. |
-| `cd ../..` | Move **up two levels**. |
+| `ls` | Folder ထဲရှိ content များကို **List** အလိုက် ပြသပေးသည်။ |
+| `ls -l` | Permissions နှင့် size များအပါအဝင် **long format** ဖြင့် အသေးစိတ်ပြသပေးသည်။ |
+| `cd [path]` | သတ်မှတ်ထားသော Folder ထဲသို့ ဝင်ရောက်ရန် (**Change Directory**)။ |
+| `cd ..` | လက်ရှိရောက်နေသော folder ၏ **အပေါ်အဆင့် (Parent folder)** သို့ ပြန်ထွက်ရန်။ |
+| `cd ../..` | **အပေါ်နှစ်ဆင့်** ပြန်ထွက်ရန်။ |
 
 ### 📝 File Manipulation & Editing
 
 | Command | Description |
 | --- | --- |
-| `mkdir` | **Make Directory**: Creates a new folder. |
-| `mv` | **Move** or rename files and directories. |
-| `rm` | **Remove** files or directory entries (use with caution!). |
-| `chmod` | **Change Mode**: Modify file permissions or Access Control Lists. |
-| `cat` | **Concatenate**: View the contents of a file directly in the terminal. |
-| `nano` / `pico` | Simple, user-friendly **text editors**. |
-| `vim` | **Vi IMproved**: A powerful, advanced editor for programmers. |
+| `mkdir` | **Make Directory**: Folder အသစ်တစ်ခု တည်ဆောက်ရန်။ |
+| `mv` | File သို့မဟုတ် Folder များကို **နေရာရွှေ့ရန်** (သို့မဟုတ်) နာမည်ပြောင်းရန်။ |
+| `rm` | File များကို **ဖျက်ရန်** (သတိထား၍ အသုံးပြုပါ!)။ |
+| `chmod` | **Change Mode**: File တစ်ခု၏ permissions များကို ပြင်ဆင်ရန်။ |
+| `cat` | **Concatenate**: File ထဲရှိ အကြောင်းအရာများကို terminal ပေါ်တွင် တိုက်ရိုက်ကြည့်ရှုရန်။ |
+| `nano` / `pico` | အသုံးပြုရလွယ်ကူသော **Text Editor** များ။ |
+| `vim` | Programmers များအတွက် စွမ်းဆောင်ရည်မြင့်မားသော **Advanced Editor** ဖြစ်သည်။ |
 
 ### 🚀 macOS Specific
 
 | Command | Description |
 | --- | --- |
-| `open .` | Opens the current folder in **Finder**. |
-| `open -a "App"` | Opens a specific **application** (e.g., `open -a "Audio MIDI Setup"`). |
+| `open .` | လက်ရှိရောက်နေသော Folder ကို **Finder** တွင် ဖွင့်ပေးသည်။ |
+| `open -a "App"` | သတ်မှတ်ထားသော **Application** ကို ဖွင့်ပေးသည်။ (ဥပမာ- `open -a "Audio MIDI Setup"`) |
 
 ---
 
-> [!WARNING]
-> The `rm` command is permanent. Unlike moving a file to the Trash, files deleted via CLI are generally not recoverable without backups.
+:::danger သတိပြုရန်
+`rm` command ဖြင့် ဖျက်လိုက်သော file များသည် Trash ထဲသို့ မရောက်ဘဲ အပြီးတိုင် ပျက်သွားတတ်ပါသည်။ ထို့ကြောင့် အသုံးပြုသည့်အခါ အထူးဂရုစိုက်ပါ။
+:::
