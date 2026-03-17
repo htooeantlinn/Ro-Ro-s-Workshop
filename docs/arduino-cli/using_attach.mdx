@@ -2,43 +2,131 @@
 sidebar_label: 'Using Attach'
 sidebar_position: 7
 ---
+
+import { useState, useEffect } from 'react';
+
+export const ImageLoop = ({ images }) => {
+  const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <div 
+        onClick={() => setIsZoomed(!isZoomed)}
+        style={{ 
+          cursor: 'zoom-in', 
+          position: 'relative',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '2px solid var(--ifm-color-emphasis-300)',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+        }}
+      >
+        <img src={images[index]} style={{ display: 'block', width: '100%' }} />
+        
+        {images.length > 1 && (
+          <div style={{
+            position: 'absolute', bottom: '10px', right: '10px',
+            backgroundColor: '#333', color: 'white',
+            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem', 
+            fontWeight: 'bold', opacity: '0.8'
+          }}>
+            Step {index + 1} of {images.length}
+          </div>
+        )}
+      </div>
+
+      {isZoomed && (
+        <div 
+          onClick={() => setIsZoomed(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img src={images[index]} style={{ maxHeight: '95vh', maxWidth: '95vw', borderRadius: '8px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
+
 # Using Attach
-```bash
 
-```
-![Alt Text](ass/image_57.png)
+`board attach` command သည် သင်၏ sketch နှင့် board configuration (Core & Port) ကို တစ်ခါတည်း တွဲပေးထားခြင်းဖြစ်ပါသည်။ ဤသို့လုပ်ဆောင်ထားခြင်းဖြင့် နောက်ပိုင်းတွင် command အရှည်ကြီးများ ရိုက်စရာမလိုဘဲ compile နှင့် upload ကို အလွယ်တကူ ပြုလုပ်နိုင်မည် ဖြစ်ပါသည်။
 
-```bash
-
-```
-![Alt Text](ass/image_58.png)
+### 1. Board နှင့် Sketch ကို ချိတ်ဆက်ခြင်း (Attach)
+ပထမဦးစွာ မိမိအသုံးပြုမည့် board ၏ core နှင့် port ကို အောက်ပါအတိုင်း တစ်ကြိမ် attach လုပ်ပေးရပါမည်။
 
 ```bash
-
+arduino-cli board attach -b arduino:avr:uno -p /dev/cu.usbmodem1101 MySketch
 ```
-![Alt Text](ass/image_59.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410297/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.41.33_AM_xkszcp.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410222/htooeantlinn/pack1/image_57_oxezgn.png"
+]} />
+
+### 2. Configuration File ကို စစ်ဆေးခြင်း
+Attach လုပ်ပြီးပါက `MySketch` folder ထဲတွင် `sketch.yaml` ဆိုသော file လေး ရောက်ရှိလာပါမည်။ ၎င်း file ထဲတွင် configuration များကို အောက်ပါအတိုင်း စစ်ဆေးနိုင်ပါသည်။
 
 ```bash
-
+ls MySketch
+cat MySketch/sketch.yaml
 ```
-![Alt Text](ass/image_60.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410299/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.42.13_AM_x7n2bc.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410223/htooeantlinn/pack1/image_58_sn8ftl.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410301/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.42.38_AM_qsnkxl.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410227/htooeantlinn/pack1/image_59_mcd9ic.png"
+]} />
+
+### 3. ရိုးရှင်းစွာ Compile နှင့် Upload လုပ်ခြင်း
+တစ်ကြိမ် attach လုပ်ပြီးသွားလျှင် port နှင့် board name များ ထပ်ထည့်ရန်မလိုတော့ဘဲ compile နှင့် upload လုပ်နိုင်ပါသည်။
+
+**Compile လုပ်ရန်:**
+```bash
+arduino-cli compile MySketch
+```
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410302/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.43.12_AM_npuq6i.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410230/htooeantlinn/pack1/image_60_xpzpkc.png"
+]} />
+
+**Upload လုပ်ရန်:**
+```bash
+arduino-cli upload MySketch
+```
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410304/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.43.32_AM_y725k2.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410231/htooeantlinn/pack1/image_61_brnveg.png"
+]} />
+
+---
+
+### 4. Sketch Folder ထဲသို့ဝင်၍ အသုံးပြုခြင်း
+အကယ်၍ သင်သည် sketch folder ထဲသို့ `cd` ဖြင့် ဝင်ရောက်ထားပါက ပို၍ပင် တိုတောင်းသော command များကို အသုံးပြုနိုင်ပါသည်။
 
 ```bash
+cd MySketch
 
+# Compile လုပ်ရန်
+arduino-cli compile
+
+# Upload လုပ်ရန်
+arduino-cli upload
 ```
-![Alt Text](ass/image_61.png)
-
-```bash
-
-```
-![Alt Text](ass/image_62.png)
-
-```bash
-
-```
-![Alt Text](ass/image_63.png)
-
-```bash
-
-```
-![Alt Text](ass/image_64.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410305/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.44.14_AM_encqv9.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410234/htooeantlinn/pack1/image_63_odsvd1.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410304/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.44.28_AM_mmgaxa.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410241/htooeantlinn/pack1/image_64_hqor1f.png"
+]} />
