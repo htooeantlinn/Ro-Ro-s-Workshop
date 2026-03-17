@@ -3,108 +3,238 @@ sidebar_label: 'Compile & Upload'
 sidebar_position: 6
 ---
 
-# Compile & Upload
-## For Arduino UNO R3
-```bash
+import { useState, useEffect } from 'react';
 
+export const ImageLoop = ({ images }) => {
+  const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <div 
+        onClick={() => setIsZoomed(!isZoomed)}
+        style={{ 
+          cursor: 'zoom-in', 
+          position: 'relative',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '2px solid var(--ifm-color-emphasis-300)',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+        }}
+      >
+        <img src={images[index]} style={{ display: 'block', width: '100%' }} />
+        
+        {images.length > 1 && (
+          <div style={{
+            position: 'absolute', bottom: '10px', right: '10px',
+            backgroundColor: '#333', color: 'white',
+            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem', 
+            fontWeight: 'bold', opacity: '0.8'
+          }}>
+            Step {index + 1} of {images.length}
+          </div>
+        )}
+      </div>
+
+      {isZoomed && (
+        <div 
+          onClick={() => setIsZoomed(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img src={images[index]} style={{ maxHeight: '95vh', maxWidth: '95vw', borderRadius: '8px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
+
+# Compile & Upload
+
+ချိတ်ဆက်ထားသော Board များကို ရှာဖွေခြင်း၊ Code ကို Compile လုပ်ခြင်းနှင့် Upload တင်ခြင်း လုပ်ငန်းစဉ်များ ဖြစ်ပါသည်။
+
+### ချိတ်ဆက်ထားသော Board များကို စစ်ဆေးခြင်း
+လက်ရှိ ကွန်ပျူတာမှာ ချိတ်ထားတဲ့ board တွေရဲ့ list နဲ့ port တွေကို အောက်ပါအတိုင်း ကြည့်နိုင်ပါတယ်။
+
+```bash
+arduino-cli board list
 ```
-![Alt Text](ass/image_40.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410289/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.14.22_AM_hboj2k.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410290/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.14.29_AM_ogl1fw.png"
+]} />
+
+မလုပ်ဆောင်မီ မိမိ၏ sketch folder ရှိ/မရှိ အရင်ကြည့်ပါ။
 
 ```bash
 ls
 ```
-![Alt Text](ass/image_29.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410292/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.30.11_AM_vs0d9c.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410293/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.30.16_AM_mqcymk.png"
+]} />
+
+---
+
+## 🔵 For Arduino UNO R3
+### 1. Port စစ်ဆေးခြင်း
+UNO board ၏ port ကို မှတ်ထားပါ (ဥပမာ- `/dev/cu.usbmodem1101`)။
 
 ```bash
-
+arduino-cli board list
 ```
-![Alt Text](ass/image_5.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410289/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.14.22_AM_hboj2k.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410291/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.19.30_AM_sptck2.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410169/htooeantlinn/pack1/image_40_bbkwgm.png"
+]} />
 
+### 2. Compile လုပ်ခြင်း
 ```bash
-
+arduino-cli compile -b arduino:avr:uno MySketch
 ```
-![Alt Text](ass/image_6.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410293/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.30.26_AM_icgdid.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409995/htooeantlinn/pack1/image_5_zxifoo.png"
+]} />
 
+### 3. Upload လုပ်ခြင်း
 ```bash
-
+arduino-cli upload -p /dev/cu.usbmodem1101 -b arduino:avr:uno MySketch
 ```
-![Alt Text](ass/image_41.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410294/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.30.43_AM_r468ys.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409992/htooeantlinn/pack1/image_6_qj3ahx.png"
+]} />
 
+### 4. Serial Monitor ကြည့်ခြင်း
 ```bash
-
+arduino-cli monitor -p /dev/cu.usbmodem1101 -c baudrate=9600
 ```
-![Alt Text](ass/image_42.png)
+*(Stop ပြုလုပ်ရန်: `Control + C`)*
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410296/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.31.06_AM_krcuiu.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410171/htooeantlinn/pack1/image_41_iwdzhv.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410171/htooeantlinn/pack1/image_42_hkiafo.png"
+]} />
 
-## For ESP32-WROOM-32
+---
+
+## 🔴 For ESP32-WROOM-32
+
+### 1. Port စစ်ဆေးခြင်း
+ESP32 board ၏ port ကို မှတ်ထားပါ (ဥပမာ- `/dev/cu.usbserial-110`)။
 ```bash
-
+arduino-cli board list
 ```
-![Alt Text](ass/image_43.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410289/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.14.22_AM_hboj2k.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410234/htooeantlinn/pack1/Screenshot_2026-03-10_at_2.43.00_PM_u5hnxl.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410173/htooeantlinn/pack1/image_43_mqk0nl.png"
+]} />
 
+### 2. Compile လုပ်ခြင်း
 ```bash
-
+arduino-cli compile -b esp32:esp32:esp32 MySketch
 ```
-![Alt Text](ass/image_29.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410237/htooeantlinn/pack1/Screenshot_2026-03-10_at_2.44.42_PM_x2m14d.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410173/htooeantlinn/pack1/image_44_fdlyqg.png"
+]} />
 
+### 3. Upload လုပ်ခြင်း
 ```bash
-
+arduino-cli upload -p /dev/cu.usbserial-110 -b esp32:esp32:esp32:UploadSpeed=115200 MySketch
 ```
-![Alt Text](ass/image_44.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410238/htooeantlinn/pack1/Screenshot_2026-03-10_at_2.46.33_PM_pgadq0.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410178/htooeantlinn/pack1/image_45_mghrc8.png"
+]} />
 
+### 4. Monitor ကြည့်ခြင်း
 ```bash
-
+arduino-cli monitor -p /dev/cu.usbserial-110 -c baudrate=9600
 ```
-![Alt Text](ass/image_45.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410241/htooeantlinn/pack1/Screenshot_2026-03-10_at_2.48.21_PM_ueoemo.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410179/htooeantlinn/pack1/image_46_euplfj.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410178/htooeantlinn/pack1/image_47_io6yum.png"
+]} />
 
-```bash
+---
 
-```
-![Alt Text](ass/image_46.png)
+## 🟢 For Raspberry Pi Pico 2 W
+### 1. Port စစ်ဆေးခြင်း
+Pico ၏ port ကို စစ်ဆေးသောအခါ **New Board (UF2)** နှင့် **Old Board (Regular Port)** ဟူ၍ ကွဲပြားနိုင်ပါသည်။
 
-```bash
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410289/htooeantlinn/pack1/Screenshot_2026-03-10_at_11.14.22_AM_hboj2k.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410247/htooeantlinn/pack1/Screenshot_2026-03-10_at_3.05.28_PM_ldkrw5.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410181/htooeantlinn/pack1/image_48_itrraj.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410241/htooeantlinn/pack1/Screenshot_2026-03-10_at_2.54.40_PM_wa0cun.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410186/htooeantlinn/pack1/image_49_bua68e.png"
+]} />
 
-```
-![Alt Text](ass/image_47.png)
-
-## For Raspberry Pi Pico 2 W
-```bash
-
-```
-![Alt Text](ass/image_48.png)
-![Alt Text](ass/image_49.png)
-
-```bash
-
-```
-![Alt Text](ass/image_29.png)
-
+### 2. Compile လုပ်ခြင်း
 ```bash
 arduino-cli compile -b rp2040:rp2040:rpipico2 --board-options "usbstack=picosdk" MySketch
 ```
-![Alt Text](ass/image_50.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410242/htooeantlinn/pack1/Screenshot_2026-03-10_at_2.59.11_PM_thnuew.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410183/htooeantlinn/pack1/image_50_llfses.png"
+]} />
 
+### 3. Upload လုပ်ခြင်း (New/Old Board ပေါ်မူတည်၍)
+
+*New Board (UF2):*
 ```bash
-
+arduino-cli upload -p UF2_Board -b rp2040:rp2040:rpipico2 --board-options "usbstack=picosdk" MySketch
 ```
-![Alt Text](ass/image_51.png)
-![Alt Text](ass/image_52.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410248/htooeantlinn/pack1/Screenshot_2026-03-10_at_3.07.43_PM_nceg2e.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410184/htooeantlinn/pack1/image_51_uqnpr1.png"
+]} />
 
+*Old Board Port:*
 ```bash
-
+arduino-cli upload -p /dev/cu.usbmodem1101 -b rp2040:rp2040:rpipico2 --board-options "usbstack=picosdk" MySketch
 ```
-![Alt Text](ass/image_53.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410245/htooeantlinn/pack1/Screenshot_2026-03-10_at_3.00.42_PM_hlpkhm.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410220/htooeantlinn/pack1/image_52_c2hr4e.png"
+]} />
 
+### 4. Pico Monitor ပြန်ကြည့်နည်း
+1. Board ကို laptop မှ ဖြုတ်လိုက်ပါ။
+2. **BOOT button** ကို ဖိထားလျက် ပြန်တပ်ပါ။ စက္ကန့်အနည်းငယ်အကြာတွင် BOOT button ကို ပြန်လွှတ်ပါ။
+3. `arduino-cli board list` ဖြင့် port ကို ပြန်စစ်ပြီးမှ monitor command ကို run ပါ။
 ```bash
-
+arduino-cli monitor -p /dev/cu.usbmodem1101 -c baudrate=9600
 ```
-![Alt Text](ass/image_49.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410256/htooeantlinn/pack1/Screenshot_2026-03-10_at_3.10.31_PM_et3puw.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410250/htooeantlinn/pack1/Screenshot_2026-03-10_at_3.02.51_PM_ssmad5.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410248/htooeantlinn/pack1/Screenshot_2026-03-10_at_3.02.56_PM_mauezf.png"
+]} />
 
+:::danger Error Note
+New Pico board ကို upload လုပ်ပြီးချင်း `monitor` ကြည့်ပါက error တက်တတ်ပါသည်။
 ```bash
-
+arduino-cli monitor -p UF2_Board -c baudrate=9600
 ```
-![Alt Text](ass/image_55.png)
-
-```bash
-
-```
-![Alt Text](ass/image_56.png)
+<ImageLoop images={[
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410256/htooeantlinn/pack1/Screenshot_2026-03-10_at_3.08.45_PM_o2b7ri.png",
+    "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410226/htooeantlinn/pack1/image_53_toh6hw.png"
+]} />
+:::
