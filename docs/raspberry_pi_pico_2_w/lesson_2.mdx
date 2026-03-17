@@ -1,0 +1,67 @@
+---
+sidebar_label: 'Lesson 2'
+sidebar_position: 3
+---
+
+# Lesson 2: External LED Control (GPIO)
+
+Lesson 1 မှာ Onboard LED ကို စမ်းခဲ့ပြီးပြီဆိုတော့ အခုတစ်ခါမှာတော့ ပြင်ပက LED မီးလုံးလေးတွေကို Pico ရဲ့ GPIO (General Purpose Input/Output) Pin တွေမှာ ချိတ်ဆက်ပြီး ထိန်းချုပ်ကြည့်ပါမယ်။
+
+### လိုအပ်မည့် ပစ္စည်းများ
+* Raspberry Pi Pico 2 W x 1
+* Breadboard x 1
+* LED (မည်သည့်အရောင်မဆို) x 1
+* 220 Ohm Resistor x 1
+* Jumper Wires
+
+---
+
+### အဆင့် (၁) - Circuit ချိတ်ဆက်ခြင်း
+Pico ရဲ့ Pin တွေဟာ 3.3V ဖြစ်တဲ့အတွက် LED မလောင်အောင် Resistor ခံပေးဖို့ လိုပါတယ်။ အောက်ပါအတိုင်း ချိတ်ဆက်ပေးပါ။
+
+1.  **LED Long Leg (Anode):** Pico ရဲ့ **GP15** (Pin 20) မှာ ချိတ်ပါ။
+2.  **LED Short Leg (Cathode):** Resistor တစ်ဖက်နဲ့ ချိတ်ပါ။
+3.  **Resistor အခြားတစ်ဖက်:** Pico ရဲ့ **GND** (Pin 3, 8, သို့မဟုတ် 38) တစ်ခုခုမှာ ချိတ်ပါ။
+
+
+
+---
+
+### အဆင့် (၂) - MicroPython Code ရေးသားခြင်း
+Thonny IDE ကိုဖွင့်ပြီး အောက်ပါ code ကို ရေးပါ။ ဒီ code က LED ကို တစ်စက္ကန့်ခြား တစ်ခါ လင်းစေမှာ ဖြစ်ပါတယ်။
+
+```python
+from machine import Pin
+import time
+
+# Pin 15 ကို Output အဖြစ် သတ်မှတ်ခြင်း
+led_external = Pin(15, Pin.OUT)
+
+print("Starting LED Blink Project...")
+
+try:
+    while True:
+        led_external.value(1) # မီးဖွင့်မည် (High)
+        print("LED is ON")
+        time.sleep(1)
+        
+        led_external.value(0) # မီးပိတ်မည် (Low)
+        print("LED is OFF")
+        time.sleep(1)
+        
+except KeyboardInterrupt:
+    # Ctrl+C နှိပ်ရင် program ကို ရပ်ပြီး မီးပိတ်ပေးမည်
+    led_external.value(0)
+    print("Program Stopped")
+```
+
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **GPIO (General Purpose I/O):** Pico 2 W မှာ GP0 ကနေ GP28 အထိ GPIO pin ပေါင်း ၂၉ ခု ပါဝင်ပါတယ်။ (Pinout Diagram ကို Intro မှာ ပြန်ကြည့်နိုင်ပါတယ်)
+* **Digital Output:** `value(1)` သို့မဟုတ် `on()` သည် 3.3V ထုတ်ပေးခြင်းဖြစ်ပြီး `value(0)` သို့မဟုတ် `off()` သည် 0V (Ground) ဖြစ်စေခြင်းဖြစ်ပါတယ်။
+* **Resistor:** 220 Ohm ကနေ 330 Ohm အတွင်း Resistor တွေကို LED အတွက် သုံးနိုင်ပါတယ်။
+
+:::info Challenge!
+LED တစ်လုံးတည်း မဟုတ်ဘဲ နှစ်လုံး (ဥပမာ- GP14 နဲ့ GP15) ကို တစ်လှည့်စီ လင်းအောင် (Police Light ပုံစံမျိုး) Code ကို ပြင်ရေးကြည့်ပါ Linn။
+:::

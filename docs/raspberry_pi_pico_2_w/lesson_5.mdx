@@ -1,0 +1,60 @@
+---
+sidebar_label: 'Lesson 5'
+sidebar_position: 6
+---
+
+# Lesson 5: Dual Core Programming (Multitasking)
+
+ကျွန်ုပ်တို့ အရင်သင်ခန်းစာတွေမှာရေးခဲ့တဲ့ code တွေက Core 0 တစ်ခုတည်းမှာပဲ အလုပ်လုပ်တာပါ။ တကယ်လို့ အလုပ်တစ်ခုက `time.sleep()` ဖြစ်နေရင် ကျန်တဲ့ code တွေအကုန်လုံး ရပ်စောင့်နေရပါတယ်။ **Dual Core** ကို သုံးလိုက်ရင်တော့ Core 0 က sensor ဖတ်နေချိန်မှာ Core 1 က မီးမှိတ်တုတ်လုပ်တာမျိုး (သို့မဟုတ်) Wi-Fi ချိတ်တာမျိုးကို တစ်ပြိုင်တည်း လုပ်နိုင်သွားပါပြီ။
+
+### Dual Core ဘယ်လိုအလုပ်လုပ်သလဲ?
+Pico မှာ Core 0 နဲ့ Core 1 ဆိုပြီး ရှိပါတယ်။ MicroPython မှာ `_thread` ဆိုတဲ့ library ကိုသုံးပြီး ဒုတိယ Core ကို အလုပ်ပေးလို့ရပါတယ်။
+
+
+
+---
+
+### အဆင့် (၁) - ဦးနှောက်နှစ်လုံးခွဲပြီး အလုပ်ခိုင်းခြင်း
+ဒီ Project မှာ Core 1 ကို စက္ကန့်တိုင်း မီးမှိတ်တုတ်လုပ်ခိုင်းပြီး Core 0 ကိုတော့ loop ထဲမှာ တခြားအလုပ်တွေ (ဥပမာ- စာရိုက်ခြင်း) ကို အနှောင့်အယှက်မရှိ လုပ်ခိုင်းပါမယ်။
+
+```python
+import machine
+import time
+import _thread  # Multi-threading library
+
+# Onboard LED ကို သတ်မှတ်ခြင်း
+led = machine.Pin("LED", machine.Pin.OUT)
+
+# Core 1 မှာ လုပ်ဆောင်မည့် Function ကို အရင်တည်ဆောက်ပါ
+def core1_task():
+    print("Core 1: Starting LED Blink...")
+    while True:
+        led.toggle()
+        time.sleep(1) # Core 1 က ဒီမှာ စောင့်နေပေမဲ့ Core 0 ကို မထိခိုက်ပါ
+
+# Core 1 ကို စတင်ခိုင်းစေခြင်း
+_thread.start_new_thread(core1_task, ())
+
+# Core 0 မှာ လုပ်ဆောင်မည့် အဓိက Loop
+print("Core 0: Starting Main Loop...")
+count = 0
+while True:
+    print(f"Core 0 is running... Count: {count}")
+    count += 1
+    time.sleep(0.5) # Core 0 ရဲ့ speed နဲ့ Core 1 speed မတူတာကို တွေ့ရပါလိမ့်မယ်
+```
+
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Global Variables:** Core နှစ်ခုလုံးဟာ Variable အတူတူကို Share လုပ်သုံးလို့ရပါတယ်။ ဒါပေမဲ့ Core နှစ်ခုလုံးက variable တစ်ခုတည်းကို တစ်ပြိုင်တည်း ပြင်ဖို့ကြိုးစားရင် Error တက်နိုင်လို့ သတိထားရပါတယ်။
+* **Independence:** Core 1 မှာ code က crash ဖြစ်သွားရင်တောင် Core 0 က ဆက်ပြီး အလုပ်လုပ်နေနိုင်ပါတယ်။
+* **Resource Sharing:** Hardware pin တစ်ခုတည်း (ဥပမာ- LED pin) ကို Core နှစ်ခုလုံးကနေ တစ်ပြိုင်တည်း control လုပ်ဖို့ မကြိုးစားသင့်ပါဘူး။
+
+:::warning သတိပြုရန်
+MicroPython မှာ `_thread` ကို သုံးတဲ့အခါ Core 1 ထဲမှာ `while True` loop ပါရင် အဲဒီထဲမှာ `time.sleep()` လေး အနည်းဆုံး ထည့်ပေးပါ။ မဟုတ်ရင် Core 1 က CPU အားလုံးကို ယူသုံးပစ်လိုက်လို့ Core 0 ပါ လေးသွားနိုင်ပါတယ်။
+:::
+
+:::info Challenge!
+Core 0 ကို Potentiometer တန်ဖိုးဖတ်ခိုင်းပြီး၊ Core 1 ကိုတော့ အဲဒီတန်ဖိုးအပေါ်မူတည်ပြီး LED ကို အမြန်နှုန်းအမျိုးမျိုးနဲ့ မှိတ်တုတ်လုပ်ခိုင်းကြည့်ပါ Linn။
+:::

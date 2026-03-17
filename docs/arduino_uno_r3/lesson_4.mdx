@@ -3,66 +3,76 @@ sidebar_label: 'Lesson 4'
 sidebar_position: 5
 ---
 
-# Lesson 4
-### Digital Read Serial
+# Lesson 4: Serial Communication
+
+ဒီသင်ခန်းစာမှာတော့ Arduino က ဖတ်လိုက်တဲ့ data တွေကို ကျွန်ုပ်တို့ရဲ့ ကွန်ပျူတာ screen ပေါ်မှာ ဘယ်လိုပြန်ကြည့်ရမလဲဆိုတာကို လေ့လာသွားမှာဖြစ်ပါတယ်။ ဒါကို **Serial Communication** လို့ ခေါ်ပါတယ်။
+
+### Serial Monitor ဆိုတာဘာလဲ?
+Serial Monitor ဆိုတာ Arduino နဲ့ ကွန်ပျူတာအကြား message တွေ ပေးပို့လက်ခံတဲ့ နေရာဖြစ်ပါတယ်။ Code ရေးရင်း Error ရှာချင်တဲ့အခါ (Debugging) သို့မဟုတ် Input တန်ဖိုးတွေကို တိုက်ရိုက်ကြည့်ချင်တဲ့အခါမှာ အသုံးဝင်ပါတယ်။
+
+
+
+---
+
+### 1. Digital Read Serial
+Digital Input (0 သို့မဟုတ် 1) တန်ဖိုးတွေကို Serial Monitor မှာ ကြည့်ရှုနည်း ဖြစ်ပါတယ်။
+
 ```cpp
-/*
-  DigitalReadSerial
-
-  Reads a digital input on pin 2, prints the
-  result to the serial monitor
-
-  This example code is in the public domain.
-*/
-
 int buttonState = 0;
 
-void setup()
-{
+void setup() {
+  // Pin 2 ကို Input အဖြစ် သတ်မှတ်ခြင်း
   pinMode(2, INPUT);
+  
+  // Serial ဆက်သွယ်ရေးကို 9600 baud rate ဖြင့် စတင်ခြင်း
   Serial.begin(9600);
 }
 
-void loop()
-{
-  // read the input pin
+void loop() {
+  // ခလုတ်၏ အခြေအနေကို ဖတ်မည်
   buttonState = digitalRead(2);
-  // print out the state of the button
+
+  // ဖတ်ရရှိသော တန်ဖိုး (0 သို့မဟုတ် 1) ကို Screen ပေါ်တွင် ပြမည်
   Serial.println(buttonState);
-  delay(10); // Delay a little bit to improve simulation performance
+
+  delay(10); 
 }
 ```
 
-### Analog Read Serial
+---
+
+### 2. Analog Read Serial
+Potentiometer ကနေလာတဲ့ Analog တန်ဖိုး (0 - 1023) တွေကို Serial Monitor မှာ အချိန်နဲ့တပြေးညီ ကြည့်ရှုနည်း ဖြစ်ပါတယ်။
+
+
+
 ```cpp
-/*
-  AnalogReadSerial
-  Reads an analog input (potentiometer) on pin 0,
-  prints the result to the serial monitor.
-
-  OPEN THE SERIAL MONITOR TO VIEW THE OUTPUT FROM
-  THE POTENTIOMETER >>
-
-  Attach the center pin of a potentiometer to pin
-  A0, and the outside pins to +5V and ground.
-
-  This example code is in the public domain.
-*/
-
 int sensorValue = 0;
 
-void setup()
-{
+void setup() {
   pinMode(A0, INPUT);
+  
+  // Serial ဆက်သွယ်ရေး စတင်ခြင်း
   Serial.begin(9600);
 }
 
-void loop()
-{
-  // read the input on analog pin 0:
+void loop() {
+  // Analog pin A0 မှ တန်ဖိုးကို ဖတ်မည်
   sensorValue = analogRead(A0);
-  // print out the value you read:
+
+  // ဖတ်ရရှိသော တန်ဖိုး (0 ကနေ 1023 အထိ) ကို Screen ပေါ်တွင် ပြမည်
   Serial.println(sensorValue);
-  delay(10); // Delay a little bit to improve simulation performance
+
+  delay(10); 
 }
 ```
+
+---
+
+### 💡 သိကောင်းစရာ
+* **Serial.begin(9600):** ဒါဟာ ဆက်သွယ်ရေး အမြန်နှုန်း (Baud Rate) ဖြစ်ပါတယ်။ ကွန်ပျူတာက Serial Monitor မှာ ရွေးထားတဲ့ baud rate နဲ့ Arduino က သတ်မှတ်ထားတဲ့ baud rate တူညီနေရပါမယ်။
+* **Serial.println():** တန်ဖိုးတစ်ခုကို ရိုက်နှိပ်ပြီး line အသစ် (Enter ခေါက်သလို) တစ်ကြောင်း ဆင်းပေးတာ ဖြစ်ပါတယ်။
+
+:::tip Debugging Tip
+သင့်ရဲ့ project က အလုပ်မလုပ်ဘူးဆိုရင် sensor တွေက တန်ဖိုးအမှန်တကယ် ထွက်မထွက် သိနိုင်ဖို့ `Serial.println()` ကို သုံးပြီး အမြဲစစ်ဆေးကြည့်ပါ။
+:::

@@ -1,0 +1,78 @@
+---
+sidebar_label: 'Lesson 4'
+sidebar_position: 5
+---
+
+# Lesson 4: PWM & ADC (Analog Features)
+
+Digital ဆိုတာ 0 နဲ့ 1 (အဖွင့်နဲ့ အပိတ်) ပဲ ရှိတာပါ။ ဒါပေမဲ့ LED ကို အလင်းဝေဝေလေး လင်းစေချင်တာမျိုး ဒါမှမဟုတ် Potentiometer (အလှည့်ခလုတ်) ရဲ့ တန်ဖိုးကို ဖတ်ချင်တာမျိုးဆိုရင် **PWM** နဲ့ **ADC** ကို သုံးရပါတယ်။
+
+### 1. PWM (Pulse Width Modulation) - LED အလင်းလျှော့ခြင်း
+Pico 2 W ရဲ့ GPIO pin တိုင်းဟာ PWM ကို Support ပေးပါတယ်။ PWM ဆိုတာ မီးကို အဖွင့်အပိတ် အရမ်းမြန်အောင်လုပ်ပြီး မျက်စိထဲမှာ အလင်းလျော့သွားသလို ထင်ရအောင် ဖန်တီးတာဖြစ်ပါတယ်။
+
+**Circuit:** Lesson 2 အတိုင်း LED ကို **GP15** မှာ ချိတ်ထားပါ။
+
+```python
+from machine import Pin, PWM
+import time
+
+# PWM object တည်ဆောက်ခြင်း (Frequency 1000Hz သတ်မှတ်မည်)
+led_pwm = PWM(Pin(15))
+led_pwm.freq(1000)
+
+print("Starting PWM Fading...")
+
+while True:
+    # 0 မှ 65535 အတွင်း Duty Cycle ကို တိုးပေးခြင်း (အလင်းတိုးလာမည်)
+    for duty in range(0, 65535, 500):
+        led_pwm.duty_u16(duty)
+        time.sleep(0.01)
+        
+    # 65535 မှ 0 အတွင်း Duty Cycle ကို လျှော့ပေးခြင်း (အလင်းမှိန်သွားမည်)
+    for duty in range(65535, 0, -500):
+        led_pwm.duty_u16(duty)
+        time.sleep(0.01)
+```
+
+---
+
+### 2. ADC (Analog to Digital Converter) - Sensor ဖတ်ခြင်း
+Pico 2 W မှာ Analog တန်ဖိုးဖတ်နိုင်တဲ့ ADC Pins ၃ ခု (GP26, GP27, GP28) ပါဝင်ပါတယ်။
+
+**Circuit:**
+1. **Potentiometer Side 1:** Pico **3.3V** (Pin 36)
+2. **Potentiometer Side 2:** Pico **GND** (Pin 38)
+3. **Potentiometer Center (Wiper):** Pico **GP26** (Pin 31)
+
+
+
+```python
+from machine import Pin, ADC
+import time
+
+# ADC Pin GP26 ကို အသုံးပြုမည်
+pot = ADC(Pin(26))
+
+print("Reading Potentiometer...")
+
+while True:
+    # 0 မှ 65535 အထိ တန်ဖိုးကို ဖတ်ခြင်း
+    val = pot.read_u16()
+    
+    # Voltage အဖြစ် ပြောင်းလဲတွက်ချက်ခြင်း (3.3V logic ဖြစ်၍)
+    voltage = val * (3.3 / 65535)
+    
+    print(f"Raw Value: {val} | Voltage: {voltage:.2f}V")
+    time.sleep(0.5)
+```
+
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Resolution:** Pico ရဲ့ ADC ဟာ 12-bit ဖြစ်ပေမဲ့ MicroPython က အခြား board တွေနဲ့ တူအောင် 16-bit ($0 - 65535$) အဖြစ် Scale လုပ်ပေးထားပါတယ်။
+* **Duty Cycle:** PWM မှာ `duty_u16(65535)` ဆိုရင် 100% Full Power (အလင်းဆုံး) ဖြစ်ပြီး `0` ဆိုရင် ပိတ်သွားတာ ဖြစ်ပါတယ်။
+* **Voltage Warning:** Pico ရဲ့ GPIO pin တွေဟာ **3.3V** သာ ခံနိုင်ရည်ရှိပါတယ်။ 5V ပေးမိရင် Board လောင်သွားနိုင်လို့ သတိထားပါ Linn။
+
+:::info Challenge!
+Potentiometer ကို လှည့်လိုက်တဲ့အပေါ် မူတည်ပြီး LED ရဲ့ အလင်းအမှောင် (Brightness) ပြောင်းသွားအောင် Code ကို ပေါင်းရေးကြည့်ပါ Linn။ (ADC က ရတဲ့ value ကို PWM duty ထဲ တိုက်ရိုက်ထည့်ပေးရုံပါပဲ!)
+:::

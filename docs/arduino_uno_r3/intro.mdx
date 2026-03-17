@@ -10,12 +10,10 @@ export const ImageLoop = ({ images }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   
   useEffect(() => {
-    // Only set interval if there's more than one image
     if (images.length <= 1) return;
-
     const timer = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1000);
+    }, 2000);
     return () => clearInterval(timer);
   }, [images.length]);
 
@@ -62,9 +60,38 @@ export const ImageLoop = ({ images }) => {
   );
 };
 
-# Intro
-အရမ်းရိုးရှင်းတယ်၊ 5V ဖြစ်တဲ့အတွက် Sensor တော်တော်များများနှင့် တိုက်ရိုက်ချိတ်လို့ရတယ်။ ဒါပေမဲ့ Memory နည်းလို့ Project အကြီးကြီးတွေ လုပ်ရင် ကျပ်တတ်တယ်။
+# Introduction to Arduino Uno R3
+
+Arduino Uno R3 ဟာ Microcontroller လောကကို စတင်လေ့လာသူတွေအတွက် အခြေခံအကျဆုံးနဲ့ အသုံးအများဆုံး Board တစ်ခုဖြစ်ပါတယ်။
 
 <ImageLoop images={[
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773457122/htooeantlinn/pack2/Screenshot_2026-02-27_at_8.24.48_PM_gxhxvl.png"
 ]} />
+
+### 💡 ဘာကြောင့် Uno R3 ကို သုံးသင့်တာလဲ?
+* **Simplicity:** အသုံးပြုရတာ အလွန်ရိုးရှင်းပြီး လေ့လာရလွယ်ကူပါတယ်။
+* **5V Compatibility:** Logic level က 5V ဖြစ်တဲ့အတွက် လက်ရှိဈေးကွက်ထဲက Sensor တော်တော်များများနှင့် တိုက်ရိုက်ချိတ်ဆက်နိုင်ပါတယ်။
+* **Durability:** အကြမ်းခံပြီး Error ရှာရတာ လွယ်ကူပါတယ်။
+
+### ⚠️ သတိပြုရန် အချက်များ
+* **Memory Limit:** Memory (SRAM/Flash) နည်းပါးသည့်အတွက် Project အကြီးကြီးတွေ၊ Graphics ပိုင်းတွေလုပ်တဲ့အခါ ကျပ်တတ်ပါတယ်။
+* **Size:** ယနေ့ခေတ် Board အသစ်တွေနဲ့ ယှဉ်ရင် အရွယ်အစား အနည်းငယ် ကြီးမားပါတယ်။
+
+### သင်ယူသွားမည့် လမ်းညွှန် (Proposed Curriculum)
+
+1.  **Lesson 1:** Basic Output Control
+2.  **Lesson 2:** Input Handling (Buttons)
+3.  **Lesson 3:** Analog Input (Potentiometer)
+4.  **Lesson 4:** Serial Communication
+5.  **Lesson 5:** Advanced Analog Techniques
+6.  **Lesson 6:** Servo Motor Control
+7.  **Lesson 7:** Sound and Melodies
+8.  **Lesson 8:** Ultrasonic Distance Sensor
+9.  **Lesson 9:** NeoPixel (RGB LED Strip)
+10.  **Lesson 10:** LCD Display (Hello World)
+11.  **Lesson 11:** Advanced Logic & Optimization
+12.  **Lesson 12:** Practical Sensor Projects
+
+:::tip Summary
+အခြေခံလေ့လာသူတွေအတွက်တော့ Uno R3 ထက် ကောင်းတဲ့ရွေးချယ်မှု မရှိသလောက်ပါပဲ။
+:::

@@ -3,164 +3,104 @@ sidebar_label: 'Lesson 11'
 sidebar_position: 12
 ---
 
-# Lesson 11
+# Lesson 11: Advanced Logic & Optimization
 
-### Read Analog Voltage
+ဒီသင်ခန်းစာမှာတော့ Arduino ရဲ့ ဖတ်ရှုရရှိတဲ့ data တွေကို Voltage အဖြစ် ပြောင်းလဲတွက်ချက်နည်းနဲ့ Code တွေကို ပိုမိုမြန်ဆန် စမတ်ကျလာစေမယ့် နည်းလမ်းတွေကို လေ့လာပါမယ်။
+
+### 1. Read Analog Voltage (Voltage တိုက်ရိုက်တွက်ချက်ခြင်း)
+Analog Read ကနေရတဲ့ 0-1023 တန်ဖိုးကို တကယ့်လက်တွေ့ Voltage (0V - 5V) အဖြစ် သင်္ချာနည်းဖြင့် ပြောင်းလဲနည်း ဖြစ်ပါတယ်။
+
+
+
 ```cpp
-/*
-  ReadAnalogVoltage
-  Reads an analog input on pin 0, converts it to voltage, and prints the result to the serial monitor.
-
-  OPEN THE SERIAL MONITOR TO VIEW THE OUTPUT >> 
-  Attach the center pin of a potentiometer to pin A0, and the outside pins to +5V and ground.
-
-  This example code is in the public domain.
-*/
-
-
-// the setup routine runs once when you press reset:
 void setup() {
-  // initialize serial communication at 9600 bits per second:
   Serial.begin(9600);
 }
 
-// the loop routine runs over and over again forever:
 void loop() {
-  // read the input on analog pin 0:
   int sensorValue = analogRead(A0);
-  // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
+
+  // 0-1023 တန်ဖိုးကို 0-5V အဖြစ် ပြောင်းလဲတွက်ချက်ခြင်း
+  // Formula: (Value * 5.0) / 1023.0
   float voltage = sensorValue * (5.0 / 1023.0);
-  // print out the value you read:
+
+  Serial.print("Voltage: ");
   Serial.println(voltage);
+  delay(100);
 }
 ```
 
-### Blink Without Delay
+---
+
+### 2. Blink Without Delay (Multitasking လုပ်နည်း)
+`delay()` ကို သုံးရင် Arduino ဟာ အဲဒီအချိန်အတွင်းမှာ တခြားအလုပ် ဘာမှမလုပ်ဘဲ ရပ်နေတတ်ပါတယ်။ အဲဒီပြဿနာကို ဖြေရှင်းဖို့ `millis()` (အချိန်မှတ်နာရီ) ကို အသုံးပြုပြီး အလုပ်နှစ်ခုကို တစ်ပြိုင်နက် လုပ်ဆောင်နည်း ဖြစ်ပါတယ်။
+
+
+
 ```cpp
-/* Blink without Delay
-
- Turns on and off a light emitting diode (LED) connected to a digital
- pin, without using the delay() function.  This means that other code
- can run at the same time without being interrupted by the LED code.
-
- The circuit:
- * Use the onboard LED.
- * Note: Most Arduinos have an on-board LED you can control. On the UNO, MEGA and ZERO 
-  it is attached to digital pin 13, on MKR1000 on pin 6. LED_BUILTIN is set to
-  the correct LED pin independent of which board is used.
-  If you want to know what pin the on-board LED is connected to on your Arduino model, check
-  the Technical Specs of your board  at https://www.arduino.cc/en/Main/Products
-
- created 2005
- by David A. Mellis
- modified 8 Feb 2010
- by Paul Stoffregen
- modified 11 Nov 2013
- by Scott Fitzgerald
- modified 9 Jan 2017
- by Arturo Guadalupi
-
-
- This example code is in the public domain.
-
- http://www.arduino.cc/en/Tutorial/BlinkWithoutDelay
- */
-
-// constants won't change. Used here to set a pin number :
-const int ledPin =  LED_BUILTIN;// the number of the LED pin
-
-// Variables will change :
-int ledState = LOW;             // ledState used to set the LED
-
-// Generally, you should use "unsigned long" for variables that hold time
-// The value will quickly become too large for an int to store
-unsigned long previousMillis = 0;        // will store last time LED was updated
-
-// constants won't change :
-const long interval = 1000;           // interval at which to blink (milliseconds)
+const int ledPin = LED_BUILTIN;
+int ledState = LOW;
+unsigned long previousMillis = 0; // နောက်ဆုံး မီးမှိတ်ခဲ့သည့် အချိန်ကို မှတ်ထားရန်
+const long interval = 1000;       // မီးမှိတ်တုတ်လုပ်မည့် ကြာချိန်
 
 void setup() {
-  // set the digital pin as output:
   pinMode(ledPin, OUTPUT);
 }
 
 void loop() {
-  // here is where you'd put code that needs to be running all the time.
+  unsigned long currentMillis = millis(); // လက်ရှိအချိန်ကို ဖတ်ခြင်း
 
-  // check to see if it's time to blink the LED; that is, if the
-  // difference between the current time and last time you blinked
-  // the LED is bigger than the interval at which you want to
-  // blink the LED.
-  unsigned long currentMillis = millis();
-
+  // သတ်မှတ်ထားတဲ့ interval ပြည့်ပြီလား စစ်ဆေးခြင်း
   if (currentMillis - previousMillis >= interval) {
-    // save the last time you blinked the LED
-    previousMillis = currentMillis;
+    previousMillis = currentMillis; // အချိန်ဟောင်းကို Update လုပ်မည်
 
-    // if the LED is off turn it on and vice-versa:
-    if (ledState == LOW) {
-      ledState = HIGH;
-    } else {
-      ledState = LOW;
-    }
-
-    // set the LED with the ledState of the variable:
+    // LED အခြေအနေကို ပြောင်းပြန်လှန်မည်
+    ledState = (ledState == LOW) ? HIGH : LOW;
     digitalWrite(ledPin, ledState);
   }
+  
+  // ဤနေရာတွင် delay() မရှိသည့်အတွက် တခြား code များကို တစ်ပြိုင်နက် ရေးသားနိုင်သည်
 }
 ```
 
-### Input Serial Pullup
+---
+
+### 3. Input Pullup (Circuit ကို ရိုးရှင်းစေခြင်း)
+အရင်သင်ခန်းစာတွေမှာ ခလုတ် (Button) သုံးရင် Resistor တစ်လုံး အပြင်မှာ ခံရပါတယ်။ `INPUT_PULLUP` ကို သုံးရင်တော့ Arduino ထဲမှာပါတဲ့ Internal Resistor ကို သုံးမှာဖြစ်လို့ အပြင်မှာ Resistor ခံစရာ မလိုတော့ပါဘူး။
+
+
+
 ```cpp
-/*
- Input Pullup Serial
-
- This example demonstrates the use of pinMode(INPUT_PULLUP). It reads a
- digital input on pin 2 and prints the results to the serial monitor.
- 
- OPEN THE SERIAL MONITOR TO SEE THE OUTPUT FROM THE INPUT PIN >>
-
- The circuit:
- * Momentary switch attached from pin 2 to ground
- * Built-in LED on pin 13
-
- Unlike pinMode(INPUT), there is no pull-down resistor necessary. An internal
- 20K-ohm resistor is pulled to 5V. This configuration causes the input to
- read HIGH when the switch is open, and LOW when it is closed.
-
- created 14 March 2012
- by Scott Fitzgerald
-
- http://www.arduino.cc/en/Tutorial/InputPullupSerial
-
- This example code is in the public domain
-
- */
-
 void setup() {
-  //start serial connection
   Serial.begin(9600);
-  //configure pin2 as an input and enable the internal pull-up resistor
+  
+  // ခလုတ်ကို Resistor မလိုဘဲ တိုက်ရိုက်ချိတ်ရန် (Internal Pull-up သုံးမည်)
   pinMode(2, INPUT_PULLUP);
   pinMode(LED_BUILTIN, OUTPUT);
-
 }
 
 void loop() {
-  //read the pushbutton value into a variable
   int sensorVal = digitalRead(2);
-  //print out the value of the pushbutton
   Serial.println(sensorVal);
 
-  // Keep in mind the pullup means the pushbutton's
-  // logic is inverted. It goes HIGH when it's open,
-  // and LOW when it's pressed. Turn on pin 13 when the
-  // button's pressed, and off when it's not:
-  if (sensorVal == HIGH) {
-    digitalWrite(LED_BUILTIN, LOW);
-  } else {
+  // သတိပြုရန်- INPUT_PULLUP သည် Logic ပြောင်းပြန်ဖြစ်သည်
+  // ခလုတ်မနှိပ်လျှင် HIGH ဖြစ်ပြီး၊ နှိပ်လိုက်မှ LOW ဖြစ်သွားမည်
+  if (sensorVal == LOW) { // ခလုတ်နှိပ်လိုက်လျှင်
     digitalWrite(LED_BUILTIN, HIGH);
+  } else {
+    digitalWrite(LED_BUILTIN, LOW);
   }
 }
 ```
 
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Floating Pin:** ခလုတ်တစ်ခုကို Resistor မခံဘဲ `INPUT` ရိုးရိုးပဲ သုံးရင် Pin က Signal တွေ ငြိမ်မနေဘဲ (0 နဲ့ 1 ကြား ခုန်နေပြီး) Error တက်တတ်ပါတယ်။ ဒါကြောင့် `INPUT_PULLUP` ကို သုံးတာ ဖြစ်ပါတယ်။
+* **millis() vs delay():** Project အကြီးတွေမှာ `delay()` ကို ရှောင်ပြီး `millis()` ကို သုံးတာဟာ ပိုပြီး Professional ကျတဲ့ နည်းလမ်းဖြစ်ပါတယ်။
+
+:::tip Summary
+* **Voltage calculation:** Sensor ကနေ တိကျတဲ့ output voltage သိချင်ရင် သုံးပါ။
+* **Millis:** အလုပ်တွေကို တစ်ပြိုင်နက် (Parallel) လုပ်ချင်ရင် သုံးပါ။
+* **Input Pullup:** ခလုတ်ချိတ်တဲ့အခါ ကြိုးရှုပ်တာနဲ့ Resistor သုံးရတာ သက်သာချင်ရင် သုံးပါ။
+:::

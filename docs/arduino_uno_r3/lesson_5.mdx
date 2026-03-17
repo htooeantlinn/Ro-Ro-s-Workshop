@@ -3,214 +3,135 @@ sidebar_label: 'Lesson 5'
 sidebar_position: 6
 ---
 
-# Lesson 5
-### Analog In, Serial Out
+# Lesson 5: Advanced Analog Techniques
+
+ဒီသင်ခန်းစာမှာတော့ Analog Input တွေကို ပိုမိုတိကျစေဖို့နဲ့ တခြား Device တွေကို ထိန်းချုပ်ဖို့အတွက် data တွေကို ဘယ်လို Processing လုပ်မလဲဆိုတာ လေ့လာသွားပါမယ်။
+
+### 1. Analog In, Serial Out (Mapping Data)
+Arduino ရဲ့ Analog Read (0-1023) ကို LED ရဲ့ Brightness (0-255) အဖြစ် ပြောင်းလဲအသုံးပြုနည်း ဖြစ်ပါတယ်။
+
+
+
 ```cpp
-/*
-  Analog input, analog output, serial output
-
-  Reads an analog input pin, maps the result to a
-  range from 0 to 255  and uses the result to set
-  the pulsewidth modulation (PWM) of an output
-  pin.  Also prints the results to the serial
-  monitor.
-
-  The circuit:
-  * potentiometer connected to analog pin 0.
-    Center pin of the potentiometer goes to the
-    analog pin. side pins of the potentiometer go
-    to +5V and ground
-  * LED connected from digital pin 9 to ground
-
-  created 29 Dec. 2008
-  modified 9 Apr 2012
-  by Tom Igoe
-
-  This example code is in the public domain.
-*/
-
 int sensorValue = 0;
-
 int outputValue = 0;
 
-void setup()
-{
+void setup() {
   pinMode(A0, INPUT);
-  pinMode(9, OUTPUT);
+  pinMode(9, OUTPUT); // PWM Pin
   Serial.begin(9600);
 }
 
-void loop()
-{
-  // read the analog in value:
+void loop() {
   sensorValue = analogRead(A0);
-  // map it to the range of the analog out:
+
+  // map(value, fromLow, fromHigh, toLow, toHigh)
+  // 0-1023 အကွာအဝေးကို 0-255 အဖြစ် အချိုးချပြောင်းလဲခြင်း
   outputValue = map(sensorValue, 0, 1023, 0, 255);
-  // change the analog out value:
+
   analogWrite(9, outputValue);
-  // print the results to the serial monitor:
+
   Serial.print("sensor = ");
   Serial.print(sensorValue);
   Serial.print("\t output = ");
   Serial.println(outputValue);
-  // wait 2 milliseconds before the next loop for the
-  // analog-to-digital converter to settle after the
-  // last reading:
-  delay(2); // Wait for 2 millisecond(s)
+  
+  delay(2); 
 }
 ```
 
-### Calibration
+---
+
+### 2. Sensor Calibration (အာရုံခံနိုင်စွမ်းကို ချိန်ညှိခြင်း)
+Sensor တစ်ခုရဲ့ အနိမ့်ဆုံးနဲ့ အမြင့်ဆုံး တန်ဖိုးတွေကို ပတ်ဝန်းကျင် အခြေအနေအလိုက် ချိန်ညှိပေးတဲ့ နည်းလမ်းဖြစ်ပါတယ်။ စစချင်း ၅ စက္ကန့်အတွင်းမှာ Calibration လုပ်ပါမယ်။
+
+
+
 ```cpp
-/*
-  Calibration
+const int sensorPin = A0;
+const int ledPin = 9;
 
- Demonstrates one technique for calibrating sensor input.  The
- sensor readings during the first five seconds of the sketch
- execution define the minimum and maximum of expected values
- attached to the sensor pin.
-
- The sensor minimum and maximum initial values may seem backwards.
- Initially, you set the minimum high and listen for anything
- lower, saving it as the new minimum. Likewise, you set the
- maximum low and listen for anything higher as the new maximum.
-
- The circuit:
- * Analog sensor (potentiometer will do) attached to analog input 0
- * LED attached from digital pin 9 to ground
-
- created 29 Oct 2008
- By David A Mellis
- modified 30 Aug 2011
- By Tom Igoe
-
- http://www.arduino.cc/en/Tutorial/Calibration
-
- This example code is in the public domain.
-
- */
-
-// These constants won't change:
-const int sensorPin = A0;    // pin that the sensor is attached to
-const int ledPin = 9;        // pin that the LED is attached to
-
-// variables:
-int sensorValue = 0;         // the sensor value
-int sensorMin = 1023;        // minimum sensor value
-int sensorMax = 0;           // maximum sensor value
-
+int sensorValue = 0;
+int sensorMin = 1023; // အနိမ့်ဆုံးကို အမြင့်ဆုံးတန်ဖိုးအရင်ထား
+int sensorMax = 0;    // အမြင့်ဆုံးကို အနိမ့်ဆုံးတန်ဖိုးအရင်ထား
 
 void setup() {
-  // turn on LED to signal the start of the calibration period:
   pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH); // Calibration လုပ်နေကြောင်း မီးဖွင့်ပြမည်
 
-  // calibrate during the first five seconds
+  // ပထမ ၅ စက္ကန့်အတွင်း Sensor တန်ဖိုးများကို မှတ်သားခြင်း
   while (millis() < 5000) {
     sensorValue = analogRead(sensorPin);
-
-    // record the maximum sensor value
-    if (sensorValue > sensorMax) {
-      sensorMax = sensorValue;
-    }
-
-    // record the minimum sensor value
-    if (sensorValue < sensorMin) {
-      sensorMin = sensorValue;
-    }
-    // delay a bit
+    if (sensorValue > sensorMax) sensorMax = sensorValue;
+    if (sensorValue < sensorMin) sensorMin = sensorValue;
     delay(50);
   }
 
-  // signal the end of the calibration period
-  digitalWrite(LED_BUILTIN, LOW);
+  digitalWrite(LED_BUILTIN, LOW); // Calibration ပြီးကြောင်း မီးပိတ်ပြမည်
 }
 
 void loop() {
-  // read the sensor:
   sensorValue = analogRead(sensorPin);
-
-  // apply the calibration to the sensor reading
+  
+  // Calibrated ဖြစ်ထားသော range အတိုင်း mapping လုပ်ခြင်း
   sensorValue = map(sensorValue, sensorMin, sensorMax, 0, 255);
-
-  // in case the sensor value is outside the range seen during calibration
+  
+  // တန်ဖိုးကို 0-255 အတွင်းသာ ရှိစေရန် ကန့်သတ်ခြင်း
   sensorValue = constrain(sensorValue, 0, 255);
 
-  // fade the LED using the calibrated value:
   analogWrite(ledPin, sensorValue);
-  
-  // delay a little bit
   delay(50);
-}	
+}
 ```
 
-### Smoothing
+---
+
+### 3. Smoothing (Noise များဖယ်ရှားခြင်း)
+Sensor ကလာတဲ့ data တွေဟာ တစ်ခါတလေ အရမ်းခုန်နေတတ်ပါတယ်။ အဲဒီအခါမှာ data ၁၀ ခုကို ပျမ်းမျှ (Average) ရှာပြီး ငြိမ်သွားအောင် လုပ်တဲ့ နည်းလမ်းဖြစ်ပါတယ်။
+
+
+
 ```cpp
-/*
-
-  Smoothing
-
-  Reads repeatedly from an analog input, calculating a running average
-  and printing it to the computer.  Keeps ten readings in an array and
-  continually averages them.
-
-  The circuit:
-    * Analog sensor (potentiometer will do) attached to analog input 0
-
-  Created 22 April 2007
-  By David A. Mellis  <dam@mellis.org>
-  modified 9 Apr 2012
-  by Tom Igoe
-  http://www.arduino.cc/en/Tutorial/Smoothing
-
-  This example code is in the public domain.
-
-
-*/
-
-
-// Define the number of samples to keep track of.  The higher the number,
-// the more the readings will be smoothed, but the slower the output will
-// respond to the input.  Using a constant rather than a normal variable lets
-// use this value to determine the size of the readings array.
 const int numReadings = 10;
-
-int readings[numReadings];      // the readings from the analog input
-int readIndex = 0;              // the index of the current reading
-int total = 0;                  // the running total
-int average = 0;                // the average
-
+int readings[numReadings];      
+int readIndex = 0;              
+int total = 0;                  
+int average = 0;                
 int inputPin = A0;
 
 void setup() {
-  // initialize serial communication with computer:
   Serial.begin(9600);
-  // initialize all the readings to 0:
+  // Array ထဲက တန်ဖိုးများကို 0 အဖြစ် စတင်သတ်မှတ်ခြင်း
   for (int thisReading = 0; thisReading < numReadings; thisReading++) {
     readings[thisReading] = 0;
   }
 }
 
 void loop() {
-  // subtract the last reading:
+  // အဟောင်းဆုံး data ကို နှုတ်ထုတ်မည်
   total = total - readings[readIndex];
-  // read from the sensor:
+  
+  // data အသစ်ကို ဖတ်ပြီး array ထဲထည့်မည်
   readings[readIndex] = analogRead(inputPin);
-  // add the reading to the total:
+  
+  // data အသစ်ကို ပေါင်းထည့်မည်
   total = total + readings[readIndex];
-  // advance to the next position in the array:
+  
   readIndex = readIndex + 1;
 
-  // if we're at the end of the array...
-  if (readIndex >= numReadings) {
-    // ...wrap around to the beginning:
-    readIndex = 0;
-  }
+  // Array အဆုံးရောက်ရင် အစကနေ ပြန်သွားမည်
+  if (readIndex >= numReadings) readIndex = 0;
 
-  // calculate the average:
+  // ပျမ်းမျှတန်ဖိုး ရှာခြင်း
   average = total / numReadings;
-  // send it to the computer as ASCII digits
+  
   Serial.println(average);
-  delay(1);        // delay in between reads for stability
+  delay(1); 
 }
 ```
+
+:::info Summary
+* **Map:** တန်ဖိုးတွေကို တစ်ခုကနေ တစ်ခု အချိုးချပြောင်းလဲချင်ရင် သုံးပါ။
+* **Calibration:** Sensor တစ်ခုချင်းစီရဲ့ Range ကို တိကျချင်ရင် သုံးပါ။
+* **Smoothing:** Serial Plotter မှာ ကြည့်တဲ့အခါ data တွေ အရမ်းခုန်နေရင် ငြိမ်သွားဖို့ သုံးပါ။
+:::

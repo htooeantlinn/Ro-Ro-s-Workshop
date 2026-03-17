@@ -1,0 +1,71 @@
+---
+sidebar_label: 'Lesson 6'
+sidebar_position: 7
+---
+
+# Lesson 6: Wi-Fi Basics (Connecting to Internet)
+
+Pico 2 W ရဲ့ အကောင်းဆုံး Feature ကတော့ Wi-Fi ပါဝင်တာပါပဲ။ ဒီသင်ခန်းစာမှာ Pico ကို အိမ်က Wi-Fi Router နဲ့ ချိတ်ဆက်ပြီး IP Address တစ်ခု ရယူနည်းကို လေ့လာပါမယ်။ ဒါဟာ IoT project တွေအတွက် အခြေခံအကျဆုံး အဆင့်ဖြစ်ပါတယ်။
+
+### အဆင့် (၁) - Network Library အသုံးပြုခြင်း
+MicroPython မှာ Wi-Fi ချိတ်ဖို့ `network` ဆိုတဲ့ library ကို အသုံးပြုရပါတယ်။
+
+
+
+---
+
+### အဆင့် (၂) - Wi-Fi ချိတ်ဆက်သည့် Code ရေးသားခြင်း
+အောက်ပါ code ထဲက `WIFI_SSID` နဲ့ `WIFI_PASSWORD` နေရာမှာ မိမိအိမ်က Wi-Fi နာမည်နဲ့ password ကို အစားထိုးပေးပါ။
+
+```python
+import network
+import time
+
+# Wi-Fi အချက်အလက်များ
+WIFI_SSID = "သင့်ရဲ့_WiFi_နာမည်"
+WIFI_PASSWORD = "သင့်ရဲ့_WiFi_Password"
+
+def connect_wifi():
+    # Wi-Fi Station Mode ကို စတင်ခြင်း
+    wlan = network.WLAN(network.STA_IF)
+    wlan.active(True)
+    
+    if not wlan.isconnected():
+        print(f'Connecting to {WIFI_SSID}...')
+        wlan.connect(WIFI_SSID, WIFI_PASSWORD)
+        
+        # ချိတ်ဆက်နေစဉ် စောင့်ဆိုင်းခြင်း (Timeout ၁၀ စက္ကန့်)
+        max_wait = 10
+        while max_wait > 0:
+            if wlan.isconnected():
+                break
+            max_wait -= 1
+            print('Waiting for connection...')
+            time.sleep(1)
+
+    if wlan.isconnected():
+        print('Connection Successful!')
+        # ရရှိလာသော IP Address ကို ထုတ်ကြည့်ခြင်း
+        status = wlan.ifconfig()
+        print(f'IP Address: {status[0]}')
+    else:
+        print('Connection Failed!')
+
+# Function ကို ခေါ်ယူအသုံးပြုခြင်း
+connect_wifi()
+```
+
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **STA_IF (Station Interface):** Pico ကနေ Router ကို ချိတ်ဆက်တဲ့ mode ဖြစ်ပါတယ်။ (ဖုန်းမှာ Wi-Fi ဖွင့်သုံးသလိုမျိုး)
+* **AP_IF (Access Point Interface):** Pico ကိုယ်တိုင်က Wi-Fi လွှင့်ပေးတဲ့ mode ဖြစ်ပါတယ်။ (Hotspot လွှင့်သလိုမျိုး)
+* **2.4GHz Only:** Pico 2 W ဟာ 2.4GHz Wi-Fi ကိုသာ Support လုပ်ပါတယ်။ 5GHz Wi-Fi (Dual Band) ဆိုရင် 2.4GHz band ကိုပဲ ရွေးချယ်ချိတ်ဆက်ပေးပါ။
+
+:::warning Security Tip
+ကိုယ့်ရဲ့ Wi-Fi Password ကို Code ထဲမှာ တိုက်ရိုက်ရေးမထားချင်ရင် `secrets.py` ဆိုတဲ့ file သီးသန့်ခွဲပြီး သိမ်းဆည်းထားတဲ့ နည်းလမ်းကို သုံးနိုင်ပါတယ်။
+:::
+
+:::info Challenge!
+Wi-Fi ချိတ်ဆက်နေစဉ်အတွင်း Onboard LED ကို မှိတ်တုတ်မှိတ်တုတ် လုပ်ခိုင်းပြီး၊ ချိတ်ဆက်မှု အောင်မြင်သွားတဲ့အခါမှာ LED ကို အမြဲတမ်း လင်းနေအောင် Code ကို ပြင်ရေးကြည့်ပါ Linn။
+:::

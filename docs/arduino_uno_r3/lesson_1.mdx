@@ -3,76 +3,72 @@ sidebar_label: 'Lesson 1'
 sidebar_position: 2
 ---
 
-# Lesson 1
-### Breadboard
+# Lesson 1: Basic Output Control
+
+Arduino ရဲ့ အခြေခံအကျဆုံး Output control ဖြစ်တဲ့ Digital Write (အဖွင့်/အပိတ်) နဲ့ Analog Write (အလင်းအမှောင်ချိန်ခြင်း) သင်ခန်းစာ ဖြစ်ပါတယ်။
+
+### 1. Breadboard Connection
+အခြေခံ Circuit တစ်ခု တည်ဆောက်တဲ့အခါ လျှပ်စစ်စီးဆင်းမှုကို နားလည်ရန် အရေးကြီးပါတယ်။
+
 ```cpp
-void setup()
-{
+void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void loop()
-{
+void loop() {
   digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000); // Wait for 1000 millisecond(s)
+  delay(1000); 
   digitalWrite(LED_BUILTIN, LOW);
-  delay(1000); // Wait for 1000 millisecond(s)
+  delay(1000);
 }
 ```
 
-### Blink
-```cpp
-/*
-  This program blinks pin 13 of the Arduino (the
-  built-in LED)
-*/
+---
 
-void setup()
-{
+### 2. Blink (LED မှိတ်တုတ်မှိတ်တုတ်လုပ်ခြင်း)
+Pin 13 မှာရှိတဲ့ Built-in LED ကို အသုံးပြုပြီး Code စတင်ရေးသားနည်း ဖြစ်ပါတယ်။
+
+```cpp
+void setup() {
+  // Pin 13 ကို Output အဖြစ် သတ်မှတ်ခြင်း
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
-void loop()
-{
-  // turn the LED on (HIGH is the voltage level)
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000); // Wait for 1000 millisecond(s)
-  // turn the LED off by making the voltage LOW
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000); // Wait for 1000 millisecond(s)
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH); // LED မီးဖွင့်မည်
+  delay(1000);                     // 1 စက္ကန့် စောင့်မည်
+  digitalWrite(LED_BUILTIN, LOW);  // LED မီးပိတ်မည်
+  delay(1000);                     // 1 စက္ကန့် စောင့်မည်
 }
 ```
 
-### Fade
+---
+
+### 3. Fade (LED အလင်းအမှောင် အနှေးအမြန်ချိန်ခြင်း)
+PWM (Pulse Width Modulation) ကို အသုံးပြုပြီး LED ရဲ့ brightness ကို ချိန်ညှိနည်း ဖြစ်ပါတယ်။ (PWM Pin ဖြစ်တဲ့ ~9 ကို သုံးထားပါတယ်)
+
 ```cpp
-/*
-  Fade
-  This example shows how to fade an LED on pin 9
-  using the analogWrite() function.
-
-  The analogWrite() function uses PWM, so if  you
-  want to change the pin you're using, be  sure to
-  use another PWM capable pin. On most  Arduino,
-  the PWM pins are identified with   a "~" sign,
-  like ~3, ~5, ~6, ~9, ~10 and ~11.
-*/
-
 int brightness = 0;
 
-void setup()
-{
+void setup() {
   pinMode(9, OUTPUT);
 }
 
-void loop()
-{
+void loop() {
+  // LED ကို တဖြည်းဖြည်း လင်းလာစေရန်
   for (brightness = 0; brightness <= 255; brightness += 5) {
     analogWrite(9, brightness);
-    delay(30); // Wait for 30 millisecond(s)
+    delay(30); 
   }
+
+  // LED ကို တဖြည်းဖြည်း မှိန်သွားစေရန်
   for (brightness = 255; brightness >= 0; brightness -= 5) {
     analogWrite(9, brightness);
-    delay(30); // Wait for 30 millisecond(s)
+    delay(30); 
   }
 }
 ```
+
+:::info Note
+Uno R3 မှာ `~` သင်္ကေတပါတဲ့ Pin တွေ (3, 5, 6, 9, 10, 11) ဟာ PWM support ပေးတဲ့အတွက် Fade effect အတွက် ၎င်းတို့ကို သုံးရပါမယ်။
+:::

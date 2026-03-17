@@ -1,0 +1,64 @@
+---
+sidebar_label: 'Lesson 3'
+sidebar_position: 4
+---
+
+# Lesson 3: Reading Inputs (Buttons)
+
+ဒီသင်ခန်းစာမှာတော့ **Digital Input** အကြောင်းကို လေ့လာပါမယ်။ ခလုတ် (Button) တစ်ခုကို နှိပ်လိုက်တဲ့အခါ Pico က အဲဒီအချက်အလက်ကို ဖတ်ပြီး LED ကို ဖွင့်တာ/ပိတ်တာမျိုး လုပ်ဆောင်သွားမှာဖြစ်ပါတယ်။
+
+### လိုအပ်မည့် ပစ္စည်းများ
+* Raspberry Pi Pico 2 W x 1
+* Push Button x 1
+* LED & Resistor (Lesson 2 မှအတိုင်း)
+* Jumper Wires
+
+---
+
+### အဆင့် (၁) - Circuit ချိတ်ဆက်ခြင်း
+Button ကို ချိတ်တဲ့အခါ Lesson 11 (Arduino) မှာတုန်းကလိုပဲ Resistor အပိုမလိုအောင် **Internal Pull-up** စနစ်ကို သုံးပါမယ်။
+
+1.  **Button တစ်ဖက်:** Pico ရဲ့ **GP14** (Pin 19) မှာ ချိတ်ပါ။
+2.  **Button အခြားတစ်ဖက်:** Pico ရဲ့ **GND** (Pin 18 သို့မဟုတ် အခြား GND pin) မှာ ချိတ်ပါ။
+3.  **LED:** Lesson 2 အတိုင်း **GP15** မှာ ဆက်ထားပေးပါ။
+
+
+
+---
+
+### အဆင့် (၂) - MicroPython Code ရေးသားခြင်း
+ဒီ code က ခလုတ်ကို နှိပ်ထားတဲ့အချိန်မှာ LED လင်းနေစေမှာ ဖြစ်ပါတယ်။
+
+```python
+from machine import Pin
+import time
+
+# LED ကို Output အဖြစ် သတ်မှတ်ခြင်း
+led = Pin(15, Pin.OUT)
+
+# Button ကို Input အဖြစ်သတ်မှတ်ပြီး Internal Pull-up Resistor ကို ဖွင့်ခြင်း
+button = Pin(14, Pin.IN, Pin.PULL_UP)
+
+print("Input Reading Started...")
+
+while True:
+    # Button ရဲ့ အခြေအနေကို ဖတ်ခြင်း
+    # Pull-up သုံးထားလို့ မနှိပ်ရင် 1 (High) ဖြစ်ပြီး၊ နှိပ်ရင် 0 (Low) ဖြစ်ပါမယ်
+    if button.value() == 0:
+        led.value(1)  # ခလုတ်နှိပ်ထားလျှင် LED ဖွင့်မည်
+        print("Button Pressed!")
+    else:
+        led.value(0)  # ခလုတ်လွှတ်ထားလျှင် LED ပိတ်မည်
+    
+    time.sleep(0.01) # Switch ခုန်ခြင်း (Bouncing) ကို ကာကွယ်ရန် ခဏစောင့်ခြင်း
+```
+
+---
+
+### 💡 သိထားသင့်သည့် အချက်များ
+* **Internal Pull-up:** `Pin.PULL_UP` ကို သုံးလိုက်တဲ့အတွက် GP14 pin ဟာ ပုံမှန်အချိန်မှာ 3.3V (High) ဖြစ်နေပါတယ်။ ခလုတ်နှိပ်ပြီး Ground (GND) နဲ့ ထိလိုက်မှ 0V (Low) ဖြစ်သွားတာပါ။ ဒါကြောင့် `value() == 0` ဖြစ်ရင် ခလုတ်နှိပ်လိုက်တယ်လို့ မှတ်ယူရတာ ဖြစ်ပါတယ်။
+* **Interrupts:** ရှေ့သင်ခန်းစာတွေမှာ code က loop ထဲမှာ အမြဲစောင့်ဖတ်နေရတာထက် ပိုမြန်တဲ့ **Interrupt (IRQ)** နည်းလမ်းတွေကိုလည်း Pico မှာ သုံးလို့ရပါသေးတယ်။
+
+:::info Challenge!
+ခလုတ်ကို တစ်ခါနှိပ်လိုက်ရင် LED က ပွင့်သွားပြီး၊ နောက်တစ်ခါ ထပ်နှိပ်မှ ပိတ်သွားတဲ့ **Toggle System** တစ်ခုဖြစ်အောင် Code ကို ပြင်ရေးကြည့်ပါ Linn။ (အရိပ်အမြွက်- Variable တစ်ခုသုံးပြီး အခြေအနေကို မှတ်ထားဖို့ လိုပါလိမ့်မယ်)
+:::
