@@ -10,12 +10,10 @@ export const ImageLoop = ({ images }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   
   useEffect(() => {
-    // Only set interval if there's more than one image
     if (images.length <= 1) return;
-
     const timer = setInterval(() => {
       setIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1000);
+    }, 2000); // 1000ms က မြန်လွန်းလို့ 2000ms ပြောင်းထားပါတယ်
     return () => clearInterval(timer);
   }, [images.length]);
 
@@ -38,7 +36,7 @@ export const ImageLoop = ({ images }) => {
           <div style={{
             position: 'absolute', bottom: '10px', right: '10px',
             backgroundColor: '#333', color: 'white',
-            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem', 
+            padding: '2px 12 Myanmar', borderRadius: '20px', fontSize: '0.75rem', 
             fontWeight: 'bold', opacity: '0.8'
           }}>
             Step {index + 1} of {images.length}
@@ -64,22 +62,22 @@ export const ImageLoop = ({ images }) => {
 
 # Arduino CLI: The Essentials
 
-## 🤔 What is that!
+## 🤔 What is it? (ဒါက ဘာလဲ?)
 
 <ImageLoop images={[
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409994/htooeantlinn/pack1/image_1_mcq0cj.png"
 ]} />
 
-:::info What is it?
-The **Arduino CLI** is an open-source tool providing all Arduino IDE features—board/library management and sketch building—directly in your terminal.
+:::info Arduino CLI ဆိုတာဘာလဲ?
+**Arduino CLI** ဆိုသည်မှာ Arduino IDE တွင် ပါဝင်သော Features များ (Board/Library စီမံခန့်ခွဲခြင်းနှင့် Code Build လုပ်ခြင်း) အားလုံးကို Terminal (Command Line) မှတစ်ဆင့် တိုက်ရိုက် အသုံးပြုနိုင်ရန် ဖန်တီးထားသော Open-source tool တစ်ခု ဖြစ်ပါသည်။
 :::
 
 ---
 
-## ⚡ Why Use It?
-Ideal for **automation**, **CI/CD**, and advanced users who prefer a text-based environment over a heavy GUI.
+## ⚡ Why Use It? (ဘာကြောင့် သုံးသင့်သလဲ?)
+လေးလံသော GUI (Graphical User Interface) အစား Text-based ပတ်ဝန်းကျင်ကို ပိုမိုနှစ်သက်သူများ၊ **Automation** လုပ်လိုသူများနှင့် **CI/CD** workflow များတွင် အသုံးပြုလိုသူများအတွက် အထူးသင့်လျော်ပါသည်။
 
-* [Official Software](https://www.arduino.cc/en/software/#arduino-cli) | [Official Docs](https://docs.arduino.cc/arduino-cli/)
+* 🔗 [Official Software](https://www.arduino.cc/en/software/#arduino-cli) | [Official Docs](https://docs.arduino.cc/arduino-cli/)
 
 <ImageLoop images={[
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410139/htooeantlinn/pack1/image_2_ywxsog.png"
@@ -87,9 +85,10 @@ Ideal for **automation**, **CI/CD**, and advanced users who prefer a text-based 
 
 ---
 
-## 🛠️ How it Works
+## 🛠️ How it Works (မည်သို့ အလုပ်လုပ်သလဲ?)
 
 ### 1. Create Sketch, Compile, Upload
+Sketch အသစ်တည်ဆောက်ခြင်းမှသည် Board ထဲသို့ Code ထည့်သွင်းခြင်း (Upload) အထိ အဆင့်ဆင့်ကို command များဖြင့် ရိုးရှင်းစွာ လုပ်ဆောင်နိုင်ပါသည်။
 
 <ImageLoop images={[
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409994/htooeantlinn/pack1/image_4_baqmhn.png",
@@ -97,7 +96,9 @@ Ideal for **automation**, **CI/CD**, and advanced users who prefer a text-based 
   "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409992/htooeantlinn/pack1/image_6_qj3ahx.png"
 ]} />
 
-## 🔗 Reference
+## 🔗 Reference Video
+ပိုမိုသိရှိလိုပါက အောက်ပါဗီဒီယိုတွင် လေ့လာနိုင်ပါသည်။
+
 <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '16px', marginTop: '20px' }}>
   <iframe 
     style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}

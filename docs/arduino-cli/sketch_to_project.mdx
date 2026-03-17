@@ -2,29 +2,113 @@
 sidebar_label: 'Sketch to Project'
 sidebar_position: 5
 ---
+
+import { useState, useEffect } from 'react';
+
+export const ImageLoop = ({ images }) => {
+  const [index, setIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <div 
+        onClick={() => setIsZoomed(!isZoomed)}
+        style={{ 
+          cursor: 'zoom-in', 
+          position: 'relative',
+          borderRadius: '12px',
+          overflow: 'hidden',
+          border: '2px solid var(--ifm-color-emphasis-300)',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+        }}
+      >
+        <img src={images[index]} style={{ display: 'block', width: '100%' }} />
+        
+        {images.length > 1 && (
+          <div style={{
+            position: 'absolute', bottom: '10px', right: '10px',
+            backgroundColor: '#333', color: 'white',
+            padding: '2px 12px', borderRadius: '20px', fontSize: '0.75rem', 
+            fontWeight: 'bold', opacity: '0.8'
+          }}>
+            Step {index + 1} of {images.length}
+          </div>
+        )}
+      </div>
+
+      {isZoomed && (
+        <div 
+          onClick={() => setIsZoomed(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.9)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'zoom-out'
+          }}
+        >
+          <img src={images[index]} style={{ maxHeight: '95vh', maxWidth: '95vw', borderRadius: '8px' }} />
+        </div>
+      )}
+    </div>
+  );
+};
+
 # Sketch to Project
+
+Arduino ပရောဂျက်အသစ်တစ်ခုကို Terminal မှတစ်ဆင့် တည်ဆောက်ပုံ အဆင့်ဆင့် ဖြစ်ပါသည်။
+
+### 1. လက်ရှိ Directory ကို စစ်ဆေးခြင်း
+ပရောဂျက်မတည်ဆောက်မီ လက်ရှိရောက်ရှိနေသော folder ထဲတွင် မည်သည့် file များရှိသည်ကို အရင်စစ်ဆေးကြည့်ပါမည်။
+
 ```bash
 ls
 ```
-![Alt Text](ass/image_29.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410278/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.54.21_AM_paphji.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410158/htooeantlinn/pack1/image_29_ifmx2k.png"
+]} />
+
+### 2. Sketch Folder အသစ် တည်ဆောက်ခြင်း
+`MySketch` အမည်ဖြင့် ပရောဂျက်အသစ်တစ်ခု တည်ဆောက်ရန် အောက်ပါ command ကို အသုံးပြုပါ။
 
 ```bash
 arduino-cli sketch new MySketch
 ```
-![Alt Text](ass/image_4.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410281/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.54.53_AM_lzujxp.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773409994/htooeantlinn/pack1/image_4_baqmhn.png"
+]} />
+
+### 3. File တည်ဆောက်မှုကို ပြန်လည်စစ်ဆေးခြင်း
+Folder အသစ် ရောက်မရောက်ကို `ls` ဖြင့် ထပ်မံစစ်ဆေးပါ။
 
 ```bash
 ls
 ```
-![Alt Text](ass/image_31.png)
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410283/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.55.12_AM_nwjkuk.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410159/htooeantlinn/pack1/image_31_hztiti.png"
+]} />
+
+### 4. Code ရေးသားခြင်း (Vim Editor အသုံးပြုနည်း)
+`.ino` file ထဲသို့ code များရေးသားရန် Vim editor ကို အသုံးပြုပါမည်။
 
 ```bash
 vim MySketch/MySketch.ino
 ```
-![Alt Text](ass/image_32.png)
 
-```bash
+**Vim အသုံးပြုပုံ အခြေခံအဆင့်ဆင့်:**
+1. **Insert Mode:** စာစရေးရန် `i` သို့မဟုတ် `a` ကို နှိပ်ပါ။
+2. **Writing Code:** အောက်ပါ code ကို ရိုက်ထည့်ပါ။
 
+```cpp
 void setup() {
   Serial.begin(9600);
   while (!Serial);
@@ -35,11 +119,28 @@ void loop() {
   delay(1000);
 }
 ```
-![Alt Text](ass/image_33.png)
 
+3. **Save & Exit:** 
+  * `Esc` ကို နှိပ်ပါ။
+  * `:wq` (Write and Quit) ကို ရိုက်ပြီး `Enter` ခေါက်ပါ။
+
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410160/htooeantlinn/pack1/image_32_ukr2gl.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410161/htooeantlinn/pack1/image_33_hqlas8.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410164/htooeantlinn/pack1/image_34_nmyerq.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410163/htooeantlinn/pack1/image_35_clz1rz.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410165/htooeantlinn/pack1/image_36_cupkws.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410166/htooeantlinn/pack1/image_37_dsvscd.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410287/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.58.46_AM_kyqrc1.png"
+]} />
+
+### 5. ရေးသားထားသော Code ကို ပြန်လည်ကြည့်ရှုခြင်း
+File ထဲသို့ code များ မှန်ကန်စွာ ရောက်မရောက်ကို `cat` command ဖြင့် စစ်ဆေးနိုင်ပါသည်။
 
 ```bash
 cat MySketch/MySketch.ino
 ```
-![Alt Text](ass/image_38.png)
-
+<ImageLoop images={[
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410289/htooeantlinn/pack1/Screenshot_2026-03-10_at_10.59.46_AM_spjg1s.png",
+  "https://res.cloudinary.com/dilbjcn76/image/upload/v1773410168/htooeantlinn/pack1/image_38_mzjmbf.png"
+]} />
