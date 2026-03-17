@@ -1,0 +1,38 @@
+---
+sidebar_label: "Intro"
+sidebar_position: 1
+---
+
+### Tailwind CSS ဆိုတာ ဘာလဲ?
+
+Tailwind ဆိုတာ "Utility-First" CSS Framework တစ်ခုပါ။
+
+ရိုးရိုး CSS ရေးရင် .my-button ဆိုပြီး class နာမည်တစ်ခုပေး၊ ပြီးမှ CSS ဖိုင်ထဲမှာ style သွားရေးရပါတယ်။
+
+```cpp
+<button class="my-button">Click Me</button>
+
+<style>
+  .my-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+  }
+</style>
+```
+
+Tailwind မှာတော့ အသင့်သုံးလို့ရတဲ့ Utility Classes လေးတွေ ရှိပြီးသားပါ။ ဥပမာ- bg-blue-500 (အပြာရောင်နောက်ခံ)၊ p-4 (padding 1rem) စတာတွေကို HTML ထဲမှာ တန်းထည့်ရုံပါပဲ။
+
+```cpp
+<button class="bg-blue-500 text-white px-4 py-2 rounded">
+  Click Me
+</button>
+
+```
+---
+
+### ဘာလို့ Tailwind ကို သုံးသင့်တာလဲ?
+    1. Speed: CSS ဖိုင်နဲ့ HTML ဖိုင် ကူးချည်သန်းချည် လုပ်စရာမလိုတော့လို့ Web ဆွဲရတာ အရမ်းမြန်သွားပါတယ်။
+    2. No Class Naming Stress: Class နာမည်တွေကို container-wrapper-inner-final ဆိုပြီး စဉ်းစားရတဲ့ ဒုက္ခကနေ ကင်းဝေးသွားမယ်။
+    3. Easy Maintenance: ကိုယ်ပြင်ချင်တဲ့ Element ကို HTML ထဲမှာတင် တန်းပြင်လိုက်ရုံပါပဲ။ တခြားနေရာတွေ သွားထိခိုက်မှာ ကြောက်စရာမလိုတော့ဘူး။ 
