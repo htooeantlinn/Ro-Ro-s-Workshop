@@ -1,0 +1,1037 @@
+---
+sidebar_label: 'Output Level 1'
+sidebar_position: 3
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Output: Level 1
+
+<ToggleAll />
+
+### Question 1: 
+```cpp
+#include <iostream>
+using namespace std;
+
+int x = 960;
+
+int main() {
+    int x = 60;
+    cout << x << endl;
+    cout << ::x;
+
+    return 0;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+60
+960
+```
+    > Local `x` hides global `x`. `::x` accesses the global scope.
+  </div>
+</details>
+
+---
+
+### Question 2: 
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x = 60, y = x;
+    cout << y << endl;
+
+    return 0;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+60
+```
+    > `y` is initialized with the value of `x`.
+  </div>
+</details>
+
+---
+
+### Question 3: 
+```cpp
+int x = 4;
+int y = -4;
+cout << x - y;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+8
+```
+    > 4 - (-4) = 8.
+  </div>
+</details>
+
+---
+
+### Question 4: 
+```cpp
+int x = 4, y = 5;
+if (++x > 10 && --y > 10)
+    cout << y;
+else
+    cout << x;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+5
+```
+    > Short-circuit: `++x` (5) is not > 10, so `--y` never runs. Prints `x`.
+  </div>
+</details>
+
+---
+
+### Question 5: 
+```cpp
+int a = 2, b = 2;
+if (++a == 3 || ++b > 1 && a > 2)
+    cout << a << b;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+32
+```
+    > Short-circuit: `++a` is 3. 3==3 is true, so `||` stops there. `b` remains 2.
+  </div>
+</details>
+
+---
+
+### Question 6: 
+```cpp
+int a = 2, b = 2;
+if (++b > 1 && a > 2 || ++a == 3)
+    cout << a << b;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+33
+```
+    > `++b` is 3 (>1 true), `a>2` is false. Moves to `||`. `++a` makes `a` 3.
+  </div>
+</details>
+
+---
+
+### Question 7: 
+```cpp
+int a = 2, b = 2;
+if (++b > 1 || a > 2 || ++a == 3)
+    cout << a << b;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+23
+```
+    > `++b` is 3 (>1 true). `||` stops immediately. `a` remains 2.
+  </div>
+</details>
+
+---
+
+### Question 8: 
+```cpp
+int a = 2, b = 2;
+if (a > 5);
+    a = 10;
+cout << a + b;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+12
+```
+    > The semicolon after `if` ends it. `a = 10` runs no matter what.
+  </div>
+</details>
+
+---
+
+### Question 9: 
+```cpp
+int a = 10, b = 4;
+int c = a / b * a % b;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+0
+```
+    > 10/4=2 \rightarrow 2*10=20 \rightarrow 20\%4=0.
+  </div>
+</details>
+
+---
+
+### Question 10: 
+```cpp
+int a = 10;
+int b = 4;
+int c = (a/b) * (a%b);
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+4
+```
+    > 2 * 2 = 4.
+  </div>
+</details>
+
+---
+
+### Question 11: 
+```cpp
+#define x 5 * 3
+cout << x + x;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+30
+```
+    > 5 * 3 + 5 * 3 = 30.
+  </div>
+</details>
+
+---
+
+### Question 12: 
+```cpp
+#define x 5 + 3
+cout << x * x;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+23
+```
+    > 5 + 3 * 5 + 3 \rightarrow 5 + 15 + 3 = 23.
+  </div>
+</details>
+
+---
+
+### Question 13: 
+```cpp
+int n = 5; int m = 5;
+if (n>3 && m<3)
+    cout << n++;
+else
+    cout << ++m;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+6
+```
+    > Condition is false (5 < 3 is false). Executes ++m.
+  </div>
+</details>
+
+---
+
+### Question 14: 
+```cpp
+#define TRUE 0
+if (TRUE) cout << "True"; else cout << "False";
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+False
+```
+    > `0` is treated as false.
+  </div>
+</details>
+
+---
+
+### Question 15: 
+```cpp
+int a = 9;
+switch(a){
+    case 1: cout << "One\n"; break;
+    case 2: cout << "Two\n"; break;
+    case 3: cout << "Three\n"; break;
+    case 4: cout << "Four\n"; break;
+    case 5: cout << "Five\n"; break;
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Nine
+```
+    > switch(a) with breaks
+  </div>
+</details>
+
+---
+
+### Question 16: 
+```cpp
+int n = 3;
+switch(n){
+    case 1: cout << "One\n"; break;
+    case 2: cout << "Two\n"; break;
+    case 3: cout << "Three\n"; break;
+    case 4: cout << "Four\n"; break;
+    case 5: cout << "Five\n"; break;
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Three
+```
+    > switch(n) with breaks
+  </div>
+</details>
+
+---
+
+### Question 17: 
+```cpp
+int a = 4;
+switch(a){
+    case 1: cout << "One\n";
+    case 2: cout << "Two\n";
+    case 3: cout << "Three\n";
+    case 4: cout << "Four\n";
+    case 5: cout << "Five\n";
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+FourFiveSix
+```
+    > Fallthrough occurs because `case 4` and `5` lack `break`.
+  </div>
+</details>
+
+---
+
+### Question 18: 
+```cpp
+int a = 960;
+switch(a){
+    case 1: cout << "One\n";
+    case 2: cout << "Two\n";
+    default: cout << "Other number!";
+    case 3: cout << "Three\n";
+    case 4: cout << "Four\n";
+    case 5: cout << "Five\n";
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+OtherThreeSix
+```
+    > No match found, starts at `default` and falls through to the first `break`.
+  </div>
+</details>
+
+---
+
+### Question 19: 
+```cpp
+int a = 6;
+switch(a){
+    case 1: cout << "One\n"; break;
+    case 2: cout << "Two\n"; break;
+    case 3: cout << "Three\n"; break;
+    case 4: cout << "Four\n"; break;
+    case 5: cout << "Five\n"; break;
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Six
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 20: 
+```cpp
+#include<iostream>
+using namespace std;
+int main(){
+    int a = 2;
+    int b = 2;
+    switch (a){
+        case 1: cout << "One"; break;
+        case 2: cout << "Two"; break;
+        case 3: cout << "Three"; break;
+        default: cout << "Other Numbers";
+    }
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Two
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 21: 
+```cpp
+int sum = 0;
+for(int i=1; i<=5; i++) sum+=i;
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+15
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 22: 
+```cpp
+int sum=0;
+for(int i=1; i<=5; i++) sum += i + 1;
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+20
+```
+    > (1+1) + (2+1) + (3+1) + (4+1) + (5+1) = 20.
+  </div>
+</details>
+
+---
+
+### Question 23: 
+```cpp
+int sum=0;
+for(int i=1; i<7; i+=3) sum ++;
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+2
+```
+    > Runs for i=1 and i=4.
+  </div>
+</details>
+
+---
+
+### Question 24: 
+```cpp
+int n = 1;
+while(n!=10){ cout << n; n++; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+123456789
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 25: 
+```cpp
+int n = 1;
+while(n<10){ cout << n; n++; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+123456789
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 26: 
+```cpp
+int n = 1;
+while(n<10) n++;
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > Loop increments `n` to 10, then `cout` runs once.
+  </div>
+</details>
+
+---
+
+### Question 27: 
+```cpp
+int n = 15; int i = 0;
+while(i<10) n++;
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+25
+```
+    > `n` is incremented 10 times.
+  </div>
+</details>
+
+---
+
+### Question 28: 
+```cpp
+int n = 15; int i = 0;
+while(i<10){ n = i; i++; }
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+9
+```
+    > Last value of `i` assigned to `n` is 9.
+  </div>
+</details>
+
+---
+
+### Question 29: 
+```cpp
+int i = 0;
+while(i<10){ i++; cout << i; if(i%5==0) break; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+12345
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 30: 
+```cpp
+int n = 10;
+while(n){ cout << n; n--; if(n%5==0) break; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > Prints 10, `n` becomes 9. $10\%5==0$ is true, loop breaks immediately.
+  </div>
+</details>
+
+---
+
+### Question 31: 
+```cpp
+int n = 11;
+while(n){ cout << --n; if(n%5==0) break; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > `--n` makes `n` 10. Prints 10. $10\%5==0$ true, breaks.
+  </div>
+</details>
+
+---
+
+### Question 32: 
+```cpp
+int a = 521; int sum = 0;
+while(a>0){ sum += a%10; a /= 10; }
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+8
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 33: 
+```cpp
+int a = 521; int sum = 0;
+while(a>0){ sum += a%10; a = (a - a % 10) / 10; }
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+8
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 34: 
+```cpp
+int n = 15; int i = 0;
+while(i<10); n++;
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Infinite Loop
+```
+    > Semicolon after `while` creates an infinite empty loop.
+  </div>
+</details>
+
+---
+
+### Question 35: 
+```cpp
+int i = 0;
+while(i<10){ i++; cout << i; if(i==5) continue; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+12345678910
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 36: 
+```cpp
+int c = 3.14;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+3
+```
+    > Double assigned to `int` is truncated.
+  </div>
+</details>
+
+---
+
+### Question 37: 
+```cpp
+int m = 5 + 6 / 2 + 2;
+cout << m;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 38: 
+```cpp
+int m = 5 + 2 / 6 + 2;
+cout << m;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+7
+```
+    > 2/6 = 0. 5+0+2 = 7.
+  </div>
+</details>
+
+---
+
+### Question 39: 
+```cpp
+int m = 5 * 2 / 25 * 2;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+0
+```
+    > $10/25 = 0 \rightarrow 0*2 = 0$.
+  </div>
+</details>
+
+---
+
+### Question 40: 
+```cpp
+int a = 5, b = 4, c = 2;
+c = a + 2 + b;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+11
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 41: 
+```cpp
+int a = 5, b = 4, c = 2;
+c += a + 2 + b;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+13
+```
+    > 2 + (5+2+4) = 13.
+  </div>
+</details>
+
+---
+
+### Question 42: 
+```cpp
+int a = 5; a += ++a;
+cout << a;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+12
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 43: 
+```cpp
+int a = 5; a += a++;
+cout << a;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > Value of `a` (5) is used for both sides before increment.
+  </div>
+</details>
+
+---
+
+### Question 44: 
+```cpp
+float a = 5; a++;
+cout << a;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+6
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 45: 
+```cpp
+int a = 5; int b = ++a; bool c = b==a;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+1
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 46: 
+```cpp
+int a = 9; int b = 6; bool c = b ==a;
+cout << a << b << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+960
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 47: 
+```cpp
+int a = 9; int b = 6; bool c = b!=a;
+cout << a << b << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+961
+```
+    > 
+  </div>
+</details>
+
+---
+
+### Question 48: 
+```cpp
+cout << (2*3-2%1);
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+6
+```
+    > 2\%1 = 0. 6-0 = 6.
+  </div>
+</details>
+
+---
+
+### Question 49: 
+```cpp
+int x = 5, y = 2;
+x += y; y = x - y; x -=y;
+cout << x << y;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+25
+```
+    > Logic to swap `x` and `y`.
+  </div>
+</details>
+
+---
+
+### Question 50: 
+```cpp
+int x = 0; int y = 5;
+for (;x<y;){ cout << "Hello"; x++; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+HelloHelloHelloHelloHello
+```
+    > 
+  </div>
+</details>
+
+---
+
