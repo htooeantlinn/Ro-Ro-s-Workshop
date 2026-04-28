@@ -1,0 +1,51 @@
+---
+sidebar_label: 'Output Level 8'
+sidebar_position: 8
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Output Level 8:
+It work!
+
+<ToggleAll />
+
+## Level 8:
+
+### (1)
+
+```cpp
+int x = 960;
+
+int main() {
+    int x = 60;
+    cout << x << endl;
+    cout << ::x;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+60
+960
+```
+    > Local `x` hides global `x`. `::x` accesses the global scope.
+  </div>
+</details>
+
+---

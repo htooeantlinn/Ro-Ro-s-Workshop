@@ -1,0 +1,121 @@
+---
+sidebar_label: 'Output Level 2'
+sidebar_position: 2
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Output Level 2:
+It work!
+
+<ToggleAll />
+
+## Level 2:
+
+### (1)
+```cpp
+int x = 60, y = x;
+cout << y << endl;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+60
+```
+    > `y` is initialized with the value of `x`.
+  </div>
+</details>
+
+---
+
+### (2)
+```cpp
+int x = 4;
+int y = -4;
+cout << x - y;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+8
+```
+    > 4 - (-4) = 8.
+  </div>
+</details>
+
+---
+
+### (3) 
+```cpp
+int a = 5, b = 4, c = 2;
+c = a + 2 + b;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+11
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (4) 
+```cpp
+int a = 10, b = 4;
+int c = a / b * a % b;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+0
+```
+    > 10/4=2 \rightarrow 2*10=20 \rightarrow 20\%4=0.
+  </div>
+</details>
+
+---
+
+### (5) 
+```cpp
+int a = 10;
+int b = 4;
+int c = (a/b) * (a%b);
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+4
+```
+    > 2 * 2 = 4.
+  </div>
+</details>
+
+---

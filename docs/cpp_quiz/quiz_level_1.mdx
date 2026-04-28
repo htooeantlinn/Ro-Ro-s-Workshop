@@ -1,0 +1,184 @@
+---
+sidebar_label: 'Quiz Level 1'
+sidebar_position: 1
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Quiz Level 1
+
+It work!
+
+<ToggleAll />
+
+## Level 1:
+
+### (1)
+```cpp
+cout << (2*3-4/2%1);
+```
+1. `6`
+2. `4.0`
+3. `6.0`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 1. 6**
+    > Following precedence:  4/2 = 2 ; then  2\%1 = 0 ; then  2*3 = 6 ; finally  6-0 = 6 .
+  </div>
+</details>
+
+---
+
+### (2)
+Choose correct variable names.
+1. `int 3a;`
+2. `float -age;`
+3. `char father-name;`
+4. `int book price;`
+5. `double d;`
+6. `float areaOfCircle.;`
+7. `float scanf;`
+8. `int a&b;`
+9. `int a1234567890;`
+10. `int _@a;`
+11. `int _333_;`
+12. `char int;`
+13. `bool _ = true;`
+14. `double ___ = 4.5;`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 5, 7, 9, 11, 13, 14**
+    > Valid names must start with a letter or underscore and contain no special symbols or spaces.
+  </div>
+</details>
+
+---
+
+### (3)
+```cpp
+int a = 5;
+int b = 2;
+cout << a/b;
+```
+1. `2.5`
+2. `2.0`
+3. `2`
+4. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 3. 2**
+    > Integer division truncates the decimal part.
+  </div>
+</details>
+
+---
+
+### (4)
+```cpp
+int a = 5;
+cout << a;
+int b = 7;
+a++; b++;
+cout << a << b;
+```
+1. `568`
+2. `560`
+3. `550`
+4. `Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 1. 568**
+    > Prints 5, then increments. a becomes 6, b becomes 8. Final output: 568.
+  </div>
+</details>
+
+---
+
+### (5)
+```cpp
+int a = 5;
+cout << a;
+{
+    int b = 7;
+    a++; b++;
+}
+cout << a << b;
+```
+1. `568`
+2. `560`
+3. `550`
+4. `Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 4. Error**
+    > `b` is declared inside a nested scope `{ }`, making it inaccessible to the final `cout`.
+  </div>
+</details>
+
+---
+
+### (6)
+```cpp
+int a = 1;
+int b = ++a;
+cout << a << b;
+a++; ++b;
+cout << a << b;
+```
+1. `1233`
+2. `2233`
+3. `2223`
+4. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 2. 2233**
+    > First, `a` and `b` both become 2. Then they are incremented again to become 3.
+  </div>
+</details>
+
+---
+
+### (7)
+```cpp
+int a = 5;
+a += ++6;
+cout << a;
+```
+1. `12`
+2. `11`
+3. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 3. Compilation Error**
+    > You cannot use increment operators (`++`) on a literal constant like 6.
+  </div>
+</details>
+
+---

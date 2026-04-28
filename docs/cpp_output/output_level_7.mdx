@@ -1,0 +1,248 @@
+---
+sidebar_label: 'Output Level 7'
+sidebar_position: 7
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Output Level 7:
+It work!
+
+<ToggleAll />
+
+## Level 7:
+
+### (1) 
+```cpp
+int n = 1;
+while(n!=10){ cout << n; n++; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+123456789
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (2) 
+```cpp
+int n = 1;
+while(n<10){ cout << n; n++; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+123456789
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (3) 
+```cpp
+int n = 1;
+while(n<10) n++;
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > Loop increments `n` to 10, then `cout` runs once.
+  </div>
+</details>
+
+---
+
+### (4) 
+```cpp
+int n = 15; int i = 0;
+while(i<10) n++;
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+25
+```
+    > `n` is incremented 10 times.
+  </div>
+</details>
+
+---
+
+### (5) 
+```cpp
+int n = 15; int i = 0;
+while(i<10){ n = i; i++; }
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+9
+```
+    > Last value of `i` assigned to `n` is 9.
+  </div>
+</details>
+
+---
+
+### (6) 
+```cpp
+int i = 0;
+while(i<10){ i++; cout << i; if(i%5==0) break; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+12345
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (7) 
+```cpp
+int n = 10;
+while(n){ cout << n; n--; if(n%5==0) break; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > Prints 10, `n` becomes 9. $10\%5==0$ is true, loop breaks immediately.
+  </div>
+</details>
+
+---
+
+### (8) 
+```cpp
+int n = 11;
+while(n){ cout << --n; if(n%5==0) break; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > `--n` makes `n` 10. Prints 10. $10\%5==0$ true, breaks.
+  </div>
+</details>
+
+---
+
+### (9) 
+```cpp
+int a = 521; int sum = 0;
+while(a>0){ sum += a%10; a /= 10; }
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+8
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (10) 
+```cpp
+int a = 521; int sum = 0;
+while(a>0){ sum += a%10; a = (a - a % 10) / 10; }
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+8
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (11) 
+```cpp
+int n = 15; int i = 0;
+while(i<10); n++;
+cout << n;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Infinite Loop
+```
+    > Semicolon after `while` creates an infinite empty loop.
+  </div>
+</details>
+
+---
+
+### (12) 
+```cpp
+int i = 0;
+while(i<10){ i++; cout << i; if(i==5) continue; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+12345678910
+```
+    > 
+  </div>
+</details>
+
+---

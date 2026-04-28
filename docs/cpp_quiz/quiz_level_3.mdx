@@ -1,0 +1,119 @@
+---
+sidebar_label: 'Quiz Level 3'
+sidebar_position: 3
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Quiz Level 3
+
+It work!
+
+<ToggleAll />
+
+## Level 3:
+
+### (1)
+Which of the following are valid in C++?
+1. `char a = ‘@’;`
+2. `char b = ‘\n’;`
+3. `char c = ‘6’;`
+4. `char d = ‘13’;`
+5. `char e = 65;`
+6. `char f = “a”;`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 1, 2, 3, 5**
+    > 4 is too long for a `char`, and 6 uses double quotes which denotes a `string`.
+  </div>
+</details>
+
+---
+
+### (2)
+```cpp
+int a = 5;
+char A = '5';
+cout << a == A;
+```
+1. `True`
+2. `False`
+3. `true`
+4. `false`
+5. `Error`
+6. `0`
+7. `1`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 6. 0**
+    > The ASCII value of '5' is 53, so 5 == 53 is false (0). (Note: Parentheses added for precedence).
+  </div>
+</details>
+
+---
+
+### (3)
+```cpp
+int a = 5;
+char A = '5';
+cout << int(A) == a;
+```
+1. `True`
+2. `False`
+3. `true`
+4. `false`
+5. `Error`
+6. `0`
+7. `1`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 6. 0**
+    > `int('5')` is 53. 53 == 5 is false.
+  </div>
+</details>
+
+---
+
+### (4)
+```cpp
+int a = 5;
+char A = 5;
+bool b = A == a;
+cout << b;
+```
+1. `True`
+2. `False`
+3. `true`
+4. `false`
+5. `Error`
+6. `0`
+7. `1`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 7. 1**
+    > Here `A` is assigned the numeric value 5, not the character '5'. So 5 == 5 is true.
+  </div>
+</details>
+
+---

@@ -1,0 +1,183 @@
+---
+sidebar_label: 'Quiz Level 4'
+sidebar_position: 4
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Quiz Level 4
+
+It work!
+
+<ToggleAll />
+
+## Level 4:
+
+### (1)
+```cpp
+int a = 12;
+if (n > 10){
+    int x = 9;
+    cout << x;
+}
+cout << x;
+```
+1. `99`
+2. `9`
+3. `Error`
+4. `12`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 3. Error**
+    > Two issues here: `n` is undefined, and `x` is declared inside the `if` block scope, making it invisible to the final `cout`.
+  </div>
+</details>
+
+---
+
+### (2)
+```cpp
+if (false)
+    cout << "False";
+else 
+    cout << "True";
+```
+1. `True`
+2. `False`
+3. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 1. True**
+    > The condition is false, so it executes the else block.
+  </div>
+</details>
+
+---
+
+### (3)
+```cpp
+if (true)
+    cout << "False";
+else 
+    cout << "True";
+```
+1. `True`
+2. `False`
+3. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 2. False**
+    > The condition is true, so it executes the if block.
+  </div>
+</details>
+
+---
+
+### (4)
+```cpp
+if (23)
+    cout << "False";
+else 
+    cout << "True";
+```
+1. `True`
+2. `False`
+3. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 2. False**
+    > In C++, any non-zero value is true. 23 is true, so it prints "False".
+  </div>
+</details>
+
+---
+
+### (5)
+```cpp
+int x = 2;
+bool b = x<10 ? false:true;
+cout << b;
+```
+1. `True`
+2. `False`
+3. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 2. False**
+    > `x<10` is true, so the ternary picks `false`. In C++, `cout` prints `false` as `0`.
+  </div>
+</details>
+
+---
+
+### (6)
+```cpp
+int a = 5;
+char c = a>2 ? (a<3 ? 'a':'b'):(a>4 ? 'x':'y');
+cout << c;
+```
+1. `a`
+2. `b`
+3. `x`
+4. `y`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 2. b**
+    > `a>2` is true, so it checks `a<3`. `5<3` is false, resulting in 'b'.
+  </div>
+</details>
+
+---
+
+### (7)
+```cpp
+#define Integer int;
+#define age 18
+
+int main(){
+    Integer x = 19;
+    if(x>=age)
+        cout << "You are eligible to drive!";
+    else
+        cout << "Sorry! You are not old enough!";
+}
+```
+1. `Error`
+2. `You are eligible to drive!`
+3. `Sorry! You are not old enough!`
+4. `"You are eligible to drive!"`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 1. Error**
+    > The macro `#define Integer int;` includes a semicolon, creating a syntax error during replacement.
+  </div>
+</details>
+
+---

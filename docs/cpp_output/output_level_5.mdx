@@ -1,0 +1,200 @@
+---
+sidebar_label: 'Output Level 5'
+sidebar_position: 5
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Output Level 5:
+It work!
+
+<ToggleAll />
+
+## Level 5:
+
+### (1) 
+```cpp
+int a = 9;
+switch(a){
+    case 1: cout << "One\n"; break;
+    case 2: cout << "Two\n"; break;
+    case 3: cout << "Three\n"; break;
+    case 4: cout << "Four\n"; break;
+    case 5: cout << "Five\n"; break;
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Nine
+```
+    > switch(a) with breaks
+  </div>
+</details>
+
+---
+
+### (2) 
+```cpp
+int n = 3;
+switch(n){
+    case 1: cout << "One\n"; break;
+    case 2: cout << "Two\n"; break;
+    case 3: cout << "Three\n"; break;
+    case 4: cout << "Four\n"; break;
+    case 5: cout << "Five\n"; break;
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Three
+```
+    > switch(n) with breaks
+  </div>
+</details>
+
+---
+
+### (3) 
+```cpp
+int a = 4;
+switch(a){
+    case 1: cout << "One\n";
+    case 2: cout << "Two\n";
+    case 3: cout << "Three\n";
+    case 4: cout << "Four\n";
+    case 5: cout << "Five\n";
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+FourFiveSix
+```
+    > Fallthrough occurs because `case 4` and `5` lack `break`.
+  </div>
+</details>
+
+---
+
+### (4) 
+```cpp
+int a = 960;
+switch(a){
+    case 1: cout << "One\n";
+    case 2: cout << "Two\n";
+    default: cout << "Other number!";
+    case 3: cout << "Three\n";
+    case 4: cout << "Four\n";
+    case 5: cout << "Five\n";
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+OtherThreeSix
+```
+    > No match found, starts at `default` and falls through to the first `break`.
+  </div>
+</details>
+
+---
+
+### (5) 
+```cpp
+int a = 6;
+switch(a){
+    case 1: cout << "One\n"; break;
+    case 2: cout << "Two\n"; break;
+    case 3: cout << "Three\n"; break;
+    case 4: cout << "Four\n"; break;
+    case 5: cout << "Five\n"; break;
+    case 6: cout << "Six\n"; break;
+    case 7: cout << "Seven\n"; break;
+    case 8: cout << "Eight\n"; break;
+    case 9: cout << "Nine\n"; break;
+    case 10: cout << "Ten\n"; break;
+    default: cout << "Other number!"; break;
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Six
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (6) 
+```cpp
+int a = 2;
+int b = 2;
+switch (a){
+    case 1: cout << "One"; break;
+    case 2: cout << "Two"; break;
+    case 3: cout << "Three"; break;
+    default: cout << "Other Numbers";
+}
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+Two
+```
+    > 
+  </div>
+</details>
+
+---

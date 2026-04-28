@@ -1,0 +1,153 @@
+---
+sidebar_label: 'Quiz Level 2'
+sidebar_position: 2
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Quiz Level 2
+
+It work!
+
+<ToggleAll />
+
+## Level 2:
+
+### (1)
+```cpp
+int a = 3.3;
+cout << a;
+```
+1. `3.3`
+2. `3.0`
+3. `3`
+4. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 3. 3**
+    > Legal, but the decimal is truncated; the output will be 3.
+  </div>
+</details>
+
+---
+
+### (2)
+```cpp
+int a = 33;
+float b = 3.3;
+int c = a+b;
+cout << c;
+```
+1. `36`
+2. `36.3`
+3. `Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 1. 36**
+    > 33 + 3.3 = 36.3 . Storing this in an `int` truncates it to 36.
+  </div>
+</details>
+
+---
+
+### (3)
+```cpp
+float a = 5;
+int b = 2;
+cout << a%b;
+```
+1. `2.5`
+2. `2.0`
+3. `1.0`
+4. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 4. Compilation Error**
+    > The modulo operator `%` cannot be used with `float` types.
+  </div>
+</details>
+
+---
+
+### (4)
+```cpp
+float a = 2.0;
+int b = 5;
+cout << b%a;
+```
+1. `2.5`
+2. `2.0`
+3. `1.0`
+4. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 4. Compilation Error**
+    > Same as above; modulo requires both operands to be integers.
+  </div>
+</details>
+
+---
+
+### (5)
+```cpp
+double a = 5, b = 2;
+int ans = a % b;
+cout << ans;
+```
+1. `1`
+2. `Compilation Error`
+3. `0`
+4. `0.5`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 2. Compilation Error**
+    > The modulo operator `%` only works with integers in C++. You would need `fmod()` from `<cmath>` for doubles.
+  </div>
+</details>
+
+---
+
+### (6)
+```cpp
+double a = 2;
+const i = 2;
+i = a * i;
+cout << i * 2;
+```
+1. `4`
+2. `5`
+3. `8`
+4. `Compilation Error`
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+    **Correct Answer: 4.Compilation Error**
+    > You cannot reassign a value to a const variable (i = a * i).
+  </div>
+</details>
+
+---

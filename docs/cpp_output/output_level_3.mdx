@@ -1,0 +1,208 @@
+---
+sidebar_label: 'Output Level 3'
+sidebar_position: 3
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Output Level 3:
+It work!
+
+<ToggleAll />
+
+## Level 3:
+
+### (1) 
+```cpp
+int a = 5; a += ++a;
+cout << a;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+12
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (2) 
+```cpp
+int a = 5; a += a++;
+cout << a;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+10
+```
+    > Value of `a` (5) is used for both sides before increment.
+  </div>
+</details>
+
+---
+
+### (3) 
+```cpp
+int x = 5, y = 2;
+x += y; y = x - y; x -=y;
+cout << x << y;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+25
+```
+    > Logic to swap `x` and `y`.
+  </div>
+</details>
+
+---
+
+### (4) 
+```cpp
+int a = 5, b = 4, c = 2;
+c += a + 2 + b;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+13
+```
+    > 2 + (5+2+4) = 13.
+  </div>
+</details>
+
+---
+
+### (5) 
+```cpp
+float a = 5; a++;
+cout << a;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+6
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (6) 
+```cpp
+int a = 5; int b = ++a; bool c = b==a;
+cout << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+1
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (7) 
+```cpp
+int a = 9; int b = 6; bool c = b ==a;
+cout << a << b << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+960
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (8) 
+```cpp
+int a = 9; int b = 6; bool c = b!=a;
+cout << a << b << c;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+961
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (9) 
+```cpp
+#define x 5 * 3
+cout << x + x;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+30
+```
+    > 5 * 3 + 5 * 3 = 30.
+  </div>
+</details>
+
+---
+
+### (10) 
+```cpp
+#define x 5 + 3
+cout << x * x;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+23
+```
+    > 5 + 3 * 5 + 3 \rightarrow 5 + 15 + 3 = 23.
+  </div>
+</details>
+
+---

@@ -1,0 +1,101 @@
+---
+sidebar_label: 'Output Level 6'
+sidebar_position: 6
+---
+
+import { useState } from 'react';
+
+export const ToggleAll = () => {
+  const openAll = () => {
+    document.querySelectorAll('details').forEach((el) => el.open = true);
+  };
+  return (
+    <div className="admonition admonition-tip alert alert--success" style={{ cursor: 'pointer' }} onClick={openAll}>
+      <div className="admonition-heading">
+        <h5><span className="admonition-icon">💡</span> Pro Tip: Click here to reveal all answers at once!</h5>
+      </div>
+    </div>
+  );
+};
+
+# C++ Output Level 6:
+It work!
+
+<ToggleAll />
+
+## Level 6:
+
+### (1) 
+```cpp
+int sum = 0;
+for(int i=1; i<=5; i++) sum+=i;
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+15
+```
+    > 
+  </div>
+</details>
+
+---
+
+### (2) 
+```cpp
+int sum=0;
+for(int i=1; i<=5; i++) sum += i + 1;
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+20
+```
+    > (1+1) + (2+1) + (3+1) + (4+1) + (5+1) = 20.
+  </div>
+</details>
+
+---
+
+### (3) 
+```cpp
+int sum=0;
+for(int i=1; i<7; i+=3) sum ++;
+cout << sum;
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+2
+```
+    > Runs for i=1 and i=4.
+  </div>
+</details>
+
+---
+
+### (4) 
+```cpp
+int x = 0; int y = 5;
+for (;x<y;){ cout << "Hello"; x++; }
+```
+
+<details>
+  <summary>Click to see Answer</summary>
+  <div>
+```sh
+HelloHelloHelloHelloHello
+```
+    > 
+  </div>
+</details>
+
+---
